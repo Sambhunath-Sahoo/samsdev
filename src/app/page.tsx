@@ -1,79 +1,71 @@
-import Image from "next/image";
+import personalInfo from '@/data/personal-info.json'
 
 export default function Home() {
+  const { personal, experience } = personalInfo
+  
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      {/* WIP Banner */}
-      <div className="fixed top-0 left-0 right-0 bg-yellow-500 text-black text-center py-2 px-4 z-50 font-semibold">
-        🚧 WIP - Work In Progress 🚧
-      </div>
-      
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <div className="text-center sm:text-left">
-          <h1 className="text-4xl font-bold mb-4">Sams</h1>
-          <p className="text-xl text-gray-600 dark:text-gray-300 mb-6">
-            Frontend Developer & UI/UX Enthusiast
-          </p>
-          <p className="text-lg text-gray-700 dark:text-gray-400 max-w-2xl">
-            Passionate about creating beautiful, user-friendly web experiences. 
-            Specializing in React, Next.js, and modern frontend technologies.
+    <div className="min-h-screen">
+      {/* Hero Section */}
+      <section className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 section-spacing">
+        <div className="text-center">
+          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-black dark:text-white leading-[1.1] mb-8">
+            {personal.title}
+          </h1>
+          <p className="text-xl sm:text-2xl text-gray-800 dark:text-gray-200 max-w-4xl mx-auto leading-relaxed font-light">
+            I'm {personal.name}, {personal.bio}
           </p>
         </div>
+      </section>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://github.com/samsdev"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-            </svg>
-            GitHub
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://linkedin.com/in/samsdev"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-            </svg>
-            LinkedIn
-          </a>
+      {/* Work Experience Section */}
+      <section className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16">
+        <h2 className="text-2xl font-bold text-black dark:text-white mb-8">Work Experience</h2>
+        
+        <div className="space-y-8">
+          {experience.map((exp, index) => (
+            <div key={exp.id} className="border-l-2 border-gray-200 dark:border-gray-700 pl-6">
+              <div className="flex items-start space-x-4">
+                <div className="flex-shrink-0">
+                  <div className={`w-12 h-12 ${index === 0 ? 'bg-gray-900 dark:bg-gray-100' : 'bg-blue-600'} rounded-lg flex items-center justify-center`}>
+                    <span className={`${index === 0 ? 'text-white dark:text-gray-900' : 'text-white'} font-bold text-sm`}>
+                      {exp.company.split(' ').map(word => word[0]).join('').slice(0, 2)}
+                    </span>
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold text-black dark:text-white">{exp.company}</h3>
+                  <p className="text-sm text-gray-800 dark:text-gray-200">{exp.position}</p>
+                  <p className="text-sm text-gray-700 dark:text-gray-300 mb-2">
+                    {new Date(exp.startDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })} - {exp.endDate === 'Present' ? 'Present' : new Date(exp.endDate).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
+                  </p>
+                  <p className="text-gray-800 dark:text-gray-200 mb-3">
+                    {exp.description}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {exp.technologies.slice(0, 4).map((tech) => (
+                      <span key={tech} className="px-2 py-1 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-xs rounded-md">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="mailto:sam@example.com"
-        >
-          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.272H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-.904.732-1.636 1.636-1.636h20.728c.904 0 1.636.732 1.636 1.636zM12 13.091L1.636 5.457h20.728L12 13.091z"/>
-          </svg>
-          Contact
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="/resume"
-        >
-          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/>
-          </svg>
-          Resume
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="/blog"
-        >
-          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
-          </svg>
-          Blog
-        </a>
-      </footer>
+      </section>
+
+      {/* Built with Section */}
+      <section className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16 border-t border-gray-200 dark:border-gray-700">
+        <div className="text-center">
+          <h3 className="text-lg font-semibold text-black dark:text-white mb-4">Built with:</h3>
+          <div className="flex items-center justify-center space-x-6">
+            <span className="text-gray-800 dark:text-gray-200">Next.js</span>
+            <span className="text-gray-800 dark:text-gray-200">Tailwind CSS</span>
+            <span className="text-gray-800 dark:text-gray-200">Vercel</span>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
