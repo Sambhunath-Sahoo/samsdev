@@ -12,7 +12,7 @@ export default function Home() {
             {personal.title}
           </h1>
           <p className="text-xl sm:text-2xl text-gray-800 dark:text-gray-200 max-w-4xl mx-auto leading-relaxed font-light">
-            I'm {personal.name}, {personal.bio}
+            I&apos;m {personal.name}, {personal.bio}
           </p>
         </div>
       </section>

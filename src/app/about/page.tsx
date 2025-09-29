@@ -4,7 +4,7 @@ export default function About() {
       <section className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 pt-20 pb-16">
         <div className="max-w-3xl">
           <h1 className="text-4xl sm:text-5xl font-bold text-black dark:text-white leading-tight mb-8">
-            I'm Your Name. I live in Your City, where I build the future.
+            I&apos;m Your Name. I live in Your City, where I build the future.
           </h1>
           
           <div className="prose prose-lg text-gray-800 dark:text-gray-200 space-y-6">
@@ -26,7 +26,7 @@ export default function About() {
             </p>
             
             <blockquote className="border-l-4 border-gray-300 pl-6 italic text-gray-600">
-              If you ever spot me in the wild, don't hesitate to say hello! Let's grab a drink and geek-out 
+              If you ever spot me in the wild, don&apos;t hesitate to say hello! Let&apos;s grab a drink and geek-out 
               over the latest advancements in front-end development or discuss our favorite programming language. ⚡
             </blockquote>
           </div>
@@ -36,7 +36,7 @@ export default function About() {
       {/* Soft Skills Section */}
       <section className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16">
         <h2 className="text-2xl font-bold text-black dark:text-white mb-8">Soft Skills</h2>
-        <p className="text-gray-800 dark:text-gray-200 mb-6">Certain skills I've picked along the way that deserves mentioning:</p>
+        <p className="text-gray-800 dark:text-gray-200 mb-6">Certain skills I&apos;ve picked along the way that deserves mentioning:</p>
         
         <div className="space-y-6">
           <div>
