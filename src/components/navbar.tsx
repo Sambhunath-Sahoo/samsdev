@@ -15,6 +15,7 @@ import {
 import { ThemeToggle } from "@/components/theme-toggle"
 
 const navigation = [
+  { name: "GitHub", href: "#contributions" },
   { name: "About", href: "#about" },
   { name: "Experience", href: "#work-experience" },
   { name: "Projects", href: "#projects" },
