@@ -11,10 +11,10 @@ export function ContactSection() {
             CONTACT ME
           </p>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">
-            Let's talk!
+            Let&apos;s talk!
           </h2>
           <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-            Feel free to reach out! I'm here to help and will respond within 24 hours. Your questions matter to me!
+            Feel free to reach out! I&apos;m here to help and will respond within 24 hours. Your questions matter to me!
           </p>
         </div>
 

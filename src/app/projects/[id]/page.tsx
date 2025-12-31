@@ -1,7 +1,6 @@
-import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, ExternalLink, Github } from "lucide-react"
+import { ArrowLeft } from "lucide-react"
 
 // Project data
 const projects = {
@@ -68,13 +67,14 @@ const projects = {
 }
 
 type ProjectPageProps = {
-  params: {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
-export default function ProjectPage({ params }: ProjectPageProps) {
-  const project = projects[params.id as keyof typeof projects]
+export default async function ProjectPage({ params }: ProjectPageProps) {
+  const { id } = await params
+  const project = projects[id as keyof typeof projects]
 
   if (!project) {
     return (
