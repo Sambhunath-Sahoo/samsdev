@@ -18,18 +18,18 @@ export default function Home() {
       <div className="container max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-12 sm:py-16 md:py-20 lg:py-24">
         <AboutSection />
       </div>
+
+       {/* Third View - Projects */}
+       <div className="container max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-12 sm:py-16 md:py-20 lg:py-24">
+        <ProjectsSection />
+      </div>
       
-      {/* Second View - Work Experience */}
+      {/* Fifth View - Work Experience */}
       <div className="container max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-12 sm:py-16 md:py-20 lg:py-24">
         <WorkExperienceSection />
       </div>
 
-      {/* Third View - Projects */}
-      <div className="container max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-12 sm:py-16 md:py-20 lg:py-24">
-        <ProjectsSection />
-      </div>
-
-      {/* Fourth View - Contact */}
+      {/* Sixth View - Contact */}
       <div className="container max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-12 sm:py-16 md:py-20 lg:py-24">
         <ContactSection />
       </div>
