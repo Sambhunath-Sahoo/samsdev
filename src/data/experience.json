@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "company": "Recruit CRM",
+    "logo": "https://images.unsplash.com/photo-1549923746-c502d488b3ea?auto=format&fit=crop&w=100&q=80",
+    "role": "Software Engineer",
+    "location": "Pune",
+    "period": "Nov 2023 – Present",
+    "points": [
+      "Enhanced search functionality (Boolean, filters, and travel time search) using Spring Boot and Vue.js, increasing query precision and reducing search time by 30%.",
+      "Optimized global search performance by integrating SingleStore with Spring Boot microservices, cutting complex query response times by over 40%.",
+      "Leveraged AWS services (EC2, S3, Aurora) for deploying and scaling backend infrastructure, ensuring system reliability and reducing downtime across environments.",
+      "Mentored junior developers on code quality and design principles, resulting in a 20% boost in team delivery velocity and onboarding efficiency."
+    ]
+  },
+  {
+    "id": 2,
+    "company": "Recruit CRM",
+    "logo": "https://images.unsplash.com/photo-1549923746-c502d488b3ea?auto=format&fit=crop&w=100&q=80",
+    "role": "Associate Software Engineer",
+    "location": "Pune",
+    "period": "March 2022 – Nov 2023",
+    "points": [
+      "Resolved 200+ high-priority bugs across core modules, directly improving system stability and contributing to a consistent 95% customer satisfaction rate.",
+      "Refactored legacy monolithic APIs into modular Spring Boot services, reducing code complexity and accelerating feature delivery timelines.",
+      "Implemented location-based search logic using Spring Boot, laying the groundwork for the scalable Travel Time Search feature.",
+      "Redesigned database schema for the global search module in collaboration with product and QA teams, improving data indexing and reducing search latency by 30%."
+    ]
+  },
+  {
+    "id": 3,
+    "company": "SISCASO",
+    "logo": "https://images.unsplash.com/photo-1560179707-f14e90ef3623?auto=format&fit=crop&w=100&q=80",
+    "role": "Engineering Intern",
+    "location": "Pune",
+    "period": "July 2021 – Feb 2022",
+    "points": [
+      "Wrote clean, maintainable, and well-tested code using React.js, ensuring consistent performance across various modules.",
+      "Developed multiple reusable UI components and fixed assigned bugs, contributing to product stability.",
+      "Collaborated with cross-functional teams using Git for version control to manage tasks and streamline development."
+    ]
+  }
+]
+
