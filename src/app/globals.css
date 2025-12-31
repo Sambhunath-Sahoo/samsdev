@@ -5,9 +5,11 @@
   --foreground: #171717;
 }
 
-.dark {
-  --background: #0a0a0a;
-  --foreground: #ededed;
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
 }
 
 @theme inline {
@@ -21,118 +23,4 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
-  transition: all 0.3s ease;
-  min-height: 100vh;
 }
-
-
-/* MAXIMUM CONTRAST - Override all text colors */
-
-/* Light theme - Force everything to black */
-html:not(.dark) * {
-  color: #000000 !important;
-}
-
-/* Dark theme - Force everything to white */
-html.dark *,
-.dark *,
-[data-theme="dark"] * {
-  color: #ffffff !important;
-}
-
-/* Specific overrides for better hierarchy in light theme */
-html:not(.dark) .text-gray-800,
-html:not(.dark) .text-gray-700,
-html:not(.dark) .text-gray-600,
-html:not(.dark) .text-gray-500 {
-  color: #1a1a1a !important;
-}
-
-/* Specific overrides for better hierarchy in dark theme */
-html.dark .text-gray-800,
-html.dark .text-gray-700,
-html.dark .text-gray-600,
-html.dark .text-gray-500,
-.dark .text-gray-800,
-.dark .text-gray-700,
-.dark .text-gray-600,
-.dark .text-gray-500 {
-  color: #ffffff !important;
-}
-
-/* Ensure backgrounds are proper */
-html:not(.dark) body {
-  background-color: #ffffff !important;
-  color: #000000 !important;
-}
-
-html.dark body,
-.dark body {
-  background-color: #0a0a0a !important;
-  color: #ffffff !important;
-}
-
-/* Additional dark theme enforcement */
-.dark,
-html.dark {
-  background-color: #0a0a0a !important;
-}
-
-/* Force all text in dark theme to be pure white */
-.dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6,
-.dark p, .dark span, .dark div, .dark a, .dark li,
-html.dark h1, html.dark h2, html.dark h3, html.dark h4, html.dark h5, html.dark h6,
-html.dark p, html.dark span, html.dark div, html.dark a, html.dark li {
-  color: #ffffff !important;
-}
-
-/* Logo specific overrides */
-.logo-letter {
-  color: white !important;
-}
-
-.dark .logo-letter {
-  color: black !important;
-}
-
-.logo-text {
-  color: black !important;
-}
-
-.dark .logo-text {
-  color: white !important;
-}
-
-
-/* Smooth animations for interactive elements */
-.nav-link {
-  position: relative;
-  transition: all 0.3s ease;
-}
-
-.nav-link::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: currentColor;
-  transition: width 0.3s ease;
-}
-
-.nav-link:hover::after {
-  width: 100%;
-}
-
-/* Enhanced section spacing */
-.section-spacing {
-  padding: 5rem 0;
-}
-
-@media (max-width: 768px) {
-  .section-spacing {
-    padding: 3rem 0;
-  }
-}
-
