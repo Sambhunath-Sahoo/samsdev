@@ -6,7 +6,7 @@
   "linkedin": "https://linkedin.com/in/sams25/",
   "github": "https://github.com/Sambhunath-Sahoo",
   "summary": "Full Stack Developer with 3+ years of experience in developing scalable, high-performance SaaS applications using Java, Spring Boot, and MySQL. Specialized in full-stack development with a strong backend focus on Spring Boot and MySQL, and frontend expertise in Vue.js and React. Adept in microservices architecture, AWS deployment, and agile methodologies.",
-  "profileImage": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80",
+  "profileImage": "/profileImage.jpg",
   "skills": {
     "languages": ["Java", "JavaScript", "TypeScript", "SQL"],
     "fullStack": [
