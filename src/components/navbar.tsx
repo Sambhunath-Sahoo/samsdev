@@ -23,6 +23,33 @@ const navigation = [
 export function Navbar() {
   const [isOpen, setIsOpen] = React.useState(false)
 
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault()
+    const element = document.querySelector(href)
+    if (element) {
+      const offset = 80 // Account for fixed navbar height
+      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
+      const offsetPosition = elementPosition - offset
+
+      // Update URL hash
+      window.history.pushState(null, '', href)
+
+      // Trigger re-animation by temporarily hiding and showing
+      element.setAttribute('data-animate', 'true')
+      
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      })
+
+      // Reset animation trigger after scroll
+      setTimeout(() => {
+        element.removeAttribute('data-animate')
+      }, 100)
+    }
+    setIsOpen(false)
+  }
+
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <nav className="container max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 flex h-16 items-center justify-between">
@@ -37,13 +64,14 @@ export function Navbar() {
         {/* Desktop Navigation */}
         <div className="hidden md:flex md:items-center md:space-x-6">
           {navigation.map((item) => (
-            <Link
+            <a
               key={item.name}
               href={item.href}
-              className="text-sm font-medium transition-colors hover:text-primary"
+              onClick={(e) => handleNavClick(e, item.href)}
+              className="text-sm font-medium transition-colors hover:text-primary cursor-pointer"
             >
               {item.name}
-            </Link>
+            </a>
           ))}
           <ThemeToggle />
         </div>
@@ -64,14 +92,14 @@ export function Navbar() {
               </SheetHeader>
               <nav className="flex flex-col space-y-1 mt-6">
                 {navigation.map((item) => (
-                  <Link
+                  <a
                     key={item.name}
                     href={item.href}
-                    onClick={() => setIsOpen(false)}
-                    className="px-4 py-3 text-base font-medium transition-colors hover:bg-muted hover:text-primary rounded-lg"
+                    onClick={(e) => handleNavClick(e, item.href)}
+                    className="px-4 py-3 text-base font-medium transition-colors hover:bg-muted hover:text-primary rounded-lg cursor-pointer"
                   >
                     {item.name}
-                  </Link>
+                  </a>
                 ))}
               </nav>
             </SheetContent>

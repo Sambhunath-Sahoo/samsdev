@@ -1,23 +1,36 @@
 "use client"
 
 import Image from "next/image"
+import { motion } from "framer-motion"
 import { ExternalLink, Github } from "lucide-react"
+import { containerVariants, itemVariants } from "@/lib/animations"
 import { SectionHeader } from "./section-header"
 import projectsData from "@/data/projects.json"
 
 export function ProjectsSection() {
   return (
-    <section id="projects" className="space-y-8 sm:space-y-10 md:space-y-12 scroll-mt-20">
-      <SectionHeader 
-        title="Featured Projects" 
-        subtitle="Discover what I've created"
-      />
+    <motion.section 
+      id="projects" 
+      className="space-y-8 sm:space-y-10 md:space-y-12 scroll-mt-20"
+      variants={containerVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ amount: 0.2 }}
+    >
+      <motion.div variants={itemVariants}>
+        <SectionHeader 
+          title="Featured Projects" 
+          subtitle="Discover what I've created"
+        />
+      </motion.div>
       
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
-        {projectsData.map((project) => (
-          <div
+        {projectsData.map((project, index) => (
+          <motion.div
             key={project.id}
             className="group block"
+            variants={itemVariants}
+            custom={index}
           >
             <article className="relative h-full overflow-hidden rounded-xl bg-card border border-border transition-all duration-300 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/10 hover:-translate-y-1 flex flex-col">
               {/* Project Image */}
@@ -84,10 +97,10 @@ export function ProjectsSection() {
                 </p>
               </div>
             </article>
-          </div>
+          </motion.div>
         ))}
       </div>
-    </section>
+    </motion.section>
   )
 }
 

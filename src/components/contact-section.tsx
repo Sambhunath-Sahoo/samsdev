@@ -1,12 +1,23 @@
+"use client"
+
+import { motion } from "framer-motion"
+import { containerVariants, itemVariants } from "@/lib/animations"
 import { Mail } from "lucide-react"
 import userData from "@/data/user.json"
 
 export function ContactSection() {
   return (
-    <section id="contact" className="space-y-8 sm:space-y-10 md:space-y-12 scroll-mt-20">
+    <motion.section 
+      id="contact" 
+      className="space-y-8 sm:space-y-10 md:space-y-12 scroll-mt-20"
+      variants={containerVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ amount: 0.3 }}
+    >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12 items-center">
         {/* Left Side - Text */}
-        <div className="space-y-4 sm:space-y-5 md:space-y-6">
+        <motion.div className="space-y-4 sm:space-y-5 md:space-y-6" variants={itemVariants}>
           <p className="text-xs sm:text-sm font-semibold tracking-wider text-primary uppercase">
             CONTACT ME
           </p>
@@ -16,10 +27,10 @@ export function ContactSection() {
           <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
             Feel free to reach out! I&apos;m here to help and will respond within 24 hours. Your questions matter to me!
           </p>
-        </div>
+        </motion.div>
 
         {/* Right Side - Contact Info */}
-        <div className="space-y-6 sm:space-y-8">
+        <motion.div className="space-y-6 sm:space-y-8" variants={itemVariants}>
           {/* Write an email */}
           <div className="flex items-start gap-3 sm:gap-4">
             <div className="flex-shrink-0">
@@ -37,9 +48,9 @@ export function ContactSection() {
               </a>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   )
 }
 

@@ -1,17 +1,35 @@
+"use client"
+
 import Image from "next/image"
+import { motion } from "framer-motion"
+import { containerVariants, itemVariants } from "@/lib/animations"
 import { SectionHeader } from "./section-header"
 import experienceData from "@/data/experience.json"
 
 export function WorkExperienceSection() {
   return (
-    <section id="work-experience" className="space-y-8 sm:space-y-10 md:space-y-12 scroll-mt-20">
-      <SectionHeader 
-        title="Work Experience" 
-        subtitle="My professional journey and key contributions"
-      />
+    <motion.section 
+      id="work-experience" 
+      className="space-y-8 sm:space-y-10 md:space-y-12 scroll-mt-20"
+      variants={containerVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ amount: 0.2 }}
+    >
+      <motion.div variants={itemVariants}>
+        <SectionHeader 
+          title="Work Experience" 
+          subtitle="My professional journey and key contributions"
+        />
+      </motion.div>
       <div className="space-y-0 max-w-5xl mx-auto">
         {experienceData.map((exp, idx) => (
-          <div key={exp.id} className="relative flex gap-3 sm:gap-4 md:gap-6 pb-6 sm:pb-8">
+          <motion.div 
+            key={exp.id} 
+            className="relative flex gap-3 sm:gap-4 md:gap-6 pb-6 sm:pb-8"
+            variants={itemVariants}
+            custom={idx}
+          >
             {/* Timeline Line */}
             {idx < experienceData.length - 1 && (
               <div className="absolute left-7 sm:left-8 md:left-10 top-16 sm:top-18 md:top-20 h-full w-px bg-border" />
@@ -47,10 +65,10 @@ export function WorkExperienceSection() {
                 ))}
               </ul>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
-    </section>
+    </motion.section>
   )
 }
 

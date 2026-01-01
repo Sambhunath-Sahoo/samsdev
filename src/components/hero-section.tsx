@@ -1,6 +1,10 @@
+"use client"
+
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Github, Linkedin, Mail, ArrowUpRight } from "lucide-react"
+import { motion } from "framer-motion"
+import { containerVariants, itemVariants } from "@/lib/animations"
 import userData from "@/data/user.json"
 import socialsData from "@/data/socials.json"
 
@@ -19,8 +23,13 @@ export function HeroSection() {
   return (
     <section className="flex flex-col-reverse gap-8 sm:gap-10 md:gap-12 md:flex-row md:items-center md:justify-between">
       {/* Left side - Content */}
-      <div className="flex-1 space-y-5 sm:space-y-6">
-        <div className="space-y-2 sm:space-y-3">
+      <motion.div 
+        className="flex-1 space-y-5 sm:space-y-6"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        <motion.div className="space-y-2 sm:space-y-3" variants={itemVariants}>
           <p className="text-xs sm:text-sm font-medium text-muted-foreground tracking-wider uppercase">
             Portfolio
           </p>
@@ -30,14 +39,20 @@ export function HeroSection() {
           <p className="text-xl sm:text-2xl md:text-3xl text-primary font-semibold">
             {userData.title}
           </p>
-        </div>
+        </motion.div>
         
-        <p className="text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed max-w-2xl">
+        <motion.p 
+          className="text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed max-w-2xl"
+          variants={itemVariants}
+        >
           {userData.summary}
-        </p>
+        </motion.p>
 
         {/* Tech Stack */}
-        <div className="flex flex-wrap gap-2 sm:gap-2.5 pt-2 sm:pt-4">
+        <motion.div 
+          className="flex flex-wrap gap-2 sm:gap-2.5 pt-2 sm:pt-4"
+          variants={itemVariants}
+        >
           {userData.skills.fullStack.slice(0, 6).map((tech) => (
             <span
               key={tech}
@@ -46,11 +61,16 @@ export function HeroSection() {
               {tech}
             </span>
           ))}
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       {/* Right side - Image */}
-      <div className="flex-shrink-0 flex flex-col items-center gap-4 sm:gap-5 md:gap-6">
+      <motion.div 
+        className="flex-shrink-0 flex flex-col items-center gap-4 sm:gap-5 md:gap-6"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
+      >
         <div className="relative h-56 w-56 sm:h-64 sm:w-64 md:h-72 md:w-72 lg:h-80 lg:w-80">
           <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl blur-3xl" />
           <div className="relative h-full w-full overflow-hidden rounded-2xl border bg-muted">
@@ -98,7 +118,7 @@ export function HeroSection() {
             </a>
           ))}
         </div>
-      </div>
+      </motion.div>
     </section>
   )
 }
