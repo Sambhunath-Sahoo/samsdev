@@ -5,9 +5,11 @@ import { motion } from "framer-motion"
 import { ExternalLink, Github } from "lucide-react"
 import { containerVariants, itemVariants } from "@/lib/animations"
 import { SectionHeader } from "./section-header"
-import projectsData from "@/data/projects.json"
+import { getFeaturedProjects } from "@/lib/content/featured-projects"
 
 export function ProjectsSection() {
+  const projectsData = getFeaturedProjects()
+
   return (
     <motion.section 
       id="projects" 

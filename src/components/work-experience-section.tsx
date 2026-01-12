@@ -4,9 +4,11 @@ import Image from "next/image"
 import { motion } from "framer-motion"
 import { containerVariants, itemVariants } from "@/lib/animations"
 import { SectionHeader } from "./section-header"
-import experienceData from "@/data/experience.json"
+import { getExperience } from "@/lib/content/experience"
 
 export function WorkExperienceSection() {
+  const experienceData = getExperience()
+
   return (
     <motion.section 
       id="work-experience" 

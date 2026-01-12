@@ -1,16 +1,16 @@
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-import { FlatCompat } from "@eslint/eslintrc";
+import next from "eslint-config-next";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
-
-const eslintConfig = [
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
+// Next.js v16 ships a flat-config export via `eslint-config-next`.
+// Keeping this config minimal improves compatibility with ESLint v9.
+const config = [
+  ...next,
+  {
+    rules: {
+      // This rule is too strict for common client-only initialization patterns
+      // (e.g. reading localStorage in an effect, mounted guards for next-themes).
+      "react-hooks/set-state-in-effect": "off",
+    },
+  },
 ];
 
-export default eslintConfig;
+export default config;

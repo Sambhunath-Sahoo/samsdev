@@ -1,124 +1,115 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-import { Button } from "@/components/ui/button"
-import { Github, Linkedin, Mail, ArrowUpRight } from "lucide-react"
-import { motion } from "framer-motion"
-import { containerVariants, itemVariants } from "@/lib/animations"
-import userData from "@/data/user.json"
-import socialsData from "@/data/socials.json"
-
-const iconMap = {
-  Github,
-  Linkedin,
-  Mail,
-}
-
-const socials = socialsData.map((social) => ({
-  ...social,
-  icon: iconMap[social.icon as keyof typeof iconMap],
-}))
+import { motion } from "framer-motion";
+import { ArrowRight, Mail } from "lucide-react";
 
 export function HeroSection() {
   return (
-    <section className="flex flex-col-reverse gap-8 sm:gap-10 md:gap-12 md:flex-row md:items-center md:justify-between">
-      {/* Left side - Content */}
-      <motion.div 
-        className="flex-1 space-y-5 sm:space-y-6"
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
-        <motion.div className="space-y-2 sm:space-y-3" variants={itemVariants}>
-          <p className="text-xs sm:text-sm font-medium text-muted-foreground tracking-wider uppercase">
-            Portfolio
-          </p>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-            {userData.name}
-          </h1>
-          <p className="text-xl sm:text-2xl md:text-3xl text-primary font-semibold">
-            {userData.title}
-          </p>
-        </motion.div>
+    <section id="top" className="min-h-screen flex items-center justify-center container-padding relative">
+      <div className="max-w-5xl mx-auto w-full text-center pt-24 pb-16">
         
-        <motion.p 
-          className="text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed max-w-2xl"
-          variants={itemVariants}
+        {/* Badge */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400 text-sm font-medium mb-10"
         >
-          {userData.summary}
+          <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+          AVAILABLE FOR PROJECTS • 2026
+        </motion.div>
+
+        {/* Main Headline */}
+        <motion.h1
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1, duration: 0.7 }}
+          className="font-extrabold tracking-tight leading-[1.05] mb-8"
+          style={{ fontFamily: "system-ui, -apple-system, sans-serif", fontSize: "clamp(40px, 8vw, 85px)" }}
+        >
+          <span className="text-slate-900 dark:text-white">HI, I&apos;M </span>
+          <span className="text-blue-600">SAMS</span>
+          <br />
+          <span className="text-slate-400 dark:text-slate-600">FULL STACK</span>
+          <span className="text-slate-900 dark:text-white"> ENGINEER</span>
+        </motion.h1>
+
+        {/* Subtitle */}
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.6 }}
+          className="text-xl md:text-2xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed mb-10"
+        >
+          I build <span className="text-slate-900 dark:text-white font-semibold">scalable web products</span> with 
+          Spring Boot, React & Vue.js that perform and don&apos;t break.
         </motion.p>
 
-        {/* Tech Stack */}
-        <motion.div 
-          className="flex flex-wrap gap-2 sm:gap-2.5 pt-2 sm:pt-4"
-          variants={itemVariants}
+        {/* CTAs */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.6 }}
+          className="flex flex-wrap items-center justify-center gap-4 mb-16"
         >
-          {userData.skills.fullStack.slice(0, 6).map((tech) => (
-            <span
-              key={tech}
-              className="px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium rounded-lg bg-muted text-foreground border border-border hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-200"
-            >
-              {tech}
-            </span>
-          ))}
+          <a 
+            href="#work" 
+            className="group inline-flex items-center gap-3 px-8 py-4 text-base font-semibold rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition-all duration-200 hover:shadow-xl hover:shadow-blue-600/25"
+          >
+            VIEW MY WORK
+            <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+          </a>
+          <a 
+            href="#contact" 
+            className="inline-flex items-center gap-2 px-8 py-4 text-base font-semibold rounded-xl border-2 border-slate-300 dark:border-slate-600 text-slate-900 dark:text-white hover:border-slate-900 dark:hover:border-white transition-all duration-200"
+          >
+            <Mail className="h-5 w-5" />
+            GET IN TOUCH
+          </a>
         </motion.div>
-      </motion.div>
 
-      {/* Right side - Image */}
-      <motion.div 
-        className="flex-shrink-0 flex flex-col items-center gap-4 sm:gap-5 md:gap-6"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
-      >
-        <div className="relative h-56 w-56 sm:h-64 sm:w-64 md:h-72 md:w-72 lg:h-80 lg:w-80">
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl blur-3xl" />
-          <div className="relative h-full w-full overflow-hidden rounded-2xl border bg-muted">
-            <Image
-              src={userData.profileImage}
-              alt={userData.name}
-              fill
-              className="object-cover"
-              priority
+        {/* Stats */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4, duration: 0.6 }}
+          className="mx-auto w-full max-w-3xl"
+        >
+          {/* Mobile: 1-column cards. Desktop: 3 columns with dividers */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 items-stretch">
+            <div className="text-center rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/60 dark:bg-white/[0.03] px-4 py-4">
+              <div className="text-4xl sm:text-4xl md:text-5xl font-black text-blue-600">3+</div>
+              <div className="text-sm font-medium text-slate-500 dark:text-slate-400 mt-1">Years Experience</div>
+            </div>
+
+            <div className="text-center rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/60 dark:bg-white/[0.03] px-4 py-4">
+              <div className="text-4xl sm:text-4xl md:text-5xl font-black text-blue-600">200+</div>
+              <div className="text-sm font-medium text-slate-500 dark:text-slate-400 mt-1">Issues Resolved</div>
+            </div>
+
+            <div className="text-center rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/60 dark:bg-white/[0.03] px-4 py-4">
+              <div className="text-4xl sm:text-4xl md:text-5xl font-black text-blue-600">40%</div>
+              <div className="text-sm font-medium text-slate-500 dark:text-slate-400 mt-1">Performance Boost</div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Scroll indicator */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.8, duration: 0.5 }}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        >
+          <div className="w-6 h-10 border-2 border-slate-300 dark:border-slate-600 rounded-full flex justify-center pt-2">
+            <motion.div
+              animate={{ y: [0, 8, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+              className="w-1.5 h-1.5 bg-slate-400 rounded-full"
             />
           </div>
-        </div>
-        
-        {/* View Resume Button */}
-        <a
-          href="/resume.pdf"
-          target="_blank"
-          rel="noreferrer"
-          className="w-full max-w-[14rem] sm:max-w-xs"
-        >
-          <Button 
-            variant="default" 
-            size="lg"
-            className="w-full gap-2 font-semibold text-sm sm:text-base"
-          >
-            View Resume
-            <ArrowUpRight className="h-4 w-4" />
-          </Button>
-        </a>
-
-        {/* Social Links */}
-        <div className="flex items-center gap-3 sm:gap-4">
-          {socials.map((social) => (
-            <a
-              key={social.name}
-              href={social.href}
-              target="_blank"
-              rel="noreferrer"
-              className="group"
-              aria-label={social.name}
-            >
-              <div className="p-2 sm:p-2.5 rounded-lg bg-muted hover:bg-primary hover:text-primary-foreground transition-all duration-200 border border-border hover:border-primary">
-                <social.icon className="h-4 w-4 sm:h-5 sm:w-5" />
-              </div>
-            </a>
-          ))}
-        </div>
-      </motion.div>
+        </motion.div>
+      </div>
     </section>
-  )
+  );
 }

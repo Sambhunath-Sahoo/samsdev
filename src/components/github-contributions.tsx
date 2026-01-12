@@ -2,11 +2,13 @@
 
 import { motion } from "framer-motion"
 import { containerVariants, itemVariants } from "@/lib/animations"
-import userData from "@/data/user.json"
+import { getUser } from "@/lib/content/user"
 import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
 
 export function GitHubContributions() {
+  const userData = getUser()
+
   // Extract GitHub username from URL
   const githubUsername = userData.github.split('/').pop() || 'Sambhunath-Sahoo'
   const { theme, systemTheme } = useTheme()

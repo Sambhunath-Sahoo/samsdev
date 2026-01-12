@@ -1,112 +1,274 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import Link from "next/link"
-import { Menu } from "lucide-react"
+import Link from "next/link";
+import { useEffect, useMemo, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { AnimatePresence, motion } from "framer-motion";
+import { Moon, Sun } from "lucide-react";
+import { useTheme } from "@/components/theme-provider";
+import { getUser } from "@/lib/content/user";
 
-import { Button } from "@/components/ui/button"
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet"
-import { ThemeToggle } from "@/components/theme-toggle"
+type NavItem = { name: string; href: string; id: string };
 
-const navigation = [
-  { name: "About", href: "#about" },
-  { name: "Projects", href: "#projects" },
-  { name: "Contact", href: "#contact" }
-]
+const NAV: NavItem[] = [
+  { name: "Home", href: "#top", id: "top" },
+  { name: "About", href: "/about", id: "about" },
+  { name: "Work", href: "#work", id: "work" },
+  { name: "Services", href: "#services", id: "services" },
+  { name: "Stack", href: "#stack", id: "stack" },
+  { name: "Contact", href: "#contact", id: "contact" },
+];
 
 export function Navbar() {
-  const [isOpen, setIsOpen] = React.useState(false)
+  const { theme, toggleTheme } = useTheme();
+  const pathname = usePathname();
+  const router = useRouter();
+  const [scrolled, setScrolled] = useState(false);
+  const [active, setActive] = useState<string>("top");
+  const [mobileOpen, setMobileOpen] = useState(false);
+  
+  const isHomePage = pathname === "/";
+  const userData = getUser();
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault()
-    const element = document.querySelector(href)
-    if (element) {
-      const offset = 80 // Account for fixed navbar height
-      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
-      const offsetPosition = elementPosition - offset
+  const initials = useMemo(() => {
+    const parts = userData.name.split(" ").filter(Boolean);
+    return `${parts[0]?.[0] ?? "S"}${parts[1]?.[0] ?? ""}`.toUpperCase();
+  }, [userData.name]);
 
-      // Update URL hash
-      window.history.pushState(null, '', href)
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
-      // Trigger re-animation by temporarily hiding and showing
-      element.setAttribute('data-animate', 'true')
-      
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      })
+  useEffect(() => {
+    if (!isHomePage) return;
 
-      // Reset animation trigger after scroll
-      setTimeout(() => {
-        element.removeAttribute('data-animate')
-      }, 100)
+    // Only observe in-page hash sections (exclude route items like /about)
+    const sectionIds = NAV.filter((n) => n.href.startsWith("#")).map((n) => n.id);
+    const nodes = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter(Boolean) as HTMLElement[];
+
+    if (nodes.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => (b.intersectionRatio ?? 0) - (a.intersectionRatio ?? 0))[0];
+
+        if (visible?.target?.id) setActive(visible.target.id);
+      },
+      { root: null, rootMargin: "-25% 0px -65% 0px", threshold: [0, 0.1, 0.25, 0.5] }
+    );
+
+    nodes.forEach((n) => observer.observe(n));
+    return () => observer.disconnect();
+  }, [isHomePage]);
+
+  // Keep active nav in sync with route + hash
+  useEffect(() => {
+    if (!isHomePage) {
+      // Currently the only top-level route in the navbar is About
+      setActive("about");
+      return;
     }
-    setIsOpen(false)
-  }
+
+    const applyFromHash = () => {
+      const hash = window.location.hash;
+      if (hash && hash.startsWith("#")) {
+        setActive(hash.slice(1));
+      } else {
+        setActive("top");
+      }
+    };
+
+    applyFromHash();
+    window.addEventListener("hashchange", applyFromHash);
+    return () => window.removeEventListener("hashchange", applyFromHash);
+  }, [isHomePage, pathname]);
+
+  const handleNav = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
+    // If it's a page route (starts with /), let the browser handle it normally
+    if (href.startsWith("/")) {
+      setMobileOpen(false);
+      // Ensure active UI updates immediately
+      if (href === "/about") setActive("about");
+      return; // Don't prevent default - allow normal navigation
+    }
+    
+    e.preventDefault();
+    setMobileOpen(false);
+
+    // Update active UI immediately for hash links
+    if (href.startsWith("#")) setActive(href.slice(1));
+    
+    // If we're not on the home page, navigate to home with the hash
+    if (!isHomePage) {
+      router.push(`/${href}`);
+      return;
+    }
+    
+    const el = document.querySelector(href);
+    if (!el) return;
+
+    const offset = 96;
+    const top = el.getBoundingClientRect().top + window.scrollY - offset;
+    window.history.pushState(null, "", href);
+    window.scrollTo({ top, behavior: "smooth" });
+  };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <nav className="container max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 flex h-16 items-center justify-between">
-        {/* Logo */}
-        <Link href="/" className="flex items-center space-x-2">
-          <div className="h-9 w-9 rounded-md border flex items-center justify-center font-semibold">
-            S
-          </div>
-          <span className="text-lg font-semibold tracking-tight">Sams</span>
-        </Link>
+    <header className="fixed top-0 left-0 right-0 z-50">
+      <div
+        className={[
+          "pointer-events-none absolute inset-0",
+          scrolled ? "bg-background/70 backdrop-blur-xl" : "bg-transparent",
+        ].join(" ")}
+      />
 
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex md:items-center md:space-x-6">
-          {navigation.map((item) => (
-            <a
-              key={item.name}
-              href={item.href}
-              onClick={(e) => handleNavClick(e, item.href)}
-              className="text-sm font-medium transition-colors hover:text-primary cursor-pointer"
-            >
-              {item.name}
+      <div className="container-padding">
+        <div className="mx-auto max-w-6xl h-16 flex items-center justify-between">
+          {/* Left: logo */}
+          <Link href="/" className="pointer-events-auto flex items-center gap-3">
+            <div className="leading-tight">
+              <div 
+                className="text-3xl font-bold text-slate-900 dark:text-white"
+                style={{ fontFamily: "var(--font-dancing)" }}
+              >
+                Sambhunath Sahoo
+              </div>
+            </div>
+          </Link>
+
+          {/* Center: nav */}
+          <nav className="pointer-events-auto hidden md:flex items-center gap-8">
+            {NAV.slice(0, 6).map((item) => {
+              const isActive = active === item.id;
+              return (
+                <a
+                  key={item.id}
+                  href={item.href}
+                  onClick={handleNav(item.href)}
+                  className={[
+                    "relative text-sm font-semibold tracking-tight",
+                    "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white",
+                    "transition-colors duration-150 ease-out",
+                    isActive ? "text-slate-900 dark:text-white" : "",
+                  ].join(" ")}
+                >
+                  {item.name}
+                  {isActive && (
+                    <span className="absolute left-0 -bottom-2 h-[2px] w-full bg-slate-900 dark:bg-white rounded-full" />
+                  )}
+                </a>
+              );
+            })}
+          </nav>
+
+          {/* Right: CTA + theme */}
+          <div className="pointer-events-auto flex items-center gap-3">
+            <a href="#contact" onClick={handleNav("#contact")} className="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-full bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 transition-all duration-200">
+              Let&apos;s Talk
             </a>
-          ))}
-          <ThemeToggle />
-        </div>
 
-        {/* Mobile Navigation */}
-        <div className="flex md:hidden items-center space-x-2">
-          <ThemeToggle />
-          <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <Menu className="h-5 w-5" />
-                <span className="sr-only">Toggle menu</span>
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right" className="w-[300px] sm:w-[400px]">
-              <SheetHeader className="border-b pb-4">
-                <SheetTitle className="text-xl">Menu</SheetTitle>
-              </SheetHeader>
-              <nav className="flex flex-col space-y-1 mt-6">
-                {navigation.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    onClick={(e) => handleNavClick(e, item.href)}
-                    className="px-4 py-3 text-base font-medium transition-colors hover:bg-muted hover:text-primary rounded-lg cursor-pointer"
-                  >
-                    {item.name}
-                  </a>
-                ))}
-              </nav>
-            </SheetContent>
-          </Sheet>
+            <ThemeIconButton theme={theme} toggleTheme={toggleTheme} />
+
+            <button
+              onClick={() => setMobileOpen((v) => !v)}
+              className="md:hidden h-10 w-10 rounded-full border border-border bg-muted
+                         grid place-items-center text-muted-foreground hover:text-foreground
+                         transition-colors"
+              aria-label="Open menu"
+            >
+              <span className="text-lg leading-none">≡</span>
+            </button>
+          </div>
         </div>
-      </nav>
+      </div>
+
+      {/* Mobile menu */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.18, ease: "easeOut" }}
+            className="md:hidden container-padding"
+          >
+            <div className="mx-auto max-w-6xl pb-4">
+              <div className="rounded-2xl border border-border bg-background/85 backdrop-blur-xl shadow-sm overflow-hidden">
+                <div className="p-2">
+                  {NAV.map((item) => (
+                    <a
+                      key={item.id}
+                      href={item.href}
+                      onClick={handleNav(item.href)}
+                      className="block px-4 py-3 rounded-xl text-sm font-semibold
+                                 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800
+                                 transition-colors"
+                    >
+                      {item.name}
+                    </a>
+                  ))}
+                </div>
+                <div className="p-3 border-t border-border flex items-center justify-between">
+                  <a href="#contact" onClick={handleNav("#contact")} className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-full bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 transition-all duration-200">
+                    Let&apos;s Talk
+                  </a>
+                  <ThemeIconButton theme={theme} toggleTheme={toggleTheme} />
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
-  )
+  );
 }
 
+function ThemeIconButton({
+  theme,
+  toggleTheme,
+}: {
+  theme: "light" | "dark";
+  toggleTheme: () => void;
+}) {
+  const [ticking, setTicking] = useState(false);
+  const onClick = () => {
+    setTicking(true);
+    toggleTheme();
+    window.setTimeout(() => setTicking(false), 220);
+  };
+
+  return (
+    <button
+      onClick={onClick}
+      aria-label="Toggle theme"
+      className="h-10 w-10 rounded-full border border-border bg-muted/70
+                 grid place-items-center
+                 hover:bg-muted transition-colors
+                 relative overflow-hidden"
+    >
+      <motion.div
+        animate={{ rotate: ticking ? 12 : 0, scale: ticking ? 0.92 : 1 }}
+        transition={{ duration: 0.22, ease: "easeOut" }}
+      >
+        {theme === "dark" ? (
+          <Sun className="h-4 w-4 text-foreground" />
+        ) : (
+          <Moon className="h-4 w-4 text-foreground" />
+        )}
+      </motion.div>
+      <span
+        className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-200"
+        style={{
+          boxShadow: "0 0 24px -10px var(--accent)",
+        }}
+      />
+    </button>
+  );
+}

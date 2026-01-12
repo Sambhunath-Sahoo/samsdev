@@ -3,9 +3,11 @@
 import { motion } from "framer-motion"
 import { containerVariants, itemVariants } from "@/lib/animations"
 import { SectionHeader } from "./section-header"
-import userData from "@/data/user.json"
+import { getUser } from "@/lib/content/user"
 
 export function AboutSection() {
+  const userData = getUser()
+
   return (
     <motion.section 
       id="about" 

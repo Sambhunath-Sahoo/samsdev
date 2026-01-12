@@ -1,0 +1,96 @@
+[
+  {
+    "slug": "analytics-dashboard",
+    "title": "Analytics Dashboard",
+    "subtitle": "Full Stack Development",
+    "description": "Real-time analytics platform with Spring Boot backend and React frontend",
+    "image": "/projects/dashboard.png",
+    "tech": ["Spring Boot", "React", "PostgreSQL", "Redis", "Docker"],
+    "fullDescription": "A comprehensive real-time analytics dashboard built for enterprise clients to monitor and visualize business metrics. The platform handles thousands of data points per second and provides interactive charts, customizable dashboards, and automated reporting features.",
+    "features": [
+      "Real-time data visualization with WebSocket connections",
+      "Customizable dashboard layouts with drag-and-drop widgets",
+      "Advanced filtering and date range selection",
+      "Automated PDF report generation and email scheduling",
+      "Role-based access control and team collaboration",
+      "Mobile-responsive design for on-the-go monitoring"
+    ],
+    "challenges": [
+      "Optimizing database queries for large datasets (10M+ records)",
+      "Implementing efficient caching strategies with Redis",
+      "Building a scalable WebSocket infrastructure for real-time updates"
+    ],
+    "outcome": "Reduced report generation time by 80% and improved data accuracy to 99.9%. The platform now serves 500+ enterprise users with 99.95% uptime."
+  },
+  {
+    "slug": "ecommerce-platform",
+    "title": "E-Commerce Platform",
+    "subtitle": "System Design",
+    "description": "Scalable e-commerce solution handling 10K+ concurrent users",
+    "image": "/projects/ecommerce.png",
+    "tech": ["Vue.js", "Node.js", "MongoDB", "Stripe", "AWS"],
+    "fullDescription": "A modern e-commerce platform designed to handle high traffic loads during flash sales and seasonal peaks. Built with microservices architecture to ensure scalability and reliability.",
+    "features": [
+      "Product catalog with advanced search and filtering",
+      "Real-time inventory management system",
+      "Secure payment processing with Stripe integration",
+      "Order tracking and shipment notifications",
+      "Customer reviews and ratings system",
+      "Admin dashboard for store management"
+    ],
+    "challenges": [
+      "Handling 10K+ concurrent users during flash sales",
+      "Implementing a reliable shopping cart with session persistence",
+      "Building a recommendation engine for personalized suggestions"
+    ],
+    "outcome": "Successfully handled Black Friday traffic with zero downtime. Increased conversion rate by 35% through improved UX and faster page loads."
+  },
+  {
+    "slug": "rest-api-gateway",
+    "title": "REST API Gateway",
+    "subtitle": "Backend Architecture",
+    "description": "High-performance API gateway with rate limiting and caching",
+    "image": "/projects/api.png",
+    "tech": ["Java", "Spring Cloud", "Redis", "Docker", "Kubernetes"],
+    "fullDescription": "A centralized API gateway that handles authentication, rate limiting, request routing, and monitoring for a microservices ecosystem. Designed for high throughput and low latency.",
+    "features": [
+      "JWT-based authentication and authorization",
+      "Rate limiting with configurable tiers per client",
+      "Request/response transformation and validation",
+      "Circuit breaker pattern for fault tolerance",
+      "API versioning and backward compatibility",
+      "Comprehensive logging and metrics collection"
+    ],
+    "challenges": [
+      "Achieving sub-10ms latency for request routing",
+      "Implementing distributed rate limiting across multiple instances",
+      "Building a robust health check and failover system"
+    ],
+    "outcome": "Reduced API response times by 40% and achieved 99.99% availability. Currently handling 1M+ requests per day across 50+ microservices."
+  },
+  {
+    "slug": "mobile-banking-app",
+    "title": "Mobile Banking App",
+    "subtitle": "FinTech Solution",
+    "description": "Secure mobile banking application with real-time transactions",
+    "image": "/projects/mobile.png",
+    "tech": ["React Native", "Spring Boot", "PostgreSQL", "AWS", "Redis"],
+    "fullDescription": "A mobile banking application providing secure and seamless banking experience. Built with focus on security, performance, and user experience.",
+    "features": [
+      "Biometric authentication (Face ID, Fingerprint)",
+      "Real-time balance updates and transaction history",
+      "Instant money transfers between accounts",
+      "Bill payments and scheduled transfers",
+      "Push notifications for account activities",
+      "Spending analytics and budgeting tools"
+    ],
+    "challenges": [
+      "Implementing bank-grade security for transactions",
+      "Ensuring real-time sync across multiple devices",
+      "Building offline mode for limited connectivity scenarios"
+    ],
+    "outcome": "Achieved 4.8-star rating on app stores. Processing $50M+ in transactions monthly with zero security incidents."
+  }
+]
+
+

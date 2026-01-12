@@ -1,38 +1,23 @@
-import { HeroSection } from "@/components/hero-section"
-import { GitHubContributions } from "@/components/github-contributions"
-import { AboutSection } from "@/components/about-section"
-import { WorkExperienceSection } from "@/components/work-experience-section"
-import { ProjectsSection } from "@/components/projects-section"
-import { ContactSection } from "@/components/contact-section"
+"use client";
+
+import { Navbar } from "@/components/navbar";
+import { HeroSection } from "@/components/hero-section";
+import { WorkSection } from "@/components/work-section";
+import { ServicesSection } from "@/components/services-section";
+import { TechStackSection } from "@/components/tech-stack-section";
+import { ContactSection } from "@/components/contact-section";
+import { Footer } from "@/components/footer";
 
 export default function Home() {
   return (
-    <div className="w-full">
-      {/* First View - Hero + GitHub Contributions */}
-      <div className="container max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 min-h-[calc(100vh-4rem)] flex flex-col justify-center py-8 sm:py-12 md:py-16 space-y-12 sm:space-y-16 md:space-y-20">
-        <HeroSection />
-        <GitHubContributions />
-      </div>
-      
-      {/* Second View - About */}
-      <div className="container max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-12 sm:py-16 md:py-20 lg:py-24">
-        <AboutSection />
-      </div>
-
-       {/* Third View - Projects */}
-       <div className="container max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-12 sm:py-16 md:py-20 lg:py-24">
-        <ProjectsSection />
-      </div>
-      
-      {/* Fifth View - Work Experience */}
-      <div className="container max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-12 sm:py-16 md:py-20 lg:py-24">
-        <WorkExperienceSection />
-      </div>
-
-      {/* Sixth View - Contact */}
-      <div className="container max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-12 sm:py-16 md:py-20 lg:py-24">
-        <ContactSection />
-      </div>
+    <div className="min-h-screen bg-background text-foreground relative">
+      <Navbar />
+      <HeroSection />
+      <WorkSection />
+      <ServicesSection />
+      <TechStackSection />
+      <ContactSection />
+      <Footer />
     </div>
-  )
+  );
 }

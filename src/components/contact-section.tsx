@@ -1,56 +1,61 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { containerVariants, itemVariants } from "@/lib/animations"
-import { Mail } from "lucide-react"
-import userData from "@/data/user.json"
+import { motion } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
+import { getUser } from "@/lib/content/user";
 
 export function ContactSection() {
-  return (
-    <motion.section 
-      id="contact" 
-      className="space-y-8 sm:space-y-10 md:space-y-12 scroll-mt-20"
-      variants={containerVariants}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ amount: 0.3 }}
-    >
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12 items-center">
-        {/* Left Side - Text */}
-        <motion.div className="space-y-4 sm:space-y-5 md:space-y-6" variants={itemVariants}>
-          <p className="text-xs sm:text-sm font-semibold tracking-wider text-primary uppercase">
-            CONTACT ME
-          </p>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">
-            Let&apos;s talk!
-          </h2>
-          <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-            Feel free to reach out! I&apos;m here to help and will respond within 24 hours. Your questions matter to me!
-          </p>
-        </motion.div>
+  const userData = getUser();
 
-        {/* Right Side - Contact Info */}
-        <motion.div className="space-y-6 sm:space-y-8" variants={itemVariants}>
-          {/* Write an email */}
-          <div className="flex items-start gap-3 sm:gap-4">
-            <div className="flex-shrink-0">
-              <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-primary/10 flex items-center justify-center">
-                <Mail className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
-              </div>
-            </div>
-            <div className="space-y-1 min-w-0">
-              <h3 className="text-base sm:text-lg font-semibold">Write an email</h3>
-              <a 
-                href={`mailto:${userData.email}`}
-                className="text-sm sm:text-base text-muted-foreground hover:text-primary transition-colors border-b border-muted-foreground/30 hover:border-primary break-all"
-              >
-                {userData.email}
-              </a>
-            </div>
+  return (
+    <section id="contact" className="py-24 px-6 bg-slate-100 dark:bg-slate-950">
+      <div className="max-w-6xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+        >
+          {/* Availability Badge */}
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400 text-sm mb-10">
+            <span>AVAILABLE FOR PROJECTS</span>
+            <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
+            <span>2026</span>
+          </div>
+
+          {/* Large Heading */}
+          <h2 
+            className="font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.05] mb-8"
+            style={{ fontFamily: "system-ui, -apple-system, sans-serif", fontSize: "clamp(42px, 7vw, 80px)" }}
+          >
+            LET&apos;S <span className="text-blue-600">CONNECT</span><br />
+            <span className="text-slate-400 dark:text-slate-600">TO BUILD YOUR</span><br />
+            NEXT <span className="text-blue-600">IDEA</span>
+          </h2>
+
+          {/* CTA Buttons */}
+          <div className="flex flex-wrap gap-4 mb-12">
+            <a
+              href={`mailto:${userData.email}`}
+              className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-all duration-200"
+            >
+              BOOK A CALL
+            </a>
+            <a
+              href={`mailto:${userData.email}`}
+              className="inline-flex items-center gap-2 px-6 py-3 border border-slate-400 dark:border-slate-600 text-slate-900 dark:text-white font-semibold rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 transition-all duration-200"
+            >
+              EMAIL ME
+            </a>
+          </div>
+
+          {/* Footer Link */}
+          <div className="flex items-center gap-2 text-slate-900 dark:text-white text-xl font-medium">
+            <span>Let&apos;s Talk</span>
+            <ArrowUpRight className="h-5 w-5" />
           </div>
         </motion.div>
       </div>
-    </motion.section>
-  )
+    </section>
+  );
 }
-
