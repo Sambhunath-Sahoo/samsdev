@@ -24,6 +24,24 @@ export function FloatingNav() {
   
   const isHomePage = pathname === "/";
 
+  // Ensure hash navigation from other routes (e.g. /about -> /#work) actually
+  // scrolls to the section on the home page.
+  useEffect(() => {
+    if (!isHomePage) return;
+    const hash = window.location.hash;
+    if (!hash || !hash.startsWith("#")) return;
+
+    const sectionId = hash.slice(1);
+    setActiveSection(sectionId);
+
+    const el = document.querySelector(hash);
+    if (!el) return;
+
+    const offset = 100;
+    const top = el.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({ top, behavior: "smooth" });
+  }, [isHomePage, pathname]);
+
   useEffect(() => {
     if (!isHomePage) {
       setActiveSection("about");

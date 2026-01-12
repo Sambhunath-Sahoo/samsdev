@@ -55,9 +55,15 @@ export function Navbar() {
 
     const observer = new IntersectionObserver(
       (entries) => {
+        // When multiple sections are intersecting (common with a large hero),
+        // prefer the one closest to the top of the viewport.
         const visible = entries
           .filter((e) => e.isIntersecting)
-          .sort((a, b) => (b.intersectionRatio ?? 0) - (a.intersectionRatio ?? 0))[0];
+          .sort(
+            (a, b) =>
+              (b.target as HTMLElement).getBoundingClientRect().top -
+              (a.target as HTMLElement).getBoundingClientRect().top
+          )[0];
 
         if (visible?.target?.id) setActive(visible.target.id);
       },
@@ -79,15 +85,29 @@ export function Navbar() {
     const applyFromHash = () => {
       const hash = window.location.hash;
       if (hash && hash.startsWith("#")) {
-        setActive(hash.slice(1));
+        const id = hash.slice(1);
+        setActive(id);
+
+        // When coming from another route (e.g. /about -> /#work), Next may not
+        // auto-scroll to the anchor. Do it here so the active state matches UI.
+        const el = document.querySelector(hash);
+        if (el) {
+          const offset = 96;
+          const top = el.getBoundingClientRect().top + window.scrollY - offset;
+          window.scrollTo({ top, behavior: "smooth" });
+        }
       } else {
         setActive("top");
       }
     };
 
-    applyFromHash();
+    // Run after paint to ensure `window.location.hash` is updated after navigation
+    const raf = window.requestAnimationFrame(() => applyFromHash());
     window.addEventListener("hashchange", applyFromHash);
-    return () => window.removeEventListener("hashchange", applyFromHash);
+    return () => {
+      window.cancelAnimationFrame(raf);
+      window.removeEventListener("hashchange", applyFromHash);
+    };
   }, [isHomePage, pathname]);
 
   const handleNav = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
