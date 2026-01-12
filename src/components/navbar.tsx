@@ -1,40 +1,26 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
-import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "@/components/theme-provider";
-import { getUser } from "@/lib/content/user";
 
-type NavItem = { name: string; href: string; id: string };
-
-const NAV: NavItem[] = [
-  { name: "Home", href: "#top", id: "top" },
-  { name: "About", href: "/about", id: "about" },
-  { name: "Work", href: "#work", id: "work" },
-  { name: "Services", href: "#services", id: "services" },
-  { name: "Stack", href: "#stack", id: "stack" },
-  { name: "Contact", href: "#contact", id: "contact" },
-];
+const NAV = [
+  { name: "Home", href: "/" },
+  { name: "About", href: "/about" },
+  { name: "Work", href: "/#work" },
+  { name: "Services", href: "/#services" },
+  { name: "Stack", href: "/#stack" },
+  { name: "Contact", href: "/#contact" },
+] as const;
 
 export function Navbar() {
   const { theme, toggleTheme } = useTheme();
   const pathname = usePathname();
-  const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
-  const [active, setActive] = useState<string>("top");
   const [mobileOpen, setMobileOpen] = useState(false);
   
-  const isHomePage = pathname === "/";
-  const userData = getUser();
-
-  const initials = useMemo(() => {
-    const parts = userData.name.split(" ").filter(Boolean);
-    return `${parts[0]?.[0] ?? "S"}${parts[1]?.[0] ?? ""}`.toUpperCase();
-  }, [userData.name]);
-
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
     onScroll();
@@ -42,114 +28,20 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => {
-    if (!isHomePage) return;
-
-    // Only observe in-page hash sections (exclude route items like /about)
-    const sectionIds = NAV.filter((n) => n.href.startsWith("#")).map((n) => n.id);
-    const nodes = sectionIds
-      .map((id) => document.getElementById(id))
-      .filter(Boolean) as HTMLElement[];
-
-    if (nodes.length === 0) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        // When multiple sections are intersecting (common with a large hero),
-        // prefer the one closest to the top of the viewport.
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort(
-            (a, b) =>
-              (b.target as HTMLElement).getBoundingClientRect().top -
-              (a.target as HTMLElement).getBoundingClientRect().top
-          )[0];
-
-        if (visible?.target?.id) setActive(visible.target.id);
-      },
-      { root: null, rootMargin: "-25% 0px -65% 0px", threshold: [0, 0.1, 0.25, 0.5] }
-    );
-
-    nodes.forEach((n) => observer.observe(n));
-    return () => observer.disconnect();
-  }, [isHomePage]);
-
-  // Keep active nav in sync with route + hash
-  useEffect(() => {
-    if (!isHomePage) {
-      // Currently the only top-level route in the navbar is About
-      setActive("about");
-      return;
-    }
-
-    const applyFromHash = () => {
-      const hash = window.location.hash;
-      if (hash && hash.startsWith("#")) {
-        const id = hash.slice(1);
-        setActive(id);
-
-        // When coming from another route (e.g. /about -> /#work), Next may not
-        // auto-scroll to the anchor. Do it here so the active state matches UI.
-        const el = document.querySelector(hash);
-        if (el) {
-          const offset = 96;
-          const top = el.getBoundingClientRect().top + window.scrollY - offset;
-          window.scrollTo({ top, behavior: "smooth" });
-        }
-      } else {
-        setActive("top");
-      }
-    };
-
-    // Run after paint to ensure `window.location.hash` is updated after navigation
-    const raf = window.requestAnimationFrame(() => applyFromHash());
-    window.addEventListener("hashchange", applyFromHash);
-    return () => {
-      window.cancelAnimationFrame(raf);
-      window.removeEventListener("hashchange", applyFromHash);
-    };
-  }, [isHomePage, pathname]);
-
-  const handleNav = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
-    // If it's a page route (starts with /), let the browser handle it normally
-    if (href.startsWith("/")) {
-      setMobileOpen(false);
-      // Ensure active UI updates immediately
-      if (href === "/about") setActive("about");
-      return; // Don't prevent default - allow normal navigation
-    }
-    
-    e.preventDefault();
-    setMobileOpen(false);
-
-    // Update active UI immediately for hash links
-    if (href.startsWith("#")) setActive(href.slice(1));
-    
-    // If we're not on the home page, navigate to home with the hash
-    if (!isHomePage) {
-      router.push(`/${href}`);
-      return;
-    }
-    
-    const el = document.querySelector(href);
-    if (!el) return;
-
-    const offset = 96;
-    const top = el.getBoundingClientRect().top + window.scrollY - offset;
-    window.history.pushState(null, "", href);
-    window.scrollTo({ top, behavior: "smooth" });
-  };
+  const closeMobile = () => setMobileOpen(false);
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
       <div
         className={[
-          "pointer-events-none absolute inset-0",
+          // Important: keep this *behind* the navbar content so backdrop-blur
+          // blurs the page beneath the header (not the header text/buttons).
+          "pointer-events-none absolute inset-0 -z-10",
           scrolled ? "bg-background/70 backdrop-blur-xl" : "bg-transparent",
         ].join(" ")}
       />
 
-      <div className="container-padding">
+      <div className="container-padding relative">
         <div className="mx-auto max-w-6xl h-16 flex items-center justify-between">
           {/* Left: logo */}
           <Link href="/" className="pointer-events-auto flex items-center gap-3">
@@ -165,13 +57,12 @@ export function Navbar() {
 
           {/* Center: nav */}
           <nav className="pointer-events-auto hidden md:flex items-center gap-8">
-            {NAV.slice(0, 6).map((item) => {
-              const isActive = active === item.id;
+            {NAV.map((item) => {
+              const isActive = pathname === item.href;
               return (
-                <a
-                  key={item.id}
+                <Link
+                  key={item.name}
                   href={item.href}
-                  onClick={handleNav(item.href)}
                   className={[
                     "relative text-sm font-semibold tracking-tight",
                     "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white",
@@ -183,16 +74,19 @@ export function Navbar() {
                   {isActive && (
                     <span className="absolute left-0 -bottom-2 h-[2px] w-full bg-slate-900 dark:bg-white rounded-full" />
                   )}
-                </a>
+                </Link>
               );
             })}
           </nav>
 
           {/* Right: CTA + theme */}
           <div className="pointer-events-auto flex items-center gap-3">
-            <a href="#contact" onClick={handleNav("#contact")} className="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-full bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 transition-all duration-200">
+            <Link
+              href="/#contact"
+              className="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-full bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 transition-colors duration-200"
+            >
               Let&apos;s Talk
-            </a>
+            </Link>
 
             <ThemeIconButton theme={theme} toggleTheme={toggleTheme} />
 
@@ -210,42 +104,38 @@ export function Navbar() {
       </div>
 
       {/* Mobile menu */}
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.18, ease: "easeOut" }}
-            className="md:hidden container-padding"
-          >
-            <div className="mx-auto max-w-6xl pb-4">
-              <div className="rounded-2xl border border-border bg-background/85 backdrop-blur-xl shadow-sm overflow-hidden">
-                <div className="p-2">
-                  {NAV.map((item) => (
-                    <a
-                      key={item.id}
-                      href={item.href}
-                      onClick={handleNav(item.href)}
-                      className="block px-4 py-3 rounded-xl text-sm font-semibold
-                                 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800
-                                 transition-colors"
-                    >
-                      {item.name}
-                    </a>
-                  ))}
-                </div>
-                <div className="p-3 border-t border-border flex items-center justify-between">
-                  <a href="#contact" onClick={handleNav("#contact")} className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-full bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 transition-all duration-200">
-                    Let&apos;s Talk
-                  </a>
-                  <ThemeIconButton theme={theme} toggleTheme={toggleTheme} />
-                </div>
+      {mobileOpen && (
+        <div className="md:hidden container-padding">
+          <div className="mx-auto max-w-6xl pb-4">
+            <div className="rounded-2xl border border-border bg-background/85 backdrop-blur-xl shadow-sm overflow-hidden">
+              <div className="p-2">
+                {NAV.map((item) => (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    onClick={closeMobile}
+                    className="block px-4 py-3 rounded-xl text-sm font-semibold
+                               text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800
+                               transition-colors"
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </div>
+              <div className="p-3 border-t border-border flex items-center justify-between">
+                <Link
+                  href="/#contact"
+                  onClick={closeMobile}
+                  className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-full bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 transition-colors duration-200"
+                >
+                  Let&apos;s Talk
+                </Link>
+                <ThemeIconButton theme={theme} toggleTheme={toggleTheme} />
               </div>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </div>
+        </div>
+      )}
     </header>
   );
 }
@@ -273,16 +163,18 @@ function ThemeIconButton({
                  hover:bg-muted transition-colors
                  relative overflow-hidden"
     >
-      <motion.div
-        animate={{ rotate: ticking ? 12 : 0, scale: ticking ? 0.92 : 1 }}
-        transition={{ duration: 0.22, ease: "easeOut" }}
+      <span
+        className="block transition-transform duration-200"
+        style={{
+          transform: ticking ? "scale(0.92) rotate(8deg)" : "scale(1) rotate(0deg)",
+        }}
       >
         {theme === "dark" ? (
           <Sun className="h-4 w-4 text-foreground" />
         ) : (
           <Moon className="h-4 w-4 text-foreground" />
         )}
-      </motion.div>
+      </span>
       <span
         className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-200"
         style={{

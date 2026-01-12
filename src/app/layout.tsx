@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Playfair_Display, Satisfy, Manrope, Plus_Jakarta_Sans, Dancing_Script } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import { ScrollToTopOnLoad } from "@/components/scroll-to-top-on-load";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -54,6 +55,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} ${playfair.variable} ${satisfy.variable} ${manrope.variable} ${plusJakarta.variable} ${dancingScript.variable} antialiased`}>
         <ThemeProvider>
+          <ScrollToTopOnLoad />
           <div className="relative min-h-screen overflow-x-clip bg-[#fafbfc] dark:bg-[#0b0f1a]">
             {children}
           </div>

@@ -393,7 +393,7 @@ body {
    SMOOTH SCROLL
    ================================================ */
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
 }
 
 @media (prefers-reduced-motion: reduce) {
