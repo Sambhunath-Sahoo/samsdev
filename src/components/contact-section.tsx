@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { getUser } from "@/lib/content/user";
+import { AvailabilityBadge } from "@/components/availability-badge";
 
 export function ContactSection() {
   const userData = getUser();
@@ -17,11 +18,13 @@ export function ContactSection() {
           transition={{ duration: 0.6 }}
         >
           {/* Availability Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400 text-sm mb-10">
-            <span>AVAILABLE FOR PROJECTS</span>
-            <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
-            <span>2026</span>
-          </div>
+          <AvailabilityBadge
+            layout="split"
+            className="px-4 py-2 mb-10"
+            dotClassName="bg-blue-500"
+            text="AVAILABLE FOR PROJECTS"
+            year="2026"
+          />
 
           {/* Large Heading */}
           <h2 

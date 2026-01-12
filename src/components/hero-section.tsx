@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight, Mail } from "lucide-react";
+import { AvailabilityBadge } from "@/components/availability-badge";
 
 export function HeroSection() {
   return (
@@ -9,18 +10,16 @@ export function HeroSection() {
       <div className="max-w-5xl mx-auto w-full text-center pt-24 pb-16">
         
         {/* Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400 text-sm font-medium mb-10"
-        >
-          <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-          AVAILABLE FOR PROJECTS • 2026
-        </motion.div>
+        <AvailabilityBadge
+          animated
+          className="px-5 py-2.5 font-medium mb-10"
+          dotClassName="bg-green-500"
+          text="AVAILABLE FOR PROJECTS"
+          year="2026"
+        />
 
         {/* Main Headline */}
-        <motion.h1
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1, duration: 0.7 }}
@@ -32,7 +31,7 @@ export function HeroSection() {
           <br />
           <span className="text-slate-400 dark:text-slate-600">FULL STACK</span>
           <span className="text-slate-900 dark:text-white"> ENGINEER</span>
-        </motion.h1>
+        </motion.div>
 
         {/* Subtitle */}
         <motion.p

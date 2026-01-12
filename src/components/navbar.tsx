@@ -11,7 +11,7 @@ const NAV = [
   { name: "About", href: "/about" },
   { name: "Work", href: "/#work" },
   { name: "Services", href: "/#services" },
-  { name: "Stack", href: "/#stack" },
+  { name: "Technologies", href: "/#stack" },
   { name: "Contact", href: "/#contact" },
 ] as const;
 
@@ -20,13 +20,25 @@ export function Navbar() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  
+  const [activeHref, setActiveHref] = useState<string>(pathname);
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    const syncActiveHref = () => {
+      const hash = window.location.hash; // includes leading '#'
+      setActiveHref(pathname === "/" && hash ? `/${hash}` : pathname);
+    };
+
+    syncActiveHref();
+    window.addEventListener("hashchange", syncActiveHref);
+    return () => window.removeEventListener("hashchange", syncActiveHref);
+  }, [pathname]);
 
   const closeMobile = () => setMobileOpen(false);
 
@@ -44,9 +56,13 @@ export function Navbar() {
       <div className="container-padding relative">
         <div className="mx-auto max-w-6xl h-16 flex items-center justify-between">
           {/* Left: logo */}
-          <Link href="/" className="pointer-events-auto flex items-center gap-3">
+          <Link
+            href="/"
+            className="pointer-events-auto flex items-center gap-3"
+            onClick={() => setActiveHref("/")}
+          >
             <div className="leading-tight">
-              <div 
+              <div
                 className="text-3xl font-bold text-slate-900 dark:text-white"
                 style={{ fontFamily: "var(--font-dancing)" }}
               >
@@ -58,11 +74,12 @@ export function Navbar() {
           {/* Center: nav */}
           <nav className="pointer-events-auto hidden md:flex items-center gap-8">
             {NAV.map((item) => {
-              const isActive = pathname === item.href;
+              const isActive = activeHref === item.href;
               return (
                 <Link
                   key={item.name}
                   href={item.href}
+                  onClick={() => setActiveHref(item.href)}
                   className={[
                     "relative text-sm font-semibold tracking-tight",
                     "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white",
@@ -83,6 +100,7 @@ export function Navbar() {
           <div className="pointer-events-auto flex items-center gap-3">
             <Link
               href="/#contact"
+              onClick={() => setActiveHref("/#contact")}
               className="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-full bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 transition-colors duration-200"
             >
               Let&apos;s Talk
@@ -113,7 +131,10 @@ export function Navbar() {
                   <Link
                     key={item.name}
                     href={item.href}
-                    onClick={closeMobile}
+                    onClick={() => {
+                      setActiveHref(item.href);
+                      closeMobile();
+                    }}
                     className="block px-4 py-3 rounded-xl text-sm font-semibold
                                text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800
                                transition-colors"
@@ -125,7 +146,10 @@ export function Navbar() {
               <div className="p-3 border-t border-border flex items-center justify-between">
                 <Link
                   href="/#contact"
-                  onClick={closeMobile}
+                  onClick={() => {
+                    setActiveHref("/#contact");
+                    closeMobile();
+                  }}
                   className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-full bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 transition-colors duration-200"
                 >
                   Let&apos;s Talk
@@ -166,7 +190,9 @@ function ThemeIconButton({
       <span
         className="block transition-transform duration-200"
         style={{
-          transform: ticking ? "scale(0.92) rotate(8deg)" : "scale(1) rotate(0deg)",
+          transform: ticking
+            ? "scale(0.92) rotate(8deg)"
+            : "scale(1) rotate(0deg)",
         }}
       >
         {theme === "dark" ? (
