@@ -1,11 +1,9 @@
 import { defineCliConfig } from "sanity/cli";
 
-import { sanityDataset, sanityProjectId } from "./sanity/env";
-
 export default defineCliConfig({
   api: {
-    projectId: sanityProjectId,
-    dataset: sanityDataset,
+    projectId: process.env.SANITY_STUDIO_PROJECT_ID!,
+    dataset: process.env.SANITY_STUDIO_DATASET!,
   },
   project: {
     basePath: "/studio",

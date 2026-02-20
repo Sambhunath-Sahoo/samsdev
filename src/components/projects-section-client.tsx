@@ -43,7 +43,7 @@ export function ProjectsSectionClient({
 
                 {/* Tech Stack - Always visible on image */}
                 <div className="absolute top-3 left-3 right-3 flex flex-wrap gap-1.5 z-10">
-                  {project.tags.map((tag) => (
+                  {project.tech.map((tag) => (
                     <span
                       key={tag}
                       className="px-2.5 py-1 text-xs font-medium rounded-md bg-background/90 text-foreground border border-border/50 backdrop-blur-sm shadow-sm transition-all duration-200 group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-primary"
