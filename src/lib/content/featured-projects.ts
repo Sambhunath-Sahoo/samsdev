@@ -5,7 +5,7 @@ import fallbackProjects from "@/data/projects.json";
 
 export async function getFeaturedProjects(): Promise<FeaturedProject[]> {
   try {
-    const projects = await client.fetch(FEATURED_PROJECTS_QUERY);
+    const projects = await client.fetch(FEATURED_PROJECTS_QUERY, {}, { next: { revalidate: 0 } });
     if (projects && projects.length > 0) return projects;
   } catch (e) {
     console.error("Failed to fetch featured projects from Sanity:", e);
