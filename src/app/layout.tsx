@@ -53,7 +53,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} ${playfair.variable} ${satisfy.variable} ${manrope.variable} ${plusJakarta.variable} ${dancingScript.variable} antialiased`}>
+      <body suppressHydrationWarning className={`${inter.variable} ${playfair.variable} ${satisfy.variable} ${manrope.variable} ${plusJakarta.variable} ${dancingScript.variable} antialiased`}>
         <ThemeProvider>
           <ScrollToTopOnLoad />
           <div className="relative min-h-screen overflow-x-clip bg-[#fafbfc] dark:bg-[#0b0f1a]">

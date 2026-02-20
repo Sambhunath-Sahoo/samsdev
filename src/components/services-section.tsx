@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { getServices } from "@/lib/content/services";
 
 export function ServicesSection() {
@@ -17,13 +16,9 @@ export function ServicesSection() {
         </div>
         
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {services.map((service, i) => (
-            <motion.div
+          {services.map((service) => (
+            <div
               key={service.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: i * 0.1, duration: 0.5 }}
               className="group p-6 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/50 hover:border-blue-600 hover:shadow-lg hover:shadow-blue-500/10 transition-all duration-300"
             >
               <div className="text-3xl mb-4">{service.icon}</div>
@@ -33,11 +28,10 @@ export function ServicesSection() {
               <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                 {service.desc}
               </p>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
     </section>
   );
 }
-

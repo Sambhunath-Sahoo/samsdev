@@ -1,7 +1,5 @@
 "use client"
 
-import { motion } from "framer-motion"
-import { containerVariants, itemVariants } from "@/lib/animations"
 import { SectionHeader } from "./section-header"
 import { getUser } from "@/lib/content/user"
 
@@ -9,28 +7,23 @@ export function AboutSection() {
   const userData = getUser()
 
   return (
-    <motion.section 
+    <section 
       id="about" 
       className="space-y-6 sm:space-y-8 scroll-mt-20"
-      variants={containerVariants}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ amount: 0.3 }}
     >
-      <motion.div variants={itemVariants}>
+      <div>
         <SectionHeader 
           title="About Me" 
           subtitle="Passionate about building innovative solutions"
         />
-      </motion.div>
-      <motion.div className="max-w-3xl mx-auto px-2 sm:px-4" variants={itemVariants}>
+      </div>
+      <div className="max-w-3xl mx-auto px-2 sm:px-4">
         <p className="text-sm sm:text-base md:text-lg leading-relaxed text-muted-foreground text-center">
           {userData.title} with 3+ years of experience specializing in full-stack development. 
           Strong backend focus on Spring Boot and MySQL, with frontend expertise in Vue.js and React. 
           Passionate about building scalable, high-performance applications and mentoring developers.
         </p>
-      </motion.div>
-    </motion.section>
+      </div>
+    </section>
   )
 }
-

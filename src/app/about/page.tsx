@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { ArrowLeft, MapPin, Calendar, Briefcase, GraduationCap, Award, Code2, Heart } from "lucide-react";
 import { Navbar } from "@/components/navbar";
 import Link from "next/link";
@@ -16,12 +15,7 @@ export default function AboutPage() {
       {/* Hero Section */}
       <section className="pt-32 pb-16 container-padding">
         <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="space-y-6"
-          >
+          <div className="space-y-6">
             <Link
               href="/"
               className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
@@ -56,19 +50,14 @@ export default function AboutPage() {
                 <span>3+ Years Experience</span>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
       {/* About Content */}
       <section className="pb-16 container-padding">
         <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.6 }}
-            className="space-y-8"
-          >
+          <div className="space-y-8">
             <div className="space-y-4">
               <h2 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
                 <Heart className="h-6 w-6 text-blue-600" />
@@ -91,19 +80,14 @@ export default function AboutPage() {
                 </p>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
       {/* Skills Section */}
       <section className="pb-16 container-padding">
         <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.6 }}
-            className="space-y-6"
-          >
+          <div className="space-y-6">
             <h2 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
               <Code2 className="h-6 w-6 text-blue-600" />
               Skills & Technologies
@@ -154,26 +138,21 @@ export default function AboutPage() {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
       {/* Experience Section */}
       <section className="pb-16 container-padding">
         <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
-            className="space-y-6"
-          >
+          <div className="space-y-6">
             <h2 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
               <Briefcase className="h-6 w-6 text-blue-600" />
               Work Experience
             </h2>
             
             <div className="space-y-6">
-              {experienceData.map((exp, i) => (
+              {experienceData.map((exp) => (
                 <div 
                   key={exp.id}
                   className="p-6 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700"
@@ -200,19 +179,14 @@ export default function AboutPage() {
                 </div>
               ))}
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
       {/* Education Section */}
       <section className="pb-16 container-padding">
         <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.6 }}
-            className="space-y-6"
-          >
+          <div className="space-y-6">
             <h2 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
               <GraduationCap className="h-6 w-6 text-blue-600" />
               Education
@@ -225,19 +199,14 @@ export default function AboutPage() {
                 Focused on software engineering principles, data structures, algorithms, and web technologies.
               </p>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
       {/* Achievements Section */}
       <section className="pb-20 container-padding">
         <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.6 }}
-            className="p-8 rounded-2xl bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800"
-          >
+          <div className="p-8 rounded-2xl bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800">
             <h2 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-3 mb-6">
               <Award className="h-6 w-6 text-blue-600" />
               Key Achievements
@@ -257,7 +226,7 @@ export default function AboutPage() {
                 <div className="text-slate-600 dark:text-slate-400">System Uptime Achieved</div>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 

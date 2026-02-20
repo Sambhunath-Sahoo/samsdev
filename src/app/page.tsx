@@ -1,4 +1,4 @@
-"use client";
+// Server component — async children (WorkSection) fetch data server-side
 
 import { Navbar } from "@/components/navbar";
 import { HeroSection } from "@/components/hero-section";

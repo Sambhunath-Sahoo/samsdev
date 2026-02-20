@@ -1,8 +1,6 @@
 "use client"
 
 import Image from "next/image"
-import { motion } from "framer-motion"
-import { containerVariants, itemVariants } from "@/lib/animations"
 import { SectionHeader } from "./section-header"
 import { getExperience } from "@/lib/content/experience"
 
@@ -10,27 +8,21 @@ export function WorkExperienceSection() {
   const experienceData = getExperience()
 
   return (
-    <motion.section 
+    <section 
       id="work-experience" 
       className="space-y-8 sm:space-y-10 md:space-y-12 scroll-mt-20"
-      variants={containerVariants}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ amount: 0.2 }}
     >
-      <motion.div variants={itemVariants}>
+      <div>
         <SectionHeader 
           title="Work Experience" 
           subtitle="My professional journey and key contributions"
         />
-      </motion.div>
+      </div>
       <div className="space-y-0 max-w-5xl mx-auto">
         {experienceData.map((exp, idx) => (
-          <motion.div 
+          <div 
             key={exp.id} 
             className="relative flex gap-3 sm:gap-4 md:gap-6 pb-6 sm:pb-8"
-            variants={itemVariants}
-            custom={idx}
           >
             {/* Timeline Line */}
             {idx < experienceData.length - 1 && (
@@ -67,10 +59,9 @@ export function WorkExperienceSection() {
                 ))}
               </ul>
             </div>
-          </motion.div>
+          </div>
         ))}
       </div>
-    </motion.section>
+    </section>
   )
 }
-

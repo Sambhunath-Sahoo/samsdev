@@ -9,11 +9,11 @@ export type DetailedProject = {
   subtitle: string;
   description: string;
   image: string;
+  videoUrl?: string;
+  gallery?: string[];
   tech: string[];
   fullDescription: string;
   features: string[];
-  challenges: string[];
-  outcome: string;
   links?: DetailedProjectLinkSet;
 };
 
@@ -22,7 +22,7 @@ export type FeaturedProject = {
   title: string;
   description: string;
   image: string;
-  tags: string[];
+  tech: string[];
   demoUrl: string;
   githubUrl: string;
 };

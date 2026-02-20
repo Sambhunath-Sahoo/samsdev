@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { getUser } from "@/lib/content/user";
 import { AvailabilityBadge } from "@/components/availability-badge";
@@ -11,12 +10,7 @@ export function ContactSection() {
   return (
     <section id="contact" className="py-24 px-6 bg-slate-100 dark:bg-slate-950">
       <div className="max-w-6xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
-        >
+        <div>
           {/* Availability Badge */}
           <AvailabilityBadge
             layout="split"
@@ -57,7 +51,7 @@ export function ContactSection() {
             <span>Let&apos;s Talk</span>
             <ArrowUpRight className="h-5 w-5" />
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
