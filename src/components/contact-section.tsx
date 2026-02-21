@@ -1,11 +1,10 @@
-"use client";
-
 import { ArrowUpRight } from "lucide-react";
-import { getUser } from "@/lib/content/user";
+import { getAbout } from "@/lib/content/about";
 import { AvailabilityBadge } from "@/components/availability-badge";
 
-export function ContactSection() {
-  const userData = getUser();
+export async function ContactSection() {
+  const about = await getAbout();
+  const contactEmail = about?.contacts?.email ?? "sambhu05357@gmail.com";
 
   return (
     <section id="contact" className="py-24 px-6 bg-slate-100 dark:bg-slate-950">
@@ -33,13 +32,13 @@ export function ContactSection() {
           {/* CTA Buttons */}
           <div className="flex flex-wrap gap-4 mb-12">
             <a
-              href={`mailto:${userData.email}`}
+              href={`mailto:${contactEmail}`}
               className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-all duration-200"
             >
               BOOK A CALL
             </a>
             <a
-              href={`mailto:${userData.email}`}
+              href={`mailto:${contactEmail}`}
               className="inline-flex items-center gap-2 px-6 py-3 border border-slate-400 dark:border-slate-600 text-slate-900 dark:text-white font-semibold rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 transition-all duration-200"
             >
               EMAIL ME

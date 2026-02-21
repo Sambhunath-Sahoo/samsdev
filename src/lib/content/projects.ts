@@ -4,16 +4,14 @@ import {
   PROJECT_BY_SLUG_QUERY,
 } from "@/lib/sanity/queries";
 import type { DetailedProject } from "@/types/content";
-import fallbackProjects from "@/data/projects-detailed.json";
 
 export async function getDetailedProjects(): Promise<DetailedProject[]> {
   try {
-    const projects = await client.fetch(DETAILED_PROJECTS_QUERY, {}, { next: { revalidate: 0 } });
-    if (projects && projects.length > 0) return projects;
+    return await client.fetch(DETAILED_PROJECTS_QUERY, {}, { next: { revalidate: 0 } });
   } catch (e) {
     console.error("Failed to fetch projects from Sanity:", e);
+    return [];
   }
-  return fallbackProjects as unknown as DetailedProject[];
 }
 
 export async function getDetailedProjectBySlug(
@@ -25,9 +23,6 @@ export async function getDetailedProjectBySlug(
   } catch (e) {
     console.error("Failed to fetch project from Sanity:", e);
   }
-  const fallback = (fallbackProjects as unknown as DetailedProject[]).find(
-    (p) => p.slug === slug
-  );
-  return fallback ?? undefined;
+  return undefined;
 }
 

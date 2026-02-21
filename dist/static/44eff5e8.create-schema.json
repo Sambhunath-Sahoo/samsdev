@@ -1,0 +1,589 @@
+[
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "nickname",
+        "type": "string",
+        "title": "Nickname / Display Name"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "name": "designation",
+        "type": "string",
+        "title": "Designation / Role"
+      },
+      {
+        "name": "experienceYears",
+        "type": "number",
+        "title": "Years of Experience"
+      },
+      {
+        "rows": 3,
+        "description": "A brief one-liner or tagline shown prominently.",
+        "name": "shortDescription",
+        "type": "text"
+      },
+      {
+        "description": "Full rich-text bio shown on the About page.",
+        "of": [
+          {
+            "marks": {
+              "annotations": [
+                {
+                  "i18nTitleKey": "inputs.portable-text.annotation.link",
+                  "options": {
+                    "modal": {
+                      "type": "popover"
+                    }
+                  },
+                  "fields": [
+                    {
+                      "validation": [
+                        {
+                          "rules": [
+                            {
+                              "flag": "uri",
+                              "constraint": {
+                                "options": {
+                                  "scheme": [
+                                    "/^http$/",
+                                    "/^https$/",
+                                    "/^tel$/",
+                                    "/^mailto$/"
+                                  ],
+                                  "allowRelative": true,
+                                  "relativeOnly": false,
+                                  "allowCredentials": false
+                                }
+                              }
+                            }
+                          ],
+                          "level": "error"
+                        }
+                      ],
+                      "description": "A valid web, email, phone, or relative link.",
+                      "name": "href",
+                      "type": "url",
+                      "title": "Link"
+                    }
+                  ],
+                  "name": "link",
+                  "type": "object"
+                }
+              ],
+              "decorators": [
+                {
+                  "value": "strong",
+                  "title": "Strong"
+                },
+                {
+                  "value": "em",
+                  "title": "Italic"
+                },
+                {
+                  "value": "code",
+                  "title": "Code"
+                },
+                {
+                  "value": "underline",
+                  "title": "Underline"
+                },
+                {
+                  "value": "strike-through",
+                  "title": "Strike"
+                }
+              ]
+            },
+            "lists": [
+              {
+                "value": "bullet",
+                "title": "Bulleted list"
+              },
+              {
+                "value": "number",
+                "title": "Numbered list"
+              }
+            ],
+            "styles": [
+              {
+                "value": "normal",
+                "title": "Normal"
+              },
+              {
+                "value": "h1",
+                "title": "Heading 1"
+              },
+              {
+                "value": "h2",
+                "title": "Heading 2"
+              },
+              {
+                "value": "h3",
+                "title": "Heading 3"
+              },
+              {
+                "value": "h4",
+                "title": "Heading 4"
+              },
+              {
+                "value": "h5",
+                "title": "Heading 5"
+              },
+              {
+                "value": "h6",
+                "title": "Heading 6"
+              },
+              {
+                "value": "blockquote",
+                "title": "Quote"
+              }
+            ],
+            "of": [],
+            "type": "block"
+          }
+        ],
+        "name": "longDescription",
+        "type": "array"
+      },
+      {
+        "fields": [
+          {
+            "of": [
+              {
+                "type": "string"
+              }
+            ],
+            "name": "frontend",
+            "type": "array"
+          },
+          {
+            "of": [
+              {
+                "type": "string"
+              }
+            ],
+            "name": "backend",
+            "type": "array"
+          },
+          {
+            "of": [
+              {
+                "type": "string"
+              }
+            ],
+            "name": "devopsCloud",
+            "type": "array",
+            "title": "DevOps & Cloud"
+          },
+          {
+            "of": [
+              {
+                "type": "string"
+              }
+            ],
+            "name": "ai",
+            "type": "array",
+            "title": "AI"
+          },
+          {
+            "of": [
+              {
+                "type": "string"
+              }
+            ],
+            "name": "toolsPractices",
+            "type": "array",
+            "title": "Tools & Practices"
+          }
+        ],
+        "name": "skills",
+        "type": "object"
+      },
+      {
+        "fields": [
+          {
+            "name": "email",
+            "type": "string"
+          },
+          {
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "uri",
+                    "constraint": {
+                      "options": {
+                        "scheme": [
+                          "/^http$/",
+                          "/^https$/"
+                        ],
+                        "allowRelative": false,
+                        "relativeOnly": false,
+                        "allowCredentials": false
+                      }
+                    }
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "name": "github",
+            "type": "url",
+            "title": "GitHub"
+          },
+          {
+            "validation": [
+              {
+                "rules": [
+                  {
+                    "flag": "uri",
+                    "constraint": {
+                      "options": {
+                        "scheme": [
+                          "/^http$/",
+                          "/^https$/"
+                        ],
+                        "allowRelative": false,
+                        "relativeOnly": false,
+                        "allowCredentials": false
+                      }
+                    }
+                  }
+                ],
+                "level": "error"
+              }
+            ],
+            "name": "linkedin",
+            "type": "url",
+            "title": "LinkedIn"
+          }
+        ],
+        "name": "contacts",
+        "type": "object"
+      }
+    ],
+    "name": "about",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "options": {
+          "source": "title",
+          "maxLength": 96
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "description": "e.g. Full Stack Development, System Design",
+        "name": "subtitle",
+        "type": "string"
+      },
+      {
+        "rows": 3,
+        "name": "description",
+        "type": "text",
+        "title": "Short Description"
+      },
+      {
+        "rows": 6,
+        "name": "fullDescription",
+        "type": "text"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "image",
+        "type": "image",
+        "title": "Cover Image / Thumbnail"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Link to a YouTube or Vimeo video (optional)",
+        "name": "videoUrl",
+        "type": "url",
+        "title": "Video URL"
+      },
+      {
+        "description": "Additional images to loop through",
+        "of": [
+          {
+            "options": {
+              "hotspot": true
+            },
+            "type": "image"
+          }
+        ],
+        "name": "gallery",
+        "type": "array",
+        "title": "More Images"
+      },
+      {
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "tech",
+        "type": "array",
+        "title": "Tech Stack (Detail page)"
+      },
+      {
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "features",
+        "type": "array",
+        "title": "Key Features"
+      },
+      {
+        "initialValue": false,
+        "name": "isFeatured",
+        "type": "boolean",
+        "title": "Show on Homepage?"
+      },
+      {
+        "name": "order",
+        "type": "number",
+        "title": "Sort Order"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "demoUrl",
+        "type": "url",
+        "title": "Demo URL"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "githubUrl",
+        "type": "url",
+        "title": "GitHub URL"
+      }
+    ],
+    "name": "project",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string",
+        "title": "Title / Role"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "companyName",
+        "type": "string"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "companyLogo",
+        "type": "image"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "companyUrl",
+        "type": "url",
+        "title": "Company URL"
+      },
+      {
+        "options": {
+          "dateFormat": "YYYY-MM"
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "startDate",
+        "type": "date"
+      },
+      {
+        "options": {
+          "dateFormat": "YYYY-MM"
+        },
+        "hidden": "conditional",
+        "name": "endDate",
+        "type": "date"
+      },
+      {
+        "initialValue": false,
+        "name": "currentlyWorking",
+        "type": "boolean",
+        "title": "Currently Working Here?"
+      },
+      {
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "description": "Bullet points of your responsibilities and achievements.",
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "description",
+        "type": "array"
+      }
+    ],
+    "name": "workExperience",
+    "type": "document"
+  }
+]

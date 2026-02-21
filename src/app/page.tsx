@@ -1,8 +1,9 @@
-// Server component — async children (WorkSection) fetch data server-side
+// Server component — async children (WorkSection, WorkExperienceSection) fetch data server-side
 
 import { Navbar } from "@/components/navbar";
 import { HeroSection } from "@/components/hero-section";
 import { WorkSection } from "@/components/work-section";
+import { WorkExperienceSection } from "@/components/work-experience-section";
 import { ServicesSection } from "@/components/services-section";
 import { TechStackSection } from "@/components/tech-stack-section";
 import { ContactSection } from "@/components/contact-section";
@@ -14,6 +15,9 @@ export default function Home() {
       <Navbar />
       <HeroSection />
       <WorkSection />
+      <div className="container-padding">
+        <WorkExperienceSection />
+      </div>
       <ServicesSection />
       <TechStackSection />
       <ContactSection />

@@ -1,10 +1,7 @@
-import experienceData from "@/data/experience.json";
-import type { ExperienceItem } from "@/types/content";
+import { client } from "@/lib/sanity/client";
+import { WORK_EXPERIENCE_QUERY } from "@/lib/sanity/queries";
+import type { SanityExperienceItem } from "@/types/content";
 
-export const experience: ExperienceItem[] = experienceData as ExperienceItem[];
-
-export function getExperience(): ExperienceItem[] {
-  return experience;
+export async function getExperience(): Promise<SanityExperienceItem[]> {
+  return client.fetch<SanityExperienceItem[]>(WORK_EXPERIENCE_QUERY);
 }
-
-

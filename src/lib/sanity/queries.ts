@@ -51,3 +51,41 @@ export const PROJECT_BY_SLUG_QUERY = groq`
     }
   }
 `;
+
+export const WORK_EXPERIENCE_QUERY = groq`
+  *[_type == "workExperience"] | order(startDate desc) {
+    "_id": _id,
+    title,
+    companyName,
+    "companyLogo": companyLogo.asset->url,
+    companyUrl,
+    startDate,
+    endDate,
+    currentlyWorking,
+    location,
+    description
+  }
+`;
+
+export const ABOUT_QUERY = groq`
+  *[_type == "about"][0] {
+    nickname,
+    location,
+    designation,
+    experienceYears,
+    shortDescription,
+    longDescription,
+    skills {
+      frontend,
+      backend,
+      devopsCloud,
+      ai,
+      toolsPractices
+    },
+    contacts {
+      email,
+      github,
+      linkedin
+    }
+  }
+`;

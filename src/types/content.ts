@@ -27,24 +27,22 @@ export type FeaturedProject = {
   githubUrl: string;
 };
 
-export type ExperienceItem = {
-  id: number;
-  company: string;
-  role: string;
-  period: string;
-  logo: string;
-  points: string[];
+
+
+export type SanityExperienceItem = {
+  _id: string;
+  title: string;
+  companyName: string;
+  companyLogo?: string | null;
+  companyUrl?: string | null;
+  startDate: string;
+  endDate?: string | null;
+  currentlyWorking: boolean;
   location?: string;
+  description: string[];
 };
 
-export type UserProfile = {
-  name: string;
-  title: string;
-  email: string;
-  github: string;
-  linkedin: string;
-  // ... other keys can exist; keep this minimal and expand when needed
-};
+
 
 export type ServiceItem = {
   title: string;
@@ -58,4 +56,27 @@ export type TechStackItem = {
   featured?: boolean;
 };
 
+export type SanityAboutSkills = {
+  frontend?: string[];
+  backend?: string[];
+  devopsCloud?: string[];
+  ai?: string[];
+  toolsPractices?: string[];
+};
 
+export type SanityAbout = {
+  nickname: string;
+  location?: string;
+  designation?: string;
+  experienceYears?: number;
+  shortDescription?: string;
+  // Portable Text blocks
+   
+  longDescription?: any[];
+  skills?: SanityAboutSkills;
+  contacts?: {
+    email?: string;
+    github?: string;
+    linkedin?: string;
+  };
+};
