@@ -3,5 +3,5 @@ import { CONTACTS_QUERY } from "@/lib/sanity/queries";
 import type { SanityContacts } from "@/types/content";
 
 export async function getContacts(): Promise<SanityContacts | null> {
-  return client.fetch<SanityContacts | null>(CONTACTS_QUERY);
+  return client.fetch<SanityContacts | null>(CONTACTS_QUERY, {}, { next: { revalidate: 2 } });
 }
