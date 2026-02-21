@@ -41,53 +41,8 @@ export default defineType({
       of: [{ type: "block" }],
       description: "Full rich-text bio shown on the About page.",
     }),
-    defineField({
-      name: "skills",
-      title: "Skills",
-      type: "object",
-      fields: [
-        defineField({
-          name: "frontend",
-          title: "Frontend",
-          type: "array",
-          of: [{ type: "string" }],
-        }),
-        defineField({
-          name: "backend",
-          title: "Backend",
-          type: "array",
-          of: [{ type: "string" }],
-        }),
-        defineField({
-          name: "devopsCloud",
-          title: "DevOps & Cloud",
-          type: "array",
-          of: [{ type: "string" }],
-        }),
-        defineField({
-          name: "ai",
-          title: "AI",
-          type: "array",
-          of: [{ type: "string" }],
-        }),
-        defineField({
-          name: "toolsPractices",
-          title: "Tools & Practices",
-          type: "array",
-          of: [{ type: "string" }],
-        }),
-      ],
-    }),
-    defineField({
-      name: "contacts",
-      title: "Contacts",
-      type: "object",
-      fields: [
-        defineField({ name: "email", title: "Email", type: "string" }),
-        defineField({ name: "github", title: "GitHub", type: "url" }),
-        defineField({ name: "linkedin", title: "LinkedIn", type: "url" }),
-      ],
-    }),
+
+
   ],
   preview: {
     select: { title: "nickname", subtitle: "designation" },

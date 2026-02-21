@@ -54,20 +54,10 @@ export function HeroSection() {
 
         {/* Stats */}
         <div className="mx-auto w-full max-w-3xl">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 items-stretch">
+          <div className="grid grid-cols-1 gap-4 sm:gap-6 items-stretch">
             <div className="text-center rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/60 dark:bg-white/[0.03] px-4 py-4">
-              <div className="text-4xl sm:text-4xl md:text-5xl font-black text-blue-600">3+</div>
+              <div className="text-4xl sm:text-4xl md:text-5xl font-black text-blue-600">4+</div>
               <div className="text-sm font-medium text-slate-500 dark:text-slate-400 mt-1">Years Experience</div>
-            </div>
-
-            <div className="text-center rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/60 dark:bg-white/[0.03] px-4 py-4">
-              <div className="text-4xl sm:text-4xl md:text-5xl font-black text-blue-600">200+</div>
-              <div className="text-sm font-medium text-slate-500 dark:text-slate-400 mt-1">Issues Resolved</div>
-            </div>
-
-            <div className="text-center rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/60 dark:bg-white/[0.03] px-4 py-4">
-              <div className="text-4xl sm:text-4xl md:text-5xl font-black text-blue-600">40%</div>
-              <div className="text-sm font-medium text-slate-500 dark:text-slate-400 mt-1">Performance Boost</div>
             </div>
           </div>
         </div>

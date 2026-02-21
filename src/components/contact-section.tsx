@@ -1,10 +1,10 @@
 import { ArrowUpRight } from "lucide-react";
-import { getAbout } from "@/lib/content/about";
+import { getContacts } from "@/lib/content/contacts";
 import { AvailabilityBadge } from "@/components/availability-badge";
 
 export async function ContactSection() {
-  const about = await getAbout();
-  const contactEmail = about?.contacts?.email ?? "sambhu05357@gmail.com";
+  const contacts = await getContacts();
+  const contactEmail = contacts?.email ?? "sambhu05357@gmail.com";
 
   return (
     <section id="contact" className="py-24 px-6 bg-slate-100 dark:bg-slate-950">

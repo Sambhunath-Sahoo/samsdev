@@ -1,40 +1,13 @@
-import { ArrowLeft, MapPin, Briefcase, Calendar, Code2, Heart } from "lucide-react";
+import { ArrowLeft, MapPin, Briefcase, Calendar, Heart, GraduationCap } from "lucide-react";
 import { Navbar } from "@/components/navbar";
 import Link from "next/link";
 import { PortableText } from "@portabletext/react";
 import { getAbout } from "@/lib/content/about";
-import { getExperience } from "@/lib/content/experience";
-import type { SanityExperienceItem, SanityAboutSkills } from "@/types/content";
-
-function formatPeriod(item: SanityExperienceItem): string {
-  const formatDate = (dateStr: string) => {
-    const [year, month] = dateStr.split("-");
-    const date = new Date(parseInt(year), parseInt(month) - 1);
-    return date.toLocaleDateString("en-US", { month: "short", year: "numeric" });
-  };
-  const start = formatDate(item.startDate);
-  const end = item.currentlyWorking ? "Present" : item.endDate ? formatDate(item.endDate) : "";
-  return `${start} – ${end}`;
-}
-
-const SKILL_CATEGORIES: { key: keyof SanityAboutSkills; label: string }[] = [
-  { key: "frontend",      label: "Frontend" },
-  { key: "backend",       label: "Backend" },
-  { key: "devopsCloud",   label: "DevOps & Cloud" },
-  { key: "ai",            label: "AI" },
-  { key: "toolsPractices",label: "Tools & Practices" },
-];
-
-const SKILL_COLORS: Record<keyof SanityAboutSkills, string> = {
-  frontend:       "bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300",
-  backend:        "bg-blue-100  dark:bg-blue-900/30  text-blue-700  dark:text-blue-300",
-  devopsCloud:    "bg-sky-100   dark:bg-sky-900/30   text-sky-700   dark:text-sky-300",
-  ai:             "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300",
-  toolsPractices: "bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300",
-};
+import { WorkExperienceSection } from "@/components/work-experience-section";
+import { EducationSection } from "@/components/education-section";
 
 export default async function AboutPage() {
-  const [about, experienceData] = await Promise.all([getAbout(), getExperience()]);
+  const about = await getAbout();
 
   return (
     <div className="min-h-screen bg-background text-foreground relative">
@@ -122,96 +95,29 @@ export default async function AboutPage() {
         </section>
       )}
 
-      {/* Skills Section */}
-      {about?.skills && (
-        <section className="pb-16 container-padding">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-3 mb-6">
-              <Code2 className="h-6 w-6 text-blue-600" />
-              Skills &amp; Technologies
-            </h2>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {SKILL_CATEGORIES.map(({ key, label }) => {
-                const items = about.skills?.[key];
-                if (!items || items.length === 0) return null;
-                return (
-                  <div
-                    key={key}
-                    className="p-6 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700"
-                  >
-                    <h3 className="font-bold text-slate-900 dark:text-white mb-4">{label}</h3>
-                    <div className="flex flex-wrap gap-2">
-                      {items.map((skill) => (
-                        <span
-                          key={skill}
-                          className={`px-3 py-1 text-sm rounded-full font-medium ${SKILL_COLORS[key]}`}
-                        >
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-      )}
-
       {/* Work Experience Section */}
       <section className="pb-16 container-padding">
-        <div className="max-w-4xl mx-auto">
-          <div className="space-y-6">
+        <div className="max-w-5xl mx-auto">
+          <div className="mb-8">
             <h2 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
               <Briefcase className="h-6 w-6 text-blue-600" />
               Work Experience
             </h2>
-
-            <div className="space-y-6">
-              {experienceData.map((exp) => (
-                <div
-                  key={exp._id}
-                  className="p-6 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700"
-                >
-                  <div className="flex items-start justify-between mb-4">
-                    <div>
-                      <h3 className="text-xl font-bold text-slate-900 dark:text-white">{exp.title}</h3>
-                      {exp.companyUrl ? (
-                        <a
-                          href={exp.companyUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-blue-600 font-medium hover:underline"
-                        >
-                          {exp.companyName}
-                        </a>
-                      ) : (
-                        <p className="text-blue-600 font-medium">{exp.companyName}</p>
-                      )}
-                    </div>
-                    <span className="text-sm text-slate-500 dark:text-slate-400 shrink-0 ml-4">
-                      {formatPeriod(exp)}
-                    </span>
-                  </div>
-                  {exp.location && (
-                    <p className="text-slate-600 dark:text-slate-400 mb-2 flex items-center gap-2 text-sm">
-                      <MapPin className="h-4 w-4" />
-                      {exp.location}
-                    </p>
-                  )}
-                  <ul className="space-y-2 mt-4">
-                    {exp.description.map((point, idx) => (
-                      <li key={idx} className="flex items-start gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-blue-600 mt-2 flex-shrink-0" />
-                        <span className="text-slate-600 dark:text-slate-400">{point}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
           </div>
+          <WorkExperienceSection showHeader={false} />
+        </div>
+      </section>
+
+      {/* Education Section */}
+      <section className="pb-16 container-padding">
+        <div className="max-w-5xl mx-auto">
+          <div className="mb-8">
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
+              <GraduationCap className="h-6 w-6 text-blue-600" />
+              Education
+            </h2>
+          </div>
+          <EducationSection showHeader={false} />
         </div>
       </section>
 

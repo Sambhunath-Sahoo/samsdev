@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import { usePathname } from "next/navigation";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "@/components/theme-provider";
@@ -23,7 +23,16 @@ export function Navbar() {
   const [activeHref, setActiveHref] = useState<string>(pathname);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
+    let ticking = false;
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setScrolled(window.scrollY > 12);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -31,16 +40,16 @@ export function Navbar() {
 
   useEffect(() => {
     const syncActiveHref = () => {
-      const hash = window.location.hash; // includes leading '#'
+      const hash = window.location.hash;
       setActiveHref(pathname === "/" && hash ? `/${hash}` : pathname);
     };
 
     syncActiveHref();
-    window.addEventListener("hashchange", syncActiveHref);
+    window.addEventListener("hashchange", syncActiveHref, { passive: true });
     return () => window.removeEventListener("hashchange", syncActiveHref);
   }, [pathname]);
 
-  const closeMobile = () => setMobileOpen(false);
+  const closeMobile = useCallback(() => setMobileOpen(false), []);
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
@@ -83,13 +92,13 @@ export function Navbar() {
                   className={[
                     "relative text-sm font-semibold tracking-tight",
                     "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white",
-                    "transition-colors duration-150 ease-out",
+                    "transition-colors duration-200",
                     isActive ? "text-slate-900 dark:text-white" : "",
                   ].join(" ")}
                 >
                   {item.name}
                   {isActive && (
-                    <span className="absolute left-0 -bottom-2 h-[2px] w-full bg-slate-900 dark:bg-white rounded-full" />
+                    <span className="absolute left-0 -bottom-2 h-[2px] w-full bg-slate-900 dark:bg-white rounded-full transition-all duration-200" />
                   )}
                 </Link>
               );

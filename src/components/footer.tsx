@@ -1,8 +1,9 @@
 import { Github, Linkedin } from "lucide-react";
 import { getAbout } from "@/lib/content/about";
+import { getContacts } from "@/lib/content/contacts";
 
 export async function Footer() {
-  const about = await getAbout();
+  const [about, contacts] = await Promise.all([getAbout(), getContacts()]);
   const currentYear = new Date().getFullYear();
 
   return (
@@ -13,7 +14,7 @@ export async function Footer() {
         </p>
         <div className="flex items-center gap-4">
           <a
-            href={about?.contacts?.github ?? "https://github.com/Sambhunath-Sahoo"}
+            href={contacts?.github ?? "https://github.com/Sambhunath-Sahoo"}
             target="_blank"
             rel="noopener noreferrer"
             className="text-muted-foreground hover:text-foreground transition-colors"
@@ -22,7 +23,7 @@ export async function Footer() {
             <Github className="h-5 w-5" />
           </a>
           <a
-            href={about?.contacts?.linkedin ?? "https://linkedin.com/in/sams25/"}
+            href={contacts?.linkedin ?? "https://linkedin.com/in/sams25/"}
             target="_blank"
             rel="noopener noreferrer"
             className="text-muted-foreground hover:text-foreground transition-colors"

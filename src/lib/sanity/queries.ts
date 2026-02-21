@@ -74,18 +74,32 @@ export const ABOUT_QUERY = groq`
     designation,
     experienceYears,
     shortDescription,
-    longDescription,
-    skills {
-      frontend,
-      backend,
-      devopsCloud,
-      ai,
-      toolsPractices
-    },
-    contacts {
-      email,
-      github,
-      linkedin
-    }
+    longDescription
+  }
+`;
+
+export const CONTACTS_QUERY = groq`
+  *[_type == "contacts"][0] {
+    email,
+    github,
+    linkedin
+  }
+`;
+
+export const SKILLS_QUERY = groq`
+  *[_type == "skills"][0] {
+    frontend,
+    backend,
+    devopsCloud,
+    ai,
+    toolsPractices
+  }
+`;
+
+export const SERVICES_QUERY = groq`
+  *[_type == "services"] | order(order asc) {
+    _id,
+    title,
+    desc
   }
 `;

@@ -15,9 +15,7 @@ export default function Home() {
       <Navbar />
       <HeroSection />
       <WorkSection />
-      <div className="container-padding">
-        <WorkExperienceSection />
-      </div>
+      <WorkExperienceSection />
       <ServicesSection />
       <TechStackSection />
       <ContactSection />

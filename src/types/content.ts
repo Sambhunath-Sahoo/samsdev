@@ -50,10 +50,10 @@ export type ServiceItem = {
   icon: string;
 };
 
-export type TechStackItem = {
-  name: string;
-  icon: string;
-  featured?: boolean;
+export type SanityServiceItem = {
+  _id: string;
+  title: string;
+  desc: string;
 };
 
 export type SanityAboutSkills = {
@@ -73,10 +73,10 @@ export type SanityAbout = {
   // Portable Text blocks
    
   longDescription?: any[];
-  skills?: SanityAboutSkills;
-  contacts?: {
-    email?: string;
-    github?: string;
-    linkedin?: string;
-  };
+};
+
+export type SanityContacts = {
+  email?: string;
+  github?: string;
+  linkedin?: string;
 };

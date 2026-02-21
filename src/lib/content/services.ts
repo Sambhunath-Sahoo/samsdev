@@ -1,10 +1,7 @@
-import servicesData from "@/data/services.json";
-import type { ServiceItem } from "@/types/content";
+import { client } from "@/lib/sanity/client";
+import { SERVICES_QUERY } from "@/lib/sanity/queries";
+import type { SanityServiceItem } from "@/types/content";
 
-export const services: ServiceItem[] = servicesData as ServiceItem[];
-
-export function getServices(): ServiceItem[] {
-  return services;
+export async function getServices(): Promise<SanityServiceItem[]> {
+  return client.fetch<SanityServiceItem[]>(SERVICES_QUERY);
 }
-
-

@@ -158,122 +158,6 @@
         ],
         "name": "longDescription",
         "type": "array"
-      },
-      {
-        "fields": [
-          {
-            "of": [
-              {
-                "type": "string"
-              }
-            ],
-            "name": "frontend",
-            "type": "array"
-          },
-          {
-            "of": [
-              {
-                "type": "string"
-              }
-            ],
-            "name": "backend",
-            "type": "array"
-          },
-          {
-            "of": [
-              {
-                "type": "string"
-              }
-            ],
-            "name": "devopsCloud",
-            "type": "array",
-            "title": "DevOps & Cloud"
-          },
-          {
-            "of": [
-              {
-                "type": "string"
-              }
-            ],
-            "name": "ai",
-            "type": "array",
-            "title": "AI"
-          },
-          {
-            "of": [
-              {
-                "type": "string"
-              }
-            ],
-            "name": "toolsPractices",
-            "type": "array",
-            "title": "Tools & Practices"
-          }
-        ],
-        "name": "skills",
-        "type": "object"
-      },
-      {
-        "fields": [
-          {
-            "name": "email",
-            "type": "string"
-          },
-          {
-            "validation": [
-              {
-                "rules": [
-                  {
-                    "flag": "uri",
-                    "constraint": {
-                      "options": {
-                        "scheme": [
-                          "/^http$/",
-                          "/^https$/"
-                        ],
-                        "allowRelative": false,
-                        "relativeOnly": false,
-                        "allowCredentials": false
-                      }
-                    }
-                  }
-                ],
-                "level": "error"
-              }
-            ],
-            "name": "github",
-            "type": "url",
-            "title": "GitHub"
-          },
-          {
-            "validation": [
-              {
-                "rules": [
-                  {
-                    "flag": "uri",
-                    "constraint": {
-                      "options": {
-                        "scheme": [
-                          "/^http$/",
-                          "/^https$/"
-                        ],
-                        "allowRelative": false,
-                        "relativeOnly": false,
-                        "allowCredentials": false
-                      }
-                    }
-                  }
-                ],
-                "level": "error"
-              }
-            ],
-            "name": "linkedin",
-            "type": "url",
-            "title": "LinkedIn"
-          }
-        ],
-        "name": "contacts",
-        "type": "object"
       }
     ],
     "name": "about",
@@ -584,6 +468,165 @@
       }
     ],
     "name": "workExperience",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "desc",
+        "type": "string",
+        "title": "Description"
+      },
+      {
+        "initialValue": 0,
+        "description": "Order in which services should be displayed",
+        "name": "order",
+        "type": "number"
+      }
+    ],
+    "name": "services",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "frontend",
+        "type": "array"
+      },
+      {
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "backend",
+        "type": "array"
+      },
+      {
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "devopsCloud",
+        "type": "array",
+        "title": "DevOps & Cloud"
+      },
+      {
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "ai",
+        "type": "array",
+        "title": "AI"
+      },
+      {
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "toolsPractices",
+        "type": "array",
+        "title": "Tools & Practices"
+      }
+    ],
+    "name": "skills",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "name": "email",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "github",
+        "type": "url",
+        "title": "GitHub"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "linkedin",
+        "type": "url",
+        "title": "LinkedIn"
+      }
+    ],
+    "name": "contacts",
     "type": "document"
   }
 ]
