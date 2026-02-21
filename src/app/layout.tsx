@@ -3,6 +3,7 @@ import { Inter, Playfair_Display, Satisfy, Manrope, Plus_Jakarta_Sans, Dancing_S
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ScrollToTopOnLoad } from "@/components/scroll-to-top-on-load";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -60,6 +61,7 @@ export default function RootLayout({
             {children}
           </div>
         </ThemeProvider>
+        <SpeedInsights />
       </body>
     </html>
   );
