@@ -1,221 +1,126 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState, useCallback, useMemo } from "react";
 import { usePathname } from "next/navigation";
-import { Moon, Sun } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
+import { Github, Menu, Moon, Sun, X } from "lucide-react";
 import { useTheme } from "@/components/theme-provider";
+import { Brand } from "@/components/brand";
+import { cn } from "@/lib/utils";
+import socials from "@/data/socials.json";
 
 const NAV = [
   { name: "Home", href: "/" },
-  { name: "About", href: "/about" },
   { name: "Work", href: "/#work" },
+  { name: "Experience", href: "/#experience" },
   { name: "Services", href: "/#services" },
-  { name: "Technologies", href: "/#stack" },
+  { name: "Stack", href: "/#stack" },
+  { name: "About", href: "/about" },
   { name: "Contact", href: "/#contact" },
 ] as const;
 
-export function Navbar() {
-  const { theme, toggleTheme } = useTheme();
-  const pathname = usePathname();
-  const [scrolled, setScrolled] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [activeHref, setActiveHref] = useState<string>(pathname);
+const GITHUB_URL = socials.find((s) => s.name === "GitHub")?.href ?? "https://github.com/Sambhunath-Sahoo";
 
-  useEffect(() => {
-    let ticking = false;
-    const onScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          setScrolled(window.scrollY > 12);
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+const iconCell =
+  "flex w-12 items-center justify-center border-l border-line text-muted transition-colors hover:bg-invert-bg hover:text-invert-fg";
+
+export function Navbar() {
+  const { toggleTheme } = useTheme();
+  const pathname = usePathname();
+  const [activeHref, setActiveHref] = useState<string>(pathname);
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   useEffect(() => {
     const syncActiveHref = () => {
       const hash = window.location.hash;
       setActiveHref(pathname === "/" && hash ? `/${hash}` : pathname);
     };
-
     syncActiveHref();
     window.addEventListener("hashchange", syncActiveHref, { passive: true });
     return () => window.removeEventListener("hashchange", syncActiveHref);
   }, [pathname]);
 
-  const closeMobile = useCallback(() => setMobileOpen(false), []);
+  const closeMobile = useCallback(() => setIsMobileOpen(false), []);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50">
-      <div
-        className={[
-          // Important: keep this *behind* the navbar content so backdrop-blur
-          // blurs the page beneath the header (not the header text/buttons).
-          "pointer-events-none absolute inset-0 -z-10",
-          scrolled ? "bg-background/70 backdrop-blur-xl" : "bg-transparent",
-        ].join(" ")}
-      />
+    <header className="sticky top-0 z-50 w-full border-b border-line bg-bg/95 backdrop-blur-sm">
+      <div className="rail flex h-12 items-stretch">
+        <Brand className="border-r border-line px-4 sm:px-5" />
 
-      <div className="container-padding relative">
-        <div className="mx-auto max-w-6xl h-16 flex items-center justify-between">
-          {/* Left: logo */}
-          <Link
-            href="/"
-            className="pointer-events-auto flex items-center gap-3"
-            onClick={() => setActiveHref("/")}
-          >
-            <div className="leading-tight">
-              <div
-                className="text-3xl font-bold text-slate-900 dark:text-white"
-                style={{ fontFamily: "var(--font-dancing)" }}
+        <nav aria-label="Primary" className="hidden min-w-0 items-stretch lg:flex">
+          {NAV.map((item) => {
+            const isActive = activeHref === item.href;
+            return (
+              <Link
+                key={item.name}
+                href={item.href}
+                onClick={() => setActiveHref(item.href)}
+                aria-current={isActive ? "page" : undefined}
+                className={cn(
+                  "hud group flex items-center whitespace-nowrap px-2.5",
+                  isActive ? "text-ink" : "text-muted hover:text-ink",
+                )}
               >
-                Sambhunath Sahoo
-              </div>
-            </div>
-          </Link>
-
-          {/* Center: nav */}
-          <nav className="pointer-events-auto hidden md:flex items-center gap-8">
-            {NAV.map((item) => {
-              const isActive = activeHref === item.href;
-              return (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  onClick={() => setActiveHref(item.href)}
-                  className={[
-                    "relative text-sm font-semibold tracking-tight",
-                    "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white",
-                    "transition-colors duration-200",
-                    isActive ? "text-slate-900 dark:text-white" : "",
-                  ].join(" ")}
+                <span
+                  className={cn(
+                    "flex items-center px-1.5 py-0.5 group-hover:bg-invert-bg group-hover:text-invert-fg",
+                    isActive && "bg-invert-bg text-invert-fg",
+                  )}
                 >
                   {item.name}
-                  {isActive && (
-                    <span className="absolute left-0 -bottom-2 h-[2px] w-full bg-slate-900 dark:bg-white rounded-full transition-all duration-200" />
-                  )}
-                </Link>
-              );
-            })}
-          </nav>
+                </span>
+              </Link>
+            );
+          })}
+        </nav>
 
-          {/* Right: CTA + theme */}
-          <div className="pointer-events-auto flex items-center gap-3">
-            <Link
-              href="/#contact"
-              onClick={() => setActiveHref("/#contact")}
-              className="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-full bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 transition-colors duration-200"
-            >
-              Let&apos;s Talk
-            </Link>
+        <div className="flex-1" />
 
-            <ThemeIconButton theme={theme} toggleTheme={toggleTheme} />
+        <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" aria-label="GitHub" className={iconCell}>
+          <Github className="h-4 w-4" />
+        </a>
 
-            <button
-              onClick={() => setMobileOpen((v) => !v)}
-              className="md:hidden h-10 w-10 rounded-full border border-border bg-muted
-                         grid place-items-center text-muted-foreground hover:text-foreground
-                         transition-colors"
-              aria-label="Open menu"
-            >
-              <span className="text-lg leading-none">≡</span>
-            </button>
-          </div>
-        </div>
+        <button type="button" onClick={toggleTheme} aria-label="Toggle theme" className={iconCell}>
+          <Moon className="h-4 w-4 dark:hidden" />
+          <Sun className="hidden h-4 w-4 dark:block" />
+        </button>
+
+        <Link
+          href="/#contact"
+          onClick={() => setActiveHref("/#contact")}
+          className="btn btn-primary mx-2.5 my-auto hidden h-8 px-3.5 text-[11px] sm:inline-flex"
+        >
+          Let&apos;s talk
+        </Link>
+
+        <button
+          type="button"
+          onClick={() => setIsMobileOpen((open) => !open)}
+          aria-label={isMobileOpen ? "Close main menu" : "Open main menu"}
+          aria-expanded={isMobileOpen}
+          className={cn(iconCell, "lg:hidden")}
+        >
+          {isMobileOpen ? <X className="h-[18px] w-[18px]" /> : <Menu className="h-[18px] w-[18px]" />}
+        </button>
       </div>
 
-      {/* Mobile menu */}
-      {mobileOpen && (
-        <div className="md:hidden container-padding">
-          <div className="mx-auto max-w-6xl pb-4">
-            <div className="rounded-2xl border border-border bg-background/85 backdrop-blur-xl shadow-sm overflow-hidden">
-              <div className="p-2">
-                {NAV.map((item) => (
-                  <Link
-                    key={item.name}
-                    href={item.href}
-                    onClick={() => {
-                      setActiveHref(item.href);
-                      closeMobile();
-                    }}
-                    className="block px-4 py-3 rounded-xl text-sm font-semibold
-                               text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800
-                               transition-colors"
-                  >
-                    {item.name}
-                  </Link>
-                ))}
-              </div>
-              <div className="p-3 border-t border-border flex items-center justify-between">
-                <Link
-                  href="/#contact"
-                  onClick={() => {
-                    setActiveHref("/#contact");
-                    closeMobile();
-                  }}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-full bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 transition-colors duration-200"
-                >
-                  Let&apos;s Talk
-                </Link>
-                <ThemeIconButton theme={theme} toggleTheme={toggleTheme} />
-              </div>
-            </div>
-          </div>
-        </div>
+      {isMobileOpen && (
+        <nav aria-label="Mobile" className="rail border-t border-line lg:hidden">
+          {NAV.map((item) => (
+            <Link
+              key={item.name}
+              href={item.href}
+              onClick={() => {
+                setActiveHref(item.href);
+                closeMobile();
+              }}
+              className="hud block border-b border-line px-6 py-3 text-muted transition-colors last:border-b-0 hover:bg-invert-bg hover:text-invert-fg"
+            >
+              {item.name}
+            </Link>
+          ))}
+        </nav>
       )}
     </header>
-  );
-}
-
-function ThemeIconButton({
-  theme,
-  toggleTheme,
-}: {
-  theme: "light" | "dark";
-  toggleTheme: () => void;
-}) {
-  const [ticking, setTicking] = useState(false);
-  const onClick = () => {
-    setTicking(true);
-    toggleTheme();
-    window.setTimeout(() => setTicking(false), 220);
-  };
-
-  return (
-    <button
-      onClick={onClick}
-      aria-label="Toggle theme"
-      className="h-10 w-10 rounded-full border border-border bg-muted/70
-                 grid place-items-center
-                 hover:bg-muted transition-colors
-                 relative overflow-hidden"
-    >
-      <span
-        className="block transition-transform duration-200"
-        style={{
-          transform: ticking
-            ? "scale(0.92) rotate(8deg)"
-            : "scale(1) rotate(0deg)",
-        }}
-      >
-        {theme === "dark" ? (
-          <Sun className="h-4 w-4 text-foreground" />
-        ) : (
-          <Moon className="h-4 w-4 text-foreground" />
-        )}
-      </span>
-      <span
-        className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-200"
-        style={{
-          boxShadow: "0 0 24px -10px var(--accent)",
-        }}
-      />
-    </button>
   );
 }

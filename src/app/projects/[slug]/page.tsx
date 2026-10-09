@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { getDetailedProjectBySlug } from "@/lib/content/projects";
-import { ProjectDetailClient } from "@/components/project-detail-client";
+import { ProjectDetail } from "@/components/project-detail";
 
 export default async function ProjectDetailPage({
   params,
@@ -14,5 +14,5 @@ export default async function ProjectDetailPage({
     notFound();
   }
 
-  return <ProjectDetailClient project={project} />;
+  return <ProjectDetail project={project} />;
 }

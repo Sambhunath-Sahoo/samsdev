@@ -1,89 +1,95 @@
-"use client";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import { Rail, SectionBar } from "@/components/section-shell";
+import { getAbout } from "@/lib/content/about";
+import { getContacts } from "@/lib/content/contacts";
+import socials from "@/data/socials.json";
 
-import { ArrowRight, Mail } from "lucide-react";
-import { AvailabilityBadge } from "@/components/availability-badge";
+const CORE_STACK = [
+  { label: "Spring Boot", code: "SB", hue: "hue-green" },
+  { label: "React", code: "Re", hue: "hue-blue" },
+  { label: "Vue.js", code: "Vu", hue: "hue-teal" },
+  { label: "Next.js", code: "Nx", hue: "hue-purple" },
+  { label: "MySQL", code: "My", hue: "hue-orange" },
+  { label: "AWS", code: "AW", hue: "hue-yellow" },
+  { label: "LLMs · RAG", code: "AI", hue: "hue-pink" },
+] as const;
 
-export function HeroSection() {
+const DEFAULT_GITHUB = socials.find((s) => s.name === "GitHub")?.href ?? "";
+const DEFAULT_LINKEDIN = socials.find((s) => s.name === "LinkedIn")?.href ?? "";
+
+export async function HeroSection({ index = "01" }: { index?: string }) {
+  const [about, contacts] = await Promise.all([getAbout(), getContacts()]);
+  const nickname = about?.nickname ?? "Sams";
+  const years = about?.experienceYears ?? 4;
+  const year = new Date().getFullYear();
+  const location = about?.location ?? "Bangalore, India";
+
   return (
-    <section
-      id="top"
-      className="min-h-screen flex items-center justify-center container-padding relative"
-    >
-      <div className="max-w-5xl mx-auto w-full text-center pt-24 pb-16">
-        {/* Badge */}
-        <AvailabilityBadge
-          className="px-5 py-2.5 font-medium mb-10"
-          dotClassName="bg-green-500"
-          text="AVAILABLE FOR PROJECTS"
-          year="2026"
-        />
+    <section id="top" className="relative overflow-hidden scanlines">
+      <Rail className="relative">
+        <SectionBar index={index} label="Hello" aside={`Full stack · AI · ${location}`} />
 
-        {/* Main Headline */}
-        <div
-          className="font-extrabold tracking-tight leading-[1.05] mb-8"
-          style={{
-            fontFamily: "system-ui, -apple-system, sans-serif",
-            fontSize: "clamp(40px, 8vw, 85px)",
-          }}
-        >
-          <span className="text-slate-900 dark:text-white">HI, I&apos;M </span>
-          <span className="text-blue-600">SAMS</span>
-          <br />
-          <span className="text-slate-400 dark:text-slate-600">
-            FULL STACK
-            <span className="text-blue-600"> AI </span>
-          </span>
-          <span className="text-slate-900 dark:text-white"> ENGINEER</span>
-        </div>
+        <div className="section-pad">
+          <p className="hud flex flex-wrap items-center gap-3 text-muted">
+            <span className="inline-flex items-center gap-2">
+              <span
+                aria-hidden="true"
+                className="h-[7px] w-[7px] bg-[var(--c-green)] shadow-[0_0_0_3px_color-mix(in_srgb,var(--c-green)_25%,transparent)]"
+              />
+              Available for projects
+            </span>
+            <span className="text-faint">·</span>
+            <span>{year}</span>
+          </p>
 
-        {/* Subtitle */}
-        <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed mb-10">
-          I build{" "}
-          <span className="text-slate-900 dark:text-white font-semibold">
-            scalable web products
-          </span>{" "}
-          with Spring Boot, React & Vue.js that perform and don&apos;t break.
-        </p>
+          <h1 className="display-xl mt-5 max-w-3xl">
+            Hi, I&apos;m {nickname}.
+            <br />
+            Full stack <span className="accent-text">AI</span> engineer.
+          </h1>
 
-        {/* CTAs */}
-        <div className="flex flex-wrap items-center justify-center gap-4 mb-16">
-          <a
-            href="#work"
-            className="group inline-flex items-center gap-3 px-8 py-4 text-base font-semibold rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition-all duration-200 hover:shadow-xl hover:shadow-blue-600/25"
-          >
-            VIEW MY WORK
-            <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
-          </a>
-          <a
-            href="#contact"
-            className="inline-flex items-center gap-2 px-8 py-4 text-base font-semibold rounded-xl border-2 border-slate-300 dark:border-slate-600 text-slate-900 dark:text-white hover:border-slate-900 dark:hover:border-white transition-all duration-200"
-          >
-            <Mail className="h-5 w-5" />
-            GET IN TOUCH
-          </a>
-        </div>
+          <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted">
+            I build <strong className="font-medium text-ink">scalable web products</strong> with Spring Boot,
+            React and Vue.js that perform and{" "}
+            <span className="serif-i text-[1.25em] text-ink">don&apos;t break.</span>
+          </p>
 
-        {/* Stats */}
-        <div className="mx-auto w-full max-w-3xl">
-          <div className="grid grid-cols-1 gap-4 sm:gap-6 items-stretch">
-            <div className="text-center rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/60 dark:bg-white/[0.03] px-4 py-4">
-              <div className="text-4xl sm:text-4xl md:text-5xl font-black text-blue-600">
-                4+
-              </div>
-              <div className="text-sm font-medium text-slate-500 dark:text-slate-400 mt-1">
-                Years Experience
-              </div>
-            </div>
+          <div className="mt-8 flex flex-wrap gap-2.5">
+            <Link href="/#work" className="btn btn-primary">
+              View my work <ArrowRight className="h-3.5 w-3.5" strokeWidth={2.5} />
+            </Link>
+            <Link href="/#contact" className="btn btn-secondary">
+              Get in touch
+            </Link>
           </div>
-        </div>
 
-        {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
-          <div className="w-6 h-10 border-2 border-slate-300 dark:border-slate-600 rounded-full flex justify-center pt-2">
-            <div className="w-1.5 h-1.5 bg-slate-400 rounded-full animate-bounce" />
+          <div className="strip hud mt-6">
+            <span className="text-faint">Find me</span>
+            <a href={contacts?.github ?? DEFAULT_GITHUB} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">
+              GitHub
+            </a>
+            <a href={contacts?.linkedin ?? DEFAULT_LINKEDIN} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">
+              LinkedIn
+            </a>
+            <Link href="/#contact" className="btn btn-ghost">
+              Email
+            </Link>
+            <span className="text-faint">{years}+ yrs</span>
           </div>
+
+          <nav aria-label="Core stack" className="mt-12 flex flex-wrap gap-x-5 gap-y-6">
+            {CORE_STACK.map((item) => (
+              <Link key={item.label} href="/#stack" className={`group flex w-20 flex-col items-center gap-2 text-center ${item.hue}`}>
+                <span className="grid h-14 w-14 place-items-center border border-line bg-bg-raised font-mono text-[13px] font-bold text-[var(--app-ink)] transition-colors group-hover:border-[var(--app)] group-hover:bg-[var(--app)] group-hover:text-[var(--num-fg)]">
+                  {item.code}
+                </span>
+                <span className="text-xs font-medium text-muted group-hover:text-[var(--app-ink)]">{item.label}</span>
+              </Link>
+            ))}
+          </nav>
         </div>
-      </div>
+      </Rail>
     </section>
   );
 }

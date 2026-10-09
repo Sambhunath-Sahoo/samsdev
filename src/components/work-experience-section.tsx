@@ -1,111 +1,73 @@
-import Image from "next/image"
-import { SectionHeader } from "./section-header"
-import { getExperience } from "@/lib/content/experience"
-import type { SanityExperienceItem } from "@/types/content"
-
-function formatPeriod(item: SanityExperienceItem): string {
-  const formatDate = (dateStr: string) => {
-    const [year, month] = dateStr.split("-")
-    const date = new Date(parseInt(year), parseInt(month) - 1)
-    return date.toLocaleDateString("en-US", { month: "short", year: "numeric" })
-  }
-  const start = formatDate(item.startDate)
-  const end = item.currentlyWorking ? "Present" : item.endDate ? formatDate(item.endDate) : ""
-  return `${start} – ${end}`
-}
+import { Rail, SectionBar, SectionIntro } from "@/components/section-shell";
+import { getExperience } from "@/lib/content/experience";
+import { formatPeriod, periodLabel, yearOf } from "@/lib/dates";
+import type { SanityExperienceItem } from "@/types/content";
 
 interface WorkExperienceSectionProps {
-  title?: string
-  subtitle?: string
-  showHeader?: boolean
-  className?: string
+  index?: string;
+  showIntro?: boolean;
 }
 
-export async function WorkExperienceSection({
-  title = "Work Experience",
-  subtitle = "My professional journey and key contributions",
-  showHeader = true,
-  className = "",
-}: WorkExperienceSectionProps = {}) {
-  const experienceData = await getExperience()
+function asideLabel(items: SanityExperienceItem[]): string {
+  const years = items.map((item) => yearOf(item.startDate)).sort();
+  const first = years[0];
+  const isCurrent = items.some((item) => item.currentlyWorking);
+  return isCurrent ? `${first} → present` : `${first} → ${years[years.length - 1]}`;
+}
+
+function CompanyName({ item }: { item: SanityExperienceItem }) {
+  const className = "mt-1 font-medium text-accent-ink";
+  if (!item.companyUrl) return <p className={className}>{item.companyName}</p>;
+  return (
+    <a href={item.companyUrl} target="_blank" rel="noopener noreferrer" className={`${className} hover:underline`}>
+      {item.companyName}
+    </a>
+  );
+}
+
+export async function WorkExperienceSection({ index = "03", showIntro = true }: WorkExperienceSectionProps = {}) {
+  const items = await getExperience();
+  if (items.length === 0) return null;
 
   return (
-    <section
-      id="work-experience"
-      className={`section-padding container-padding scroll-mt-20 ${className}`}
-    >
-      <div className="max-w-6xl mx-auto">
-        {showHeader && (
-          <div className="mb-12">
-            <p className="text-sm font-semibold text-slate-600 dark:text-slate-300 mb-2">Experience</p>
-            <h2 className="text-4xl md:text-5xl font-black tracking-tight text-slate-900 dark:text-white">
-              WORK EXPERIENCE
-            </h2>
-          </div>
-        )}
-        
-        <div className="space-y-6">
-          {experienceData.map((exp) => (
-            <div
-              key={exp._id}
-              className="group relative p-6 md:p-8 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/50 hover:border-blue-500 hover:shadow-xl hover:shadow-blue-500/5 transition-all duration-300"
-            >
-              {/* Header with Logo */}
-              <div className="flex items-start gap-4 mb-4">
-                {exp.companyLogo && (
-                  <div className="relative h-12 w-12 flex-shrink-0 overflow-hidden rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900">
-                    <Image
-                      src={exp.companyLogo}
-                      alt={`${exp.companyName} logo`}
-                      fill
-                      className="object-contain p-1"
-                    />
-                  </div>
-                )}
-                
-                <div className="flex-1 min-w-0">
-                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-1">
-                    <div>
-                      <h3 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-blue-600 transition-colors">
-                        {exp.title}
-                      </h3>
-                      {exp.companyUrl ? (
-                        <a
-                          href={exp.companyUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-base font-semibold text-blue-600 hover:text-blue-700 dark:hover:text-blue-400 hover:underline"
-                        >
-                          {exp.companyName}
-                        </a>
-                      ) : (
-                        <p className="text-base font-semibold text-blue-600">{exp.companyName}</p>
-                      )}
-                    </div>
-                    
-                    <div className="flex flex-col items-start sm:items-end gap-1 text-sm text-slate-500 dark:text-slate-400 shrink-0">
-                      <span className="font-medium">{formatPeriod(exp)}</span>
-                      {exp.location && (
-                        <span className="text-xs">{exp.location}</span>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
+    <section id="experience" className="scroll-mt-12">
+      <Rail>
+        <SectionBar index={index} label="Experience" aside={asideLabel(items)} />
 
-              {/* Description */}
-              <ul className="space-y-2.5 ml-0">
-                {exp.description.map((point, idx) => (
-                  <li key={idx} className="flex items-start gap-3 text-slate-600 dark:text-slate-400 leading-relaxed">
-                    <span className="inline-block w-1.5 h-1.5 rounded-full bg-blue-600 mt-2 flex-shrink-0" />
-                    <span className="flex-1">{point}</span>
+        {showIntro && (
+          <SectionIntro
+            className="pb-0"
+            title={
+              <>
+                Years of <span className="accent-text">shipping</span>, not slides.
+              </>
+            }
+            lead="Roles, dates and the things that actually went to production."
+          />
+        )}
+
+        <div className={`cell-grid border-t border-line md:grid-cols-2 xl:grid-cols-3 ${showIntro ? "mt-14" : ""}`}>
+          {items.map((item) => (
+            <article key={item._id} className="cell">
+              <p className="hud text-faint">{periodLabel(item.startDate, item.endDate, item.currentlyWorking)}</p>
+              <h3 className="mt-6 text-2xl tracking-[-0.02em]">{item.title}</h3>
+              <CompanyName item={item} />
+              <p className="hud mt-2.5 flex flex-wrap gap-x-3.5 gap-y-1.5 text-faint">
+                <span>{formatPeriod(item.startDate, item.endDate, item.currentlyWorking)}</span>
+                {item.location && <span>{item.location}</span>}
+              </p>
+              <ul className="mt-4 grid gap-2.5 leading-[1.55] text-muted">
+                {item.description.map((point) => (
+                  <li key={point} className="flex gap-2.5">
+                    <span aria-hidden="true" className="mt-[9px] h-1.5 w-1.5 flex-none bg-accent" />
+                    <span>{point}</span>
                   </li>
                 ))}
               </ul>
-            </div>
+            </article>
           ))}
         </div>
-      </div>
+      </Rail>
     </section>
-  )
+  );
 }

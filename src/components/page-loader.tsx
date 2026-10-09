@@ -1,39 +1,27 @@
-"use client";
-
 import { Navbar } from "@/components/navbar";
-import { useEffect, useState } from "react";
+import { Rail } from "@/components/section-shell";
+
+const SKELETON_WIDTHS = ["w-2/3", "w-1/2", "w-5/6", "w-1/3"] as const;
 
 export function PageLoader() {
-  const [dots, setDots] = useState("");
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setDots((prev) => (prev.length >= 3 ? "" : prev + "."));
-    }, 400);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
-    <div className="min-h-screen bg-background text-foreground relative">
+    <div className="min-h-screen">
       <Navbar />
-      
-      <div className="flex items-center justify-center" style={{ minHeight: "calc(100vh - 4rem)" }}>
-        <div className="flex flex-col items-center justify-center gap-6">
-          {/* Animated logo/spinner */}
-          <div className="relative flex items-center justify-center">
-            <div className="h-16 w-16 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 shadow-lg shadow-blue-500/25 flex items-center justify-center animate-pulse">
-              <span className="text-2xl font-black text-white">S</span>
-            </div>
-            <div className="absolute -inset-2 rounded-3xl border-2 border-blue-500/20 animate-ping" style={{ animationDuration: "2s" }} />
-          </div>
-          
-          {/* Loading text */}
-          <div className="flex items-center justify-center gap-1">
-            <span className="text-base font-semibold text-slate-900 dark:text-white">Loading</span>
-            <span className="text-base font-semibold text-blue-600 inline-block w-6 text-left">{dots}</span>
-          </div>
+      <Rail className="min-h-[calc(100vh-var(--nav-h))]">
+        <div className="section-bar">
+          <p className="hud text-muted">
+            <span className="text-faint">00</span>
+            <span className="mx-2 text-faint">/</span>
+            Loading
+          </p>
         </div>
-      </div>
+        <div aria-busy="true" aria-live="polite" className="section-pad flex max-w-3xl flex-col gap-4">
+          <span className="sr-only">Loading content</span>
+          {SKELETON_WIDTHS.map((width, i) => (
+            <div key={width} className={`h-10 animate-pulse bg-bg-sunken ${width}`} style={{ animationDelay: `${i * 120}ms` }} />
+          ))}
+        </div>
+      </Rail>
     </div>
   );
 }
