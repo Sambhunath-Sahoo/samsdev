@@ -1,7 +1,7 @@
-import { client } from "@/lib/sanity/client";
-import { WORK_EXPERIENCE_QUERY } from "@/lib/sanity/queries";
+import { RESUME_EXPERIENCE } from "@/data/resume";
 import type { SanityExperienceItem } from "@/types/content";
 
+/** Experience comes from the resume in code; Sanity entries are no longer used. */
 export async function getExperience(): Promise<SanityExperienceItem[]> {
-  return client.fetch<SanityExperienceItem[]>(WORK_EXPERIENCE_QUERY, {}, { next: { revalidate: 2 } });
+  return [...RESUME_EXPERIENCE];
 }

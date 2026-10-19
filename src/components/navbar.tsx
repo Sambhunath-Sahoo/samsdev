@@ -10,13 +10,13 @@ import { cn } from "@/lib/utils";
 import socials from "@/data/socials.json";
 
 const NAV = [
-  { name: "Home", href: "/" },
-  { name: "Work", href: "/#work" },
-  { name: "Experience", href: "/#experience" },
-  { name: "Services", href: "/#services" },
-  { name: "Stack", href: "/#stack" },
-  { name: "About", href: "/about" },
-  { name: "Contact", href: "/#contact" },
+  { name: "Home", num: "01", href: "/" },
+  { name: "Work", num: "02", href: "/#work" },
+  { name: "Experience", num: "03", href: "/#experience" },
+  { name: "Services", num: "04", href: "/#services" },
+  { name: "Stack", num: "05", href: "/#stack" },
+  { name: "About", num: "06", href: "/about" },
+  { name: "Contact", num: "07", href: "/#contact" },
 ] as const;
 
 const GITHUB_URL = socials.find((s) => s.name === "GitHub")?.href ?? "https://github.com/Sambhunath-Sahoo";
@@ -67,6 +67,7 @@ export function Navbar() {
                     isActive && "bg-invert-bg text-invert-fg",
                   )}
                 >
+                  <span className={cn("mr-1.5", isActive ? "opacity-60" : "text-faint group-hover:text-inherit")}>{item.num}</span>
                   {item.name}
                 </span>
               </Link>

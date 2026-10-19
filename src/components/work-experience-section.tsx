@@ -1,4 +1,4 @@
-import { Rail, SectionBar, SectionIntro } from "@/components/section-shell";
+import { Rail, SectionBar, SectionHead } from "@/components/section-shell";
 import { getExperience } from "@/lib/content/experience";
 import { formatPeriod, periodLabel, yearOf } from "@/lib/dates";
 import type { SanityExperienceItem } from "@/types/content";
@@ -35,18 +35,10 @@ export async function WorkExperienceSection({ index = "03", showIntro = true }: 
         <SectionBar index={index} label="Experience" aside={asideLabel(items)} />
 
         {showIntro && (
-          <SectionIntro
-            className="pb-0"
-            title={
-              <>
-                Years of <span className="accent-text">shipping</span>, not slides.
-              </>
-            }
-            lead="Roles, dates and the things that actually went to production."
-          />
+          <SectionHead title="Experience" description="Four years on one SaaS product, from associate to software engineer." />
         )}
 
-        <div className={`cell-grid border-t border-line md:grid-cols-2 xl:grid-cols-3 ${showIntro ? "mt-14" : ""}`}>
+        <div className="cell-grid md:grid-cols-2 xl:grid-cols-3">
           {items.map((item) => (
             <article key={item._id} className="cell">
               <p className="hud text-faint">{periodLabel(item.startDate, item.endDate, item.currentlyWorking)}</p>

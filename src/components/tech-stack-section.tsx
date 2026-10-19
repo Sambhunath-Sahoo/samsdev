@@ -1,14 +1,14 @@
 import { Fragment } from "react";
-import { Rail, SectionBar } from "@/components/section-shell";
+import { Rail, SectionBar, SectionHead } from "@/components/section-shell";
 import { getSkills } from "@/lib/content/skills";
 import type { SanityAboutSkills } from "@/types/content";
 
 const SKILL_CATEGORIES: { key: keyof SanityAboutSkills; label: string }[] = [
+  { key: "ai", label: "AI" },
   { key: "frontend", label: "Frontend" },
   { key: "backend", label: "Backend" },
-  { key: "devopsCloud", label: "DevOps · Cloud" },
-  { key: "ai", label: "AI" },
-  { key: "toolsPractices", label: "Practice" },
+  { key: "toolsPractices", label: "Data · Security" },
+  { key: "devopsCloud", label: "Cloud · Messaging" },
 ];
 
 export async function TechStackSection({ index = "05" }: { index?: string }) {
@@ -22,6 +22,7 @@ export async function TechStackSection({ index = "05" }: { index?: string }) {
     <section id="stack" className="scroll-mt-12">
       <Rail>
         <SectionBar index={index} label="Stack" aside="Tools I reach for" />
+        <SectionHead title="Stack" description="The tools I use day to day, grouped by layer." />
 
         <div className="cell-grid md:grid-cols-[180px_1fr]">
           {categories.map(({ key, label }) => (

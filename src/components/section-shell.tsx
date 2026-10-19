@@ -44,3 +44,13 @@ export function SectionIntro({
     </div>
   );
 }
+
+/** Plain title and one line of context that sits under a SectionBar. */
+export function SectionHead({ title, description }: { title: string; description: string }) {
+  return (
+    <div className="border-b border-line px-6 pb-6 pt-8 md:px-10">
+      <h2 className="display-md">{title}</h2>
+      <p className="mt-2 max-w-xl text-muted">{description}</p>
+    </div>
+  );
+}

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Rail, SectionBar } from "@/components/section-shell";
+import { Rail, SectionBar, SectionHead } from "@/components/section-shell";
 import { getServices } from "@/lib/content/services";
 import { hueClass, padIndex } from "@/lib/hues";
 
@@ -11,6 +11,7 @@ export async function ServicesSection({ index = "04" }: { index?: string }) {
     <section id="services" className="scroll-mt-12">
       <Rail>
         <SectionBar index={index} label="Services" aside="What I can take on" />
+        <SectionHead title="Services" description="What you can hire me to build." />
 
         <div className="cell-grid sm:grid-cols-2 xl:grid-cols-4">
           {services.map((service, i) => (
