@@ -1,57 +1,55 @@
-import { Navbar } from "@/components/navbar";
-import { WorkProjectsGrid } from "@/components/work-projects-grid";
-import { getDetailedProjects } from "@/lib/content/projects";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { Navbar } from "@/components/navbar";
+import { Footer } from "@/components/footer";
+import { Rail, SectionBar } from "@/components/section-shell";
+import { ProjectCard } from "@/components/project-card";
+import { ProjectsTeaser } from "@/components/projects-teaser";
+import { getDetailedProjects } from "@/lib/content/projects";
+import { getContacts } from "@/lib/content/contacts";
+import socials from "@/data/socials.json";
+
+const DEFAULT_GITHUB = socials.find((s) => s.name === "GitHub")?.href ?? "";
 
 export default async function ProjectsPage() {
-  const projects = await getDetailedProjects();
+  const [projects, contacts] = await Promise.all([getDetailedProjects(), getContacts()]);
+  const githubUrl = contacts?.github ?? DEFAULT_GITHUB;
 
   return (
-    <div className="min-h-screen bg-background text-foreground relative">
+    <div className="min-h-screen">
       <Navbar />
-
-      {/* Hero Section */}
-      <section className="pt-32 pb-8 container-padding">
-        <div className="max-w-6xl mx-auto">
-          <div className="space-y-6">
-            <Link
-              href="/"
-              className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              Back to Home
-            </Link>
-            
-            <div className="space-y-4">
-              <p className="text-sm font-semibold text-blue-600">Work</p>
-              <h1 className="text-4xl md:text-5xl font-black tracking-tight text-slate-900 dark:text-white">
-                RECENT PROJECTS
+      <main>
+        <section className="relative scanlines">
+          <Rail className="relative">
+            <SectionBar index="01" label="Work" aside={`${projects.length} project${projects.length === 1 ? "" : "s"}`} />
+            <div className="section-pad">
+              <Link href="/" className="hud inline-flex items-center gap-1.5 text-faint hover:text-ink">
+                <ArrowLeft className="h-3 w-3" strokeWidth={2.5} /> Home
+              </Link>
+              <h1 className="display-xl mt-6 max-w-3xl">
+                Things I&apos;ve <span className="accent-text">built</span>.
               </h1>
-              <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed">
-                A comprehensive showcase of projects I&apos;ve built across full-stack development,
-                system design, cloud architecture, and performance optimization.
+              <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted">
+                Full-stack products, system design, cloud architecture and performance work. Every entry links to
+                the details.
               </p>
             </div>
-          </div>
-        </div>
-      </section>
+          </Rail>
+        </section>
 
-      {/* Projects Grid */}
-      <section className="pb-12 container-padding">
-        <div className="max-w-6xl mx-auto">
-          <WorkProjectsGrid projects={projects} />
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="py-8 container-padding border-t border-slate-200 dark:border-slate-800">
-        <div className="max-w-6xl mx-auto text-center">
-          <p className="text-sm text-slate-500 dark:text-slate-400">
-            © {new Date().getFullYear()} Sams. All rights reserved.
-          </p>
-        </div>
-      </footer>
+        <section>
+          <Rail>
+            <SectionBar index="02" label="Projects" aside="Pick one to explore" />
+            <div className="cell-grid sm:grid-cols-2">
+              {projects.map((project, i) => (
+                <ProjectCard key={project.slug} project={project} index={i} />
+              ))}
+              <ProjectsTeaser githubUrl={githubUrl} />
+            </div>
+          </Rail>
+        </section>
+      </main>
+      <Footer />
     </div>
   );
 }

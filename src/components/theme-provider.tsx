@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-  useCallback,
-} from "react";
+import { createContext, useCallback, useContext, useEffect, useState } from "react";
 
 type Theme = "light" | "dark";
 
@@ -18,71 +12,56 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-const THEME_STORAGE_KEY = "portfolio-theme";
+export const THEME_STORAGE_KEY = "portfolio-theme";
 const THEME_TRANSITION_CLASS = "theme-transition";
-const THEME_TRANSITION_MS = 280;
+const THEME_TRANSITION_MS = 200;
+
+function readThemeFromDocument(): Theme {
+  if (typeof document === "undefined") return "light";
+  return document.documentElement.classList.contains("dark") ? "dark" : "light";
+}
+
+function applyTheme(theme: Theme) {
+  const root = document.documentElement;
+  root.classList.toggle("dark", theme === "dark");
+  try {
+    localStorage.setItem(THEME_STORAGE_KEY, theme);
+  } catch {
+    // Storage can be unavailable (private mode); the class still applies.
+  }
+}
 
 function withThemeTransition() {
-  if (typeof window === "undefined") return;
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
   const root = document.documentElement;
   root.classList.add(THEME_TRANSITION_CLASS);
-  window.setTimeout(() => {
-    root.classList.remove(THEME_TRANSITION_CLASS);
-  }, THEME_TRANSITION_MS);
+  window.setTimeout(() => root.classList.remove(THEME_TRANSITION_CLASS), THEME_TRANSITION_MS);
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>("dark");
-  const [mounted, setMounted] = useState(false);
+  // The inline script in layout.tsx sets the class before hydration;
+  // we only mirror it into React state here.
+  const [theme, setThemeState] = useState<Theme>("light");
 
-  // Initialize theme from localStorage or system preference
   useEffect(() => {
-    const stored = localStorage.getItem(THEME_STORAGE_KEY) as Theme | null;
-    
-    if (stored && (stored === "light" || stored === "dark")) {
-      setThemeState(stored);
-    } else {
-      // Check system preference
-      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      setThemeState(prefersDark ? "dark" : "light");
-    }
-    
-    setMounted(true);
+    setThemeState(readThemeFromDocument());
   }, []);
 
-  // Apply theme class to html element
-  useEffect(() => {
-    if (!mounted) return;
-
-    const root = document.documentElement;
-
-    // Remove previous theme class
-    root.classList.remove("light", "dark");
-
-    // Apply new theme class
-    root.classList.add(theme);
-
-    // Store preference
-    localStorage.setItem(THEME_STORAGE_KEY, theme);
-  }, [theme, mounted]);
-
-  const setTheme = useCallback((newTheme: Theme) => {
-    setThemeState(newTheme);
+  const setTheme = useCallback((next: Theme) => {
+    applyTheme(next);
+    setThemeState(next);
   }, []);
 
   const toggleTheme = useCallback(() => {
     withThemeTransition();
-    setThemeState((prev) => (prev === "light" ? "dark" : "light"));
+    const next: Theme = readThemeFromDocument() === "dark" ? "light" : "dark";
+    applyTheme(next);
+    setThemeState(next);
   }, []);
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme, setTheme }}>
-      {/* Prevent flash by hiding until mounted */}
-      <div style={{ visibility: mounted ? "visible" : "hidden" }}>
-        {children}
-      </div>
+      {children}
     </ThemeContext.Provider>
   );
 }

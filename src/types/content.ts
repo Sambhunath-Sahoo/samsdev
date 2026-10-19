@@ -3,10 +3,14 @@ export type DetailedProjectLinkSet = {
   github?: string;
 };
 
+export type ProjectStatus = "live" | "in-progress";
+
 export type DetailedProject = {
   slug: string;
   title: string;
   subtitle: string;
+  /** Defaults to "live" when a live link exists, otherwise "in-progress". */
+  status?: ProjectStatus;
   description: string;
   image: string;
   videoUrl?: string;

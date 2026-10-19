@@ -1,134 +1,69 @@
-import { ArrowLeft, MapPin, Briefcase, Calendar, Heart, GraduationCap } from "lucide-react";
-import { Navbar } from "@/components/navbar";
 import Link from "next/link";
-import { PortableText } from "@portabletext/react";
-import { getAbout } from "@/lib/content/about";
+import { ArrowLeft } from "lucide-react";
+import { PortableText, type PortableTextComponents } from "@portabletext/react";
+import { Navbar } from "@/components/navbar";
+import { Footer } from "@/components/footer";
+import { Rail, SectionBar } from "@/components/section-shell";
 import { WorkExperienceSection } from "@/components/work-experience-section";
 import { EducationSection } from "@/components/education-section";
+import { getAbout } from "@/lib/content/about";
+
+const portableTextComponents: PortableTextComponents = {
+  block: {
+    normal: ({ children }) => <p>{children}</p>,
+    h1: ({ children }) => <h2>{children}</h2>,
+    h2: ({ children }) => <h2>{children}</h2>,
+    h3: ({ children }) => <h3>{children}</h3>,
+    blockquote: ({ children }) => <blockquote>{children}</blockquote>,
+  },
+};
 
 export default async function AboutPage() {
   const about = await getAbout();
+  const nickname = about?.nickname ?? "Sams";
+  const hasStory = (about?.longDescription?.length ?? 0) > 0;
 
   return (
-    <div className="min-h-screen bg-background text-foreground relative">
+    <div className="min-h-screen">
       <Navbar />
-
-      {/* Hero Section */}
-      <section className="pt-32 pb-16 container-padding">
-        <div className="max-w-4xl mx-auto">
-          <div className="space-y-6">
-            <Link
-              href="/"
-              className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              Back to Home
-            </Link>
-
-            <div className="space-y-4">
-              <p className="text-sm font-semibold text-blue-600">About</p>
-              <h1 className="text-4xl md:text-5xl font-black tracking-tight text-slate-900 dark:text-white">
-                HI, I&apos;M {about?.nickname?.toUpperCase() ?? "SAMS"}
+      <main>
+        <section className="relative scanlines">
+          <Rail className="relative">
+            <SectionBar index="01" label="About" aside={`${about?.designation ?? "Full Stack Developer"} · ${about?.location ?? ""}`} />
+            <div className="section-pad">
+              <Link href="/" className="hud inline-flex items-center gap-1.5 text-faint hover:text-ink">
+                <ArrowLeft className="h-3 w-3" strokeWidth={2.5} /> Home
+              </Link>
+              <h1 className="display-xl mt-6 max-w-3xl">
+                Hi, I&apos;m <span className="accent-text">{nickname}</span>.
               </h1>
               {about?.shortDescription && (
-                <p className="text-xl text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl">
-                  {about.shortDescription}
-                </p>
+                <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted">{about.shortDescription}</p>
               )}
+              <div className="strip hud mt-8">
+                {about?.location && <span className="text-muted">{about.location}</span>}
+                {about?.designation && <span className="text-muted">{about.designation}</span>}
+                {about?.experienceYears && <span className="text-muted">{about.experienceYears}+ years</span>}
+              </div>
             </div>
-
-            {/* Quick Info */}
-            <div className="flex flex-wrap gap-6 pt-2">
-              {about?.location && (
-                <div className="flex items-center gap-2 text-slate-600 dark:text-slate-400">
-                  <MapPin className="h-4 w-4 text-blue-600" />
-                  <span>{about.location}</span>
-                </div>
-              )}
-              {about?.designation && (
-                <div className="flex items-center gap-2 text-slate-600 dark:text-slate-400">
-                  <Briefcase className="h-4 w-4 text-blue-600" />
-                  <span>{about.designation}</span>
-                </div>
-              )}
-              {about?.experienceYears && (
-                <div className="flex items-center gap-2 text-slate-600 dark:text-slate-400">
-                  <Calendar className="h-4 w-4 text-blue-600" />
-                  <span>{about.experienceYears}+ Years Experience</span>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Long Description (rich text) */}
-      {about?.longDescription && about.longDescription.length > 0 && (
-        <section className="pb-16 container-padding">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-3 mb-6">
-              <Heart className="h-6 w-6 text-blue-600" />
-              My Story
-            </h2>
-            <div className="max-w-none text-lg leading-relaxed text-slate-600 dark:text-slate-400">
-              <PortableText 
-                value={about.longDescription} 
-                components={{
-                  block: {
-                    normal: ({ children }) => <p className="mb-6">{children}</p>,
-                    h1: ({ children }) => <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-4 mt-8">{children}</h1>,
-                    h2: ({ children }) => <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4 mt-8">{children}</h2>,
-                    h3: ({ children }) => <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4 mt-8">{children}</h3>,
-                    blockquote: ({ children }) => <blockquote className="border-l-4 border-blue-500 pl-4 italic my-6">{children}</blockquote>,
-                  },
-                  list: {
-                    bullet: ({ children }) => <ul className="list-disc pl-6 mb-6 space-y-2">{children}</ul>,
-                    number: ({ children }) => <ol className="list-decimal pl-6 mb-6 space-y-2">{children}</ol>,
-                  },
-                  marks: {
-                    strong: ({ children }) => <strong className="font-semibold text-slate-900 dark:text-white">{children}</strong>,
-                  }
-                }}
-              />
-            </div>
-          </div>
+          </Rail>
         </section>
-      )}
 
-      {/* Work Experience Section */}
-      <section className="pb-16 container-padding">
-        <div className="max-w-5xl mx-auto">
-          <div className="mb-8">
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
-              <Briefcase className="h-6 w-6 text-blue-600" />
-              Work Experience
-            </h2>
-          </div>
-          <WorkExperienceSection showHeader={false} />
-        </div>
-      </section>
+        {hasStory && (
+          <section>
+            <Rail>
+              <SectionBar index="02" label="Story" aside="In my own words" />
+              <div className="section-pad prose-craft">
+                <PortableText value={about!.longDescription!} components={portableTextComponents} />
+              </div>
+            </Rail>
+          </section>
+        )}
 
-      {/* Education Section */}
-      <section className="pb-16 container-padding">
-        <div className="max-w-5xl mx-auto">
-          <div className="mb-8">
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
-              <GraduationCap className="h-6 w-6 text-blue-600" />
-              Education
-            </h2>
-          </div>
-          <EducationSection showHeader={false} />
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="py-8 container-padding border-t border-slate-200 dark:border-slate-800">
-        <div className="max-w-6xl mx-auto text-center">
-          <p className="text-sm text-slate-500 dark:text-slate-400">
-            © {new Date().getFullYear()} {about?.nickname ?? "Sams"}. All rights reserved.
-          </p>
-        </div>
-      </footer>
+        <WorkExperienceSection index="03" showIntro={false} />
+        <EducationSection index="04" />
+      </main>
+      <Footer />
     </div>
   );
 }

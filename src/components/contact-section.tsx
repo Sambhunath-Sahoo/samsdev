@@ -1,57 +1,48 @@
-import { ArrowUpRight } from "lucide-react";
+import { Rail } from "@/components/section-shell";
+import { CopyButton } from "@/components/copy-button";
 import { getContacts } from "@/lib/content/contacts";
-import { AvailabilityBadge } from "@/components/availability-badge";
+import socials from "@/data/socials.json";
 
-export async function ContactSection() {
+const DEFAULT_EMAIL = "sambhu05357@gmail.com";
+const DEFAULT_LINKEDIN = socials.find((s) => s.name === "LinkedIn")?.href ?? "";
+
+export async function ContactSection({ index = "07" }: { index?: string }) {
   const contacts = await getContacts();
-  const contactEmail = contacts?.email ?? "sambhu05357@gmail.com";
+  const email = contacts?.email ?? DEFAULT_EMAIL;
+  const linkedin = contacts?.linkedin ?? DEFAULT_LINKEDIN;
 
   return (
-    <section id="contact" className="py-24 px-6 bg-slate-100 dark:bg-slate-950">
-      <div className="max-w-6xl mx-auto">
-        <div>
-          {/* Availability Badge */}
-          <AvailabilityBadge
-            layout="split"
-            className="px-4 py-2 mb-10"
-            dotClassName="bg-blue-500"
-            text="AVAILABLE FOR PROJECTS"
-            year="2026"
-          />
-
-          {/* Large Heading */}
-          <h2 
-            className="font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.05] mb-8"
-            style={{ fontFamily: "system-ui, -apple-system, sans-serif", fontSize: "clamp(42px, 7vw, 80px)" }}
-          >
-            LET&apos;S <span className="text-blue-600">CONNECT</span><br />
-            <span className="text-slate-400 dark:text-slate-600">TO BUILD YOUR</span><br />
-            NEXT <span className="text-blue-600">IDEA</span>
+    <section id="contact" className="scroll-mt-12">
+      <Rail>
+        <div className="flex flex-col items-center px-6 py-20 text-center md:py-28">
+          <p className="hud text-faint">
+            {index} / Contact · Replies within a day
+          </p>
+          <h2 className="mt-6 max-w-4xl text-[clamp(2.75rem,7vw,4.5rem)] leading-[0.98] tracking-[-0.04em]">
+            Let&apos;s connect to build <span className="accent-text">your next idea</span>
           </h2>
+          <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted">
+            Freelance builds, full-time roles, or a second opinion on an architecture. Pick whichever is easiest.
+          </p>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-wrap gap-4 mb-12">
-            <a
-              href={`mailto:${contactEmail}`}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-all duration-200"
-            >
-              BOOK A CALL
+          <div className="mt-8 flex flex-wrap justify-center gap-2.5">
+            <a href={linkedin} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
+              Book a call
             </a>
-            <a
-              href={`mailto:${contactEmail}`}
-              className="inline-flex items-center gap-2 px-6 py-3 border border-slate-400 dark:border-slate-600 text-slate-900 dark:text-white font-semibold rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800 transition-all duration-200"
-            >
-              EMAIL ME
+            <a href={`mailto:${email}`} className="btn btn-secondary">
+              Email me
             </a>
           </div>
 
-          {/* Footer Link */}
-          <div className="flex items-center gap-2 text-slate-900 dark:text-white text-xl font-medium">
-            <span>Let&apos;s Talk</span>
-            <ArrowUpRight className="h-5 w-5" />
+          <div className="strip mt-7">
+            <span className="hud text-faint">Email</span>
+            <span>
+              <code className="select-all font-mono text-[13px] text-ink">{email}</code>
+            </span>
+            <CopyButton value={email} />
           </div>
         </div>
-      </div>
+      </Rail>
     </section>
   );
 }

@@ -1,7 +1,6 @@
-import { client } from "@/lib/sanity/client";
-import { SERVICES_QUERY } from "@/lib/sanity/queries";
+import { RESUME_SERVICES } from "@/data/resume";
 import type { SanityServiceItem } from "@/types/content";
 
 export async function getServices(): Promise<SanityServiceItem[]> {
-  return client.fetch<SanityServiceItem[]>(SERVICES_QUERY, {}, { next: { revalidate: 2 } });
+  return [...RESUME_SERVICES];
 }
