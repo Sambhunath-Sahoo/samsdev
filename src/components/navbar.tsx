@@ -17,6 +17,7 @@ const NAV = [
   { name: "Stack", num: "05", href: "/#stack" },
   { name: "About", num: "06", href: "/about" },
   { name: "Contact", num: "07", href: "/#contact" },
+  { name: "Roadmap", num: "08", href: "/roadmap" },
 ] as const;
 
 const GITHUB_URL = socials.find((s) => s.name === "GitHub")?.href ?? "https://github.com/Sambhunath-Sahoo";
@@ -49,7 +50,7 @@ export function Navbar() {
 
         <nav aria-label="Primary" className="hidden min-w-0 items-stretch lg:flex">
           {NAV.map((item) => {
-            const isActive = activeHref === item.href;
+            const isActive = activeHref === item.href || (!item.href.includes("#") && item.href !== "/" && activeHref.startsWith(`${item.href}/`));
             return (
               <Link
                 key={item.name}
