@@ -21,7 +21,7 @@ export async function WorkSection({ index = "02" }: { index?: string }) {
         <SectionBar index={index} label="Work" aside="Pick a project to explore" />
         <SectionHead title="Work" description="AI and full stack products I designed and built. Pick one to open the case study." />
 
-        <div className="cell-grid sm:grid-cols-2">
+        <div className="cell-grid sm:grid-cols-2 lg:grid-cols-4">
           {featured.map((project, i) => (
             <ProjectCard key={project.slug} project={project} index={i} />
           ))}

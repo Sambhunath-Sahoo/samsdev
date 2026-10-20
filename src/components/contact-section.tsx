@@ -14,18 +14,18 @@ export async function ContactSection({ index = "07" }: { index?: string }) {
   return (
     <section id="contact" className="scroll-mt-12">
       <Rail>
-        <div className="flex flex-col items-center px-6 py-20 text-center md:py-28">
+        <div className="flex flex-col items-center px-6 py-12 text-center md:py-16">
           <p className="hud text-faint">
             {index} / Contact · Replies within a day
           </p>
-          <h2 className="mt-6 max-w-4xl text-[clamp(2.75rem,7vw,4.5rem)] leading-[0.98] tracking-[-0.04em]">
+          <h2 className="mt-4 max-w-4xl text-[clamp(1.875rem,4.6vw,3rem)] leading-[1.02] tracking-[-0.035em]">
             Let&apos;s connect to build <span className="accent-text">your next idea</span>
           </h2>
-          <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted">
+          <p className="mx-auto mt-4 max-w-xl leading-relaxed text-muted">
             Freelance builds, full-time roles, or a second opinion on an architecture. Pick whichever is easiest.
           </p>
 
-          <div className="mt-8 flex flex-wrap justify-center gap-2.5">
+          <div className="mt-6 flex flex-wrap justify-center gap-2.5">
             <a href={linkedin} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
               Book a call
             </a>

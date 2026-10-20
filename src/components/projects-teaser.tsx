@@ -11,18 +11,18 @@ export function ProjectsTeaser({ githubUrl, showAllLink = false }: ProjectsTease
   return (
     <div className="cell hue-orange flex flex-col justify-center sm:[&:last-child:nth-child(odd)]:col-span-2">
       <p className="hud text-faint">Next up</p>
-      <h3 className="mt-4 text-3xl leading-[1.05] tracking-[-0.03em]">
+      <h3 className="mt-3 text-xl leading-tight tracking-[-0.02em]">
         More projects <span className="accent-text">on the way</span>
       </h3>
-      <p className="mt-3 leading-relaxed text-muted">
+      <p className="mt-2 text-sm leading-relaxed text-muted">
         Side projects, experiments and open-source work land here first. Follow along on GitHub for early builds.
       </p>
-      <div className="mt-6 flex flex-wrap gap-2.5">
-        <a href={githubUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
+      <div className="mt-4 flex flex-wrap gap-2">
+        <a href={githubUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-sm">
           Browse on GitHub
         </a>
         {showAllLink && (
-          <Link href="/projects" className="btn btn-secondary">
+          <Link href="/projects" className="btn btn-secondary btn-sm">
             All projects
           </Link>
         )}

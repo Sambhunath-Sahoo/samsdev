@@ -31,21 +31,21 @@
 @layer base {
   /* ---------- light (default) ---------- */
   :root {
-    --bg: #f2f1ee;
-    --bg-raised: #faf9f7;
-    --bg-sunken: #e9e8e4;
+    --bg: #fff;
+    --bg-raised: #fff;
+    --bg-sunken: #fafaf9;
     --ink: #101014;
     --ink-strong: #000;
     --muted: #1010149e;
     --faint: #1010146b;
-    --line: #10101429;
-    --line-strong: #10101466;
+    --line: #1010141c;
+    --line-strong: #10101440;
     --accent: #2d81ff;
     --accent-ink: #1659c4;
     --invert-bg: #101014;
     --invert-fg: #f2f1ee;
     --danger: #b3261e;
-    --scanline: #10101408;
+    --scanline: transparent;
     --num-fg: #000;
 
     --c-blue: #2f7bf5;   --c-blue-ink: #1a5bc4;
@@ -92,8 +92,13 @@
     background: var(--bg);
   }
 
+  /* Faint graph-paper grid on the page; the lines follow the theme's own line colour. */
   body {
-    background: var(--bg);
+    background-color: var(--bg);
+    background-image:
+      linear-gradient(color-mix(in srgb, var(--line) 16%, transparent) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in srgb, var(--line) 16%, transparent) 1px, transparent 1px);
+    background-size: 28px 28px;
     color: var(--ink);
     font-family: var(--font-body);
     -webkit-font-smoothing: antialiased;
@@ -148,9 +153,9 @@
     font-weight: 400;
   }
 
-  .display-xl { font-size: clamp(2.5rem, 6.5vw, 4.5rem); line-height: 1.02; letter-spacing: -0.035em; }
-  .display-lg { font-size: clamp(2.25rem, 5vw, 3.75rem); line-height: 1.02; letter-spacing: -0.035em; }
-  .display-md { font-size: clamp(2rem, 4vw, 3rem); line-height: 1.05; letter-spacing: -0.03em; }
+  .display-xl { font-size: clamp(2.125rem, 4.8vw, 3.25rem); line-height: 1.02; letter-spacing: -0.035em; }
+  .display-lg { font-size: clamp(1.875rem, 3.6vw, 2.75rem); line-height: 1.02; letter-spacing: -0.035em; }
+  .display-md { font-size: clamp(1.5rem, 2.8vw, 2.125rem); line-height: 1.05; letter-spacing: -0.03em; }
 
   /* ---------- interactive ---------- */
   .invert-block {
@@ -245,19 +250,17 @@
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-    padding: 12px 24px;
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
-    background: color-mix(in srgb, var(--bg) 60%, transparent);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    padding: 10px 24px;
+    border-top: 1px solid var(--line-strong);
+    border-bottom: 1px solid var(--line-strong);
+    background: var(--bg);
   }
 
-  .section-pad { padding: 56px 24px; }
+  .section-pad { padding: 40px 24px; }
 
   @media (min-width: 768px) {
-    .section-bar { padding: 12px 40px; }
-    .section-pad { padding: 80px 40px; }
+    .section-bar { padding: 10px 40px; }
+    .section-pad { padding: 52px 40px; }
   }
 
   .cell-grid {
@@ -271,10 +274,10 @@
     min-width: 0;
   }
 
-  .cell { padding: 24px; }
+  .cell { padding: 20px; }
 
   @media (min-width: 768px) {
-    .cell { padding: 32px; }
+    .cell { padding: 24px; }
   }
 
   .scanlines::before {

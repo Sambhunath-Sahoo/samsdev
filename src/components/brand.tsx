@@ -12,7 +12,9 @@ export function Brand({ className }: { className?: string }) {
       )}
     >
       <span aria-hidden="true" className="h-2 w-2 bg-accent" />
-      sams<span className="text-accent-ink">.dev</span>
+      <span>
+        sams<span className="text-accent-ink">.dev</span>
+      </span>
     </Link>
   );
 }

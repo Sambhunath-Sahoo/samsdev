@@ -35,12 +35,12 @@ export async function AboutSection({ index = "06" }: { index?: string }) {
               Curious about how things <span className="accent-text">work</span>, then making them work better.
             </h2>
             {about?.shortDescription && (
-              <p className="mt-6 max-w-[60ch] leading-[1.7] text-muted">{about.shortDescription}</p>
+              <p className="mt-4 max-w-[60ch] text-[15px] leading-[1.7] text-muted">{about.shortDescription}</p>
             )}
-            <p className="serif-i mt-7 max-w-[24ch] text-[1.75rem] leading-[1.2] text-ink-strong">
+            <p className="serif-i mt-5 max-w-[26ch] text-[1.375rem] leading-[1.25] text-ink-strong">
               Outside of work: emerging tech, side projects, and mentoring other developers.
             </p>
-            <Link href="/about" className="btn btn-secondary mt-8">
+            <Link href="/about" className="btn btn-secondary mt-6">
               Full story
             </Link>
           </div>

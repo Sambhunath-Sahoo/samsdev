@@ -40,7 +40,7 @@ export function SectionIntro({
   return (
     <div className={cn("section-pad", className)}>
       <h2 className="display-lg max-w-3xl">{title}</h2>
-      {lead && <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted">{lead}</p>}
+      {lead && <p className="mt-4 max-w-xl leading-relaxed text-muted">{lead}</p>}
     </div>
   );
 }
@@ -48,9 +48,9 @@ export function SectionIntro({
 /** Plain title and one line of context that sits under a SectionBar. */
 export function SectionHead({ title, description }: { title: string; description: string }) {
   return (
-    <div className="border-b border-line px-6 pb-6 pt-8 md:px-10">
+    <div className="border-b border-line px-6 pb-4 pt-6 md:px-10">
       <h2 className="display-md">{title}</h2>
-      <p className="mt-2 max-w-xl text-muted">{description}</p>
+      <p className="mt-1.5 max-w-xl text-sm text-muted">{description}</p>
     </div>
   );
 }
