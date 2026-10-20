@@ -18,3 +18,7 @@ export function countPoints(track: RoadmapTrack): number {
     0,
   );
 }
+
+export function countLessons(track: RoadmapTrack): number {
+  return track.sections.reduce((total, section) => total + section.subsections.filter((sub) => sub.lesson).length, 0);
+}

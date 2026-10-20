@@ -6,8 +6,29 @@ export interface RoadmapPoint {
   readonly question: string;
 }
 
+/** One block of a lesson. Inline `code` and **bold** are allowed in every text field. */
+export type LessonBlock =
+  | { readonly type: "h2"; readonly text: string }
+  | { readonly type: "p"; readonly text: string }
+  | { readonly type: "list"; readonly items: readonly string[]; readonly ordered?: boolean }
+  | { readonly type: "code"; readonly language: string; readonly code: string; readonly title?: string }
+  | { readonly type: "callout"; readonly tone: "tip" | "gotcha" | "cost"; readonly title: string; readonly text: string }
+  | { readonly type: "table"; readonly head: readonly string[]; readonly rows: readonly (readonly string[])[] }
+  | { readonly type: "figure"; readonly src: string; readonly alt: string; readonly caption: string; readonly width: number; readonly height: number };
+
+export interface Lesson {
+  /** One sentence shown under the title and in lesson cards. */
+  readonly summary: string;
+  readonly minutes: number;
+  readonly blocks: readonly LessonBlock[];
+}
+
 export interface RoadmapSubsection {
   readonly title: string;
+  /** URL segment for the lesson page. Only needed when `lesson` exists. Unique within a track. */
+  readonly slug?: string;
+  /** The written note. Omitted while the subsection is only an outline. */
+  readonly lesson?: Lesson;
   /** Written points. Omitted while the subsection is only an outline. */
   readonly points?: readonly RoadmapPoint[];
 }

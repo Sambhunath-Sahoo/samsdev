@@ -1,12 +1,13 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { countPoints, countSubsections } from "@/data/roadmap";
+import { countLessons, countPoints, countSubsections } from "@/data/roadmap";
 import type { RoadmapTrack } from "@/types/roadmap";
 
 export function RoadmapTrackCard({ track, index }: { track: RoadmapTrack; index: string }) {
   const stats = [
     `${track.sections.length} sections`,
     `${countSubsections(track)} subsections`,
+    `${countLessons(track)} lessons`,
     `${countPoints(track)} points written`,
   ];
 

@@ -1,4 +1,5 @@
-import { ChevronDown, FileText, ListChecks } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, BookOpen, ChevronDown, FileText, ListChecks } from "lucide-react";
 import { chevron, summaryReset } from "@/components/details-styles";
 import { ProgressCount } from "@/components/progress-count";
 import { RoadmapPointCheckbox } from "@/components/roadmap-point-checkbox";
@@ -7,7 +8,7 @@ import type { RoadmapPoint, RoadmapSection, RoadmapSubsection } from "@/types/ro
 
 const plural = (count: number, word: string) => `${count} ${word}${count === 1 ? "" : "s"}`;
 
-function PointItem({ point }: { point: RoadmapPoint }) {
+export function PointItem({ point }: { point: RoadmapPoint }) {
   return (
     <li className="flex items-start gap-3 py-2.5">
       <div className="pt-0.5">
@@ -30,8 +31,24 @@ function PointItem({ point }: { point: RoadmapPoint }) {
   );
 }
 
-function SubsectionItem({ subsection }: { subsection: RoadmapSubsection }) {
+function SubsectionItem({ trackId, subsection }: { trackId: string; subsection: RoadmapSubsection }) {
   const points = subsection.points ?? [];
+
+  if (subsection.lesson && subsection.slug) {
+    return (
+      <li>
+        <Link href={`/roadmap/${trackId}/${subsection.slug}`} className="group/lesson flex items-center gap-4 px-5 py-3.5 hover:bg-bg-sunken">
+          <BookOpen className="h-4 w-4 shrink-0 text-[var(--app)]" aria-hidden />
+          <span className="min-w-0 text-ink">{subsection.title}</span>
+          <span className="ml-auto flex shrink-0 items-center gap-3 text-sm text-muted">
+            <ProgressCount ids={subsectionPointIds(subsection)} className="accent-text" />
+            <span className="hidden sm:inline">{subsection.lesson.minutes} min lesson</span>
+            <ArrowRight className="h-4 w-4 transition-transform group-hover/lesson:translate-x-0.5" aria-hidden />
+          </span>
+        </Link>
+      </li>
+    );
+  }
 
   if (points.length === 0) {
     return (
@@ -64,9 +81,10 @@ function SubsectionItem({ subsection }: { subsection: RoadmapSubsection }) {
   );
 }
 
-export function RoadmapSectionRow({ section, index }: { section: RoadmapSection; index: number }) {
+export function RoadmapSectionRow({ trackId, section, index }: { trackId: string; section: RoadmapSection; index: number }) {
   const pointCount = sectionPointIds(section).length;
-  const meta = [plural(section.subsections.length, "subsection"), pointCount > 0 ? plural(pointCount, "point") : "coming soon"].join(" • ");
+  const lessonCount = section.subsections.filter((sub) => sub.lesson).length;
+  const meta = [plural(section.subsections.length, "subsection"), lessonCount > 0 ? plural(lessonCount, "lesson") : pointCount > 0 ? plural(pointCount, "point") : "coming soon"].join(" • ");
 
   return (
     <details data-collapsible className="group/section border-b border-line last:border-b-0" open={pointCount > 0}>
@@ -86,7 +104,7 @@ export function RoadmapSectionRow({ section, index }: { section: RoadmapSection;
         <p className="px-5 pb-1 pt-4 text-sm text-faint">{section.goal}</p>
         <ul className="py-1">
           {section.subsections.map((sub) => (
-            <SubsectionItem key={sub.title} subsection={sub} />
+            <SubsectionItem key={sub.title} trackId={trackId} subsection={sub} />
           ))}
         </ul>
         {section.doneWhen && (

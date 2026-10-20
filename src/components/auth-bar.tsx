@@ -7,11 +7,14 @@ export async function AuthBar({
   progressUnavailable,
   signedOutMessage,
   signedInMessage,
+  framed = true,
 }: {
   redirectTo: string;
   progressUnavailable: boolean;
   signedOutMessage: string;
   signedInMessage: string;
+  /** Wrap in the page rail. Pass false when the bar already sits inside one. */
+  framed?: boolean;
 }) {
   const session = await auth();
   const user = session?.user;
@@ -26,9 +29,8 @@ export async function AuthBar({
     await signOut({ redirectTo });
   }
 
-  return (
-    <section>
-      <Rail>
+  const body = (
+    <>
         <div className="flex flex-wrap items-center justify-between gap-4 border-t border-line px-6 py-4 md:px-10">
           {user ? (
             <>
@@ -57,7 +59,8 @@ export async function AuthBar({
             Your saved progress could not be loaded right now. Ticks will not be saved until it is back.
           </p>
         )}
-      </Rail>
-    </section>
+    </>
   );
+
+  return <section>{framed ? <Rail>{body}</Rail> : body}</section>;
 }

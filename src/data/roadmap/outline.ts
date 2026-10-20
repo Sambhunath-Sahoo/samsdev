@@ -1,6 +1,9 @@
-import type { RoadmapSection } from "@/types/roadmap";
+import type { RoadmapSection, RoadmapSubsection } from "@/types/roadmap";
 
-/** Outline-only section: subsections have titles but no written points yet. */
-export function outline(title: string, goal: string, subsections: readonly string[]): RoadmapSection {
-  return { title, goal, subsections: subsections.map((name) => ({ title: name })) };
+/**
+ * Section whose subsections are mostly outline. A plain string is an outline-only subsection;
+ * pass a full subsection object (with `lesson` and `points`) once its note is written.
+ */
+export function outline(title: string, goal: string, subsections: readonly (string | RoadmapSubsection)[]): RoadmapSection {
+  return { title, goal, subsections: subsections.map((item) => (typeof item === "string" ? { title: item } : item)) };
 }
