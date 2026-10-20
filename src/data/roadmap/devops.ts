@@ -1,5 +1,14 @@
 import type { RoadmapTrack } from "@/types/roadmap";
 import { outline } from "./outline";
+import { BUDGETS_AND_COST_ALERTS } from "./lessons/devops/budgets-and-cost-alerts";
+import { COMPUTE_EC2 } from "./lessons/devops/compute-ec2";
+import { DOCKER_COMPOSE } from "./lessons/devops/docker-compose";
+import { DOCKERFILE_AND_BUILD_CACHE } from "./lessons/devops/dockerfile-and-build-cache";
+import { FIREWALLS_AND_REVERSE_PROXIES } from "./lessons/devops/firewalls-and-reverse-proxies";
+import { IAM_AND_LEAST_PRIVILEGE } from "./lessons/devops/iam-and-least-privilege";
+import { REGISTRIES_AND_IMAGE_SCANNING } from "./lessons/devops/registries-and-image-scanning";
+import { VOLUMES_NETWORKS_AND_SECRETS } from "./lessons/devops/volumes-networks-and-secrets";
+
 
 export const DEVOPS: RoadmapTrack = {
   id: "devops",
@@ -19,7 +28,7 @@ export const DEVOPS: RoadmapTrack = {
       "DNS and IP",
       "TCP, UDP and ports",
       "TLS and certificates",
-      "Firewalls and reverse proxies",
+      FIREWALLS_AND_REVERSE_PROXIES,
     ]),
     outline("Git and collaboration", "Ship changes through reviewed pull requests.", [
       "Branching and pull requests",
@@ -29,10 +38,10 @@ export const DEVOPS: RoadmapTrack = {
     ]),
     outline("Containers", "Package an app so it runs the same everywhere.", [
       "Images vs containers",
-      "Dockerfile and build cache",
-      "Volumes, networks and secrets",
-      "Docker Compose",
-      "Registries and image scanning",
+      DOCKERFILE_AND_BUILD_CACHE,
+      VOLUMES_NETWORKS_AND_SECRETS,
+      DOCKER_COMPOSE,
+      REGISTRIES_AND_IMAGE_SCANNING,
     ]),
     outline("CI/CD", "Every merge is tested, built and deployable.", [
       "CI, continuous delivery, continuous deployment",
@@ -41,12 +50,12 @@ export const DEVOPS: RoadmapTrack = {
       "Deployment strategies: rolling, blue-green, canary, rollback",
     ]),
     outline("Cloud (AWS)", "Run the app on real infrastructure without leaking money or keys.", [
-      "IAM and least privilege",
-      "Compute: EC2, ECS Fargate",
+      IAM_AND_LEAST_PRIVILEGE,
+      COMPUTE_EC2,
       "Networking: VPC, subnets, gateways",
       "Data: RDS",
       "Load balancing and autoscaling",
-      "Budgets and cost alerts",
+      BUDGETS_AND_COST_ALERTS,
     ]),
     outline("Kubernetes", "Run and heal containers across a cluster.", [
       "Architecture: control plane and nodes",
