@@ -1,0 +1,15 @@
+services:
+  web:
+    build:
+      context: .
+      args:
+        NEXT_PUBLIC_SANITY_PROJECT_ID: ${NEXT_PUBLIC_SANITY_PROJECT_ID}
+        NEXT_PUBLIC_SANITY_DATASET: ${NEXT_PUBLIC_SANITY_DATASET}
+    ports:
+      - "3003:3000"
+    env_file:
+      - .env.local
+    environment:
+      AUTH_TRUST_HOST: "true"
+      AUTH_URL: http://localhost:3003
+    restart: unless-stopped
