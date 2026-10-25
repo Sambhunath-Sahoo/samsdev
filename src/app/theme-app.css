@@ -1,0 +1,54 @@
+/* Styles for the roadmap pages. Owned by the roadmap-UI work. */
+
+.theme-app {
+  background: var(--bg);
+  color: var(--ink);
+}
+
+/* Small caps label above a page title. */
+.theme-app .eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Serif headings read better with a normal tracking than the display face. */
+.theme-app .display-lg,
+.theme-app .display-md {
+  letter-spacing: -0.015em;
+  line-height: 1.1;
+}
+
+/* Rounded pill used for status badges (Soon, N lessons, Done). */
+.theme-app .pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  border-radius: 999px;
+  padding: 0.125rem 0.625rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+.theme-app .pill-ok { background: var(--ok-bg); color: var(--ok-fg); }
+.theme-app .pill-warn { background: var(--warn-bg); color: var(--warn-fg); }
+
+/* Rows that open and close: keep the focus ring inside the rounded shape. */
+.theme-app summary:focus-visible {
+  outline-offset: -2px;
+  border-radius: 0.75rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-app *,
+  .theme-app *::before,
+  .theme-app *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

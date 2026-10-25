@@ -20,15 +20,15 @@ type FooterLink = { label: string; href: string; external?: boolean };
 
 function FooterColumn({ title, links }: { title: string; links: FooterLink[] }) {
   return (
-    <nav aria-label={title} className="cell flex flex-col gap-2.5">
-      <p className="hud mb-1.5 text-faint">{title}</p>
+    <nav aria-label={title} className="flex flex-col gap-2.5">
+      <p className="hud mb-1.5 text-muted">{title}</p>
       {links.map((link) =>
         link.external ? (
-          <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer" className="text-muted hover:text-ink">
+          <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer" className="text-ink/80 hover:text-accent-ink">
             {link.label}
           </a>
         ) : (
-          <Link key={link.href} href={link.href} className="text-muted hover:text-ink">
+          <Link key={link.href} href={link.href} className="text-ink/80 hover:text-accent-ink">
             {link.label}
           </Link>
         ),
@@ -56,15 +56,15 @@ export async function Footer() {
   ];
 
   return (
-    <footer className="border-t border-line">
-      <div className="rail">
-        <div className="cell-grid sm:grid-cols-2 md:grid-cols-[2fr_1fr_1fr_1fr]">
-          <div className="cell">
+    <footer className="band-ink border-t border-line px-4 pb-8 pt-14 sm:px-6 lg:px-10">
+      <div className="mx-auto max-w-[1180px]">
+        <div className="grid gap-10 sm:grid-cols-2 md:grid-cols-[2fr_1fr_1fr_1fr]">
+          <div>
             <Brand />
             <p className="mt-4 max-w-xs leading-relaxed text-muted">
               Full stack AI engineer. Spring Boot, React and Vue.js products that perform and don&apos;t break.
             </p>
-            <a href={`mailto:${email}`} className="hud mt-6 inline-block text-faint hover:text-ink">
+            <a href={`mailto:${email}`} className="hud mt-6 inline-block text-muted hover:text-accent-ink">
               {email}
             </a>
           </div>
@@ -73,7 +73,7 @@ export async function Footer() {
           <FooterColumn title="Connect" links={connectLinks} />
         </div>
 
-        <div className="flex flex-col gap-2 border-t border-line px-6 py-4 md:flex-row md:items-center md:justify-between md:px-10">
+        <div className="mt-12 flex flex-col gap-2 border-t border-line pt-5 md:flex-row md:items-center md:justify-between">
           <p className="hud text-faint">
             © {year} {about?.nickname ?? "Sams"}. All rights reserved.
           </p>

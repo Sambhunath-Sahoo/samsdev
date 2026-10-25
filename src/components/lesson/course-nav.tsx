@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useMemo, useState } from "react";
-import { Check, ChevronDown, Search } from "lucide-react";
+import { ChevronDown, Search } from "lucide-react";
+import { LessonCheck } from "@/components/lesson/lesson-check";
 import { useProgress } from "@/components/progress-provider";
 import { cn } from "@/lib/utils";
 
@@ -63,15 +64,15 @@ export function CourseNav({ trackId, trackTitle, sections }: { trackId: string; 
 
   return (
     <nav aria-label={`${trackTitle} course contents`} className="px-4 py-5">
-      <p className="hud text-faint">Course contents</p>
+      <p className="eyebrow">Course contents</p>
       <div className="mt-2 flex items-baseline justify-between gap-3">
-        <h2 className="text-xl tracking-tight">{trackTitle}</h2>
-        <span className="font-mono text-xs text-faint">
+        <h2 className="text-xl">{trackTitle}</h2>
+        <span className="pill pill-ok">
           {doneCount}/{written.length}
         </span>
       </div>
 
-      <label className="mt-4 flex items-center gap-2 border border-line bg-bg-raised px-3 py-2 focus-within:border-line-strong">
+      <label className="mt-4 flex items-center gap-2 rounded-lg border border-line bg-bg-raised px-3 py-2 focus-within:border-accent focus-within:ring-2 focus-within:ring-accent/30">
         <Search className="h-4 w-4 shrink-0 text-faint" aria-hidden />
         <span className="sr-only">Search lessons</span>
         <input
@@ -92,43 +93,29 @@ export function CourseNav({ trackId, trackTitle, sections }: { trackId: string; 
                 type="button"
                 onClick={() => toggle(index)}
                 aria-expanded={isOpen}
-                className="flex w-full items-center gap-3 py-3 text-left hover:text-ink"
+                className="flex w-full items-center gap-3 rounded-lg py-3 text-left hover:text-ink"
               >
-                <span className="font-mono text-xs text-faint">{String(index + 1).padStart(2, "0")}</span>
+                <span aria-hidden className="grid h-6 w-6 shrink-0 place-items-center rounded-md bg-accent text-xs font-semibold text-[var(--num-fg)]">{index + 1}</span>
                 <span className="min-w-0 flex-1 text-sm font-semibold text-ink-strong">{section.title}</span>
                 <ChevronDown className={cn("h-4 w-4 shrink-0 text-muted transition-transform", isOpen && "rotate-180")} aria-hidden />
               </button>
               {isOpen && (
-                <ul className="mb-3 ml-2 border-l border-line">
+                <ul className="mb-3 space-y-0.5">
                   {items.map((item) => (
                     <li key={item.title}>
                       {item.slug ? (
-                        <Link
-                          href={`/roadmap/${trackId}/${item.slug}`}
-                          aria-current={item.slug === activeSlug ? "page" : undefined}
-                          className={cn(
-                            "-ml-px flex items-center gap-2.5 border-l-2 px-3 py-1.5 text-sm hover:bg-bg-sunken",
-                            item.slug === activeSlug ? "border-[var(--app)] bg-bg-sunken font-medium text-ink" : "border-transparent text-muted",
-                          )}
-                        >
-                          <span
-                            aria-hidden
-                            className={cn(
-                              "flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full border",
-                              isDone(item) ? "border-[var(--app)] bg-[var(--app)] text-white" : "border-line-strong",
-                            )}
+                        <div className={cn("flex items-center rounded-lg hover:bg-tint-lav", item.slug === activeSlug && "bg-tint-lav")}>
+                          <Link
+                            href={`/roadmap/${trackId}/${item.slug}`}
+                            aria-current={item.slug === activeSlug ? "page" : undefined}
+                            className={cn("min-w-0 flex-1 px-3 py-1.5 text-sm", item.slug === activeSlug ? "font-medium text-ink" : "text-muted")}
                           >
-                            {isDone(item) && <Check className="h-2.5 w-2.5" strokeWidth={3} />}
-                          </span>
-                          <span className="min-w-0">{item.title}</span>
-                          {isDone(item) && <span className="sr-only">(done)</span>}
-                        </Link>
+                            {item.title}
+                          </Link>
+                          <LessonCheck title={item.title} pointIds={item.pointIds} />
+                        </div>
                       ) : (
-                        <p className="-ml-px flex items-center gap-2.5 border-l-2 border-transparent px-3 py-1.5 text-sm text-faint">
-                          <span aria-hidden className="h-3.5 w-3.5 shrink-0 rounded-full border border-dashed border-line-strong" />
-                          <span className="min-w-0">{item.title}</span>
-                          <span className="hud ml-auto shrink-0 text-[10px]">Soon</span>
-                        </p>
+                        <p className="px-3 py-1.5 text-sm text-faint">{item.title}</p>
                       )}
                     </li>
                   ))}

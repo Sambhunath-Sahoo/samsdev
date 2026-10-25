@@ -25,7 +25,7 @@ export function LessonToc({ headings }: { headings: readonly Heading[] }) {
   if (headings.length === 0) return null;
   return (
     <nav aria-label="On this page">
-      <p className="hud text-faint">On this page</p>
+      <p className="eyebrow">On this page</p>
       <ul className="mt-3 border-l border-line">
         {headings.map((heading) => (
           <li key={heading.id}>
@@ -34,7 +34,7 @@ export function LessonToc({ headings }: { headings: readonly Heading[] }) {
               aria-current={heading.id === activeId ? "location" : undefined}
               className={cn(
                 "-ml-px block border-l-2 py-1.5 pl-3 text-sm leading-snug hover:text-ink",
-                heading.id === activeId ? "border-[var(--app)] font-medium text-ink" : "border-transparent text-muted",
+                heading.id === activeId ? "border-accent font-medium text-ink" : "border-transparent text-muted",
               )}
             >
               {heading.text}

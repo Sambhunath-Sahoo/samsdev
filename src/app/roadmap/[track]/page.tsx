@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowRight } from "lucide-react";
+import { ArrowDown } from "lucide-react";
 import { FinalArchitecture } from "@/components/lesson/final-architecture";
-import { getRoadmapTrack } from "@/data/roadmap";
+import { RoadmapMindMap } from "@/components/roadmap-mind-map";
+import { RoadmapTrackSection } from "@/components/roadmap-track-section";
+import { countLessons, countPoints, countSubsections, getRoadmapTrack } from "@/data/roadmap";
 import { listLessons } from "@/lib/roadmap/lessons";
-import type { RoadmapSection } from "@/types/roadmap";
+import { toNavSections } from "@/lib/roadmap/nav-sections";
 
 type RoadmapTrackParams = { params: Promise<{ track: string }> };
 
@@ -15,6 +17,8 @@ export async function generateMetadata({ params }: RoadmapTrackParams): Promise<
   return { title: `${track.title} roadmap`, description: track.description };
 }
 
+const MINUTES_PER_HOUR = 60;
+
 const STAGES = [
   ["v1", "One server", "Docker, a registry and HTTPS on a single EC2 machine, set up by hand."],
   ["v2", "As code", "Terraform, a VPC, a load balancer with a certificate, secrets in a parameter store."],
@@ -23,8 +27,9 @@ const STAGES = [
   ["v5", "Kubernetes", "EKS, GitOps with ArgoCD, Prometheus and Grafana, a WAF and private subnets."],
 ] as const;
 
-function lessonCount(section: RoadmapSection) {
-  return section.subsections.filter((sub) => sub.lesson).length;
+function formatReadingTime(minutes: number): string {
+  if (minutes < MINUTES_PER_HOUR) return `${minutes} min of lessons`;
+  return `About ${Math.round(minutes / MINUTES_PER_HOUR)} h of lessons`;
 }
 
 export default async function RoadmapTrackPage({ params }: RoadmapTrackParams) {
@@ -32,75 +37,63 @@ export default async function RoadmapTrackPage({ params }: RoadmapTrackParams) {
   if (!track) notFound();
 
   const lessons = listLessons(track);
-  const first = lessons[0];
+  const totalMinutes = lessons.reduce((sum, ref) => sum + ref.subsection.lesson.minutes, 0);
+  const stats = [
+    ["Course outline", `${track.sections.length} sections · ${countSubsections(track)} topics`],
+    ["Lessons", `${countLessons(track)} written`],
+    ["Time", totalMinutes > 0 ? formatReadingTime(totalMinutes) : "Coming soon"],
+    ["Check yourself", `${countPoints(track)} points`],
+  ] as const;
 
   return (
-    <div className="px-6 pb-24 pt-10 md:px-10 lg:px-14">
-      <div className="mx-auto w-full max-w-[72rem]">
-        <p className="hud text-faint">Roadmap · {track.sections.length} topics · {lessons.length} lessons written</p>
-        <h1 className="display-lg mt-3">
-          <span className="accent-text">{track.title}</span>.
-        </h1>
-        <div aria-hidden className="mt-5 h-0.5 w-16 bg-[var(--app)]" />
-        <p className="mt-5 max-w-[60ch] text-lg leading-relaxed text-muted">{track.description}</p>
-        {first && (
-          <Link href={`/roadmap/${track.id}/${first.slug}`} className="btn btn-primary mt-6">
-            Start reading <ArrowRight className="h-4 w-4" aria-hidden />
-          </Link>
-        )}
+    <div className="px-4 pb-24 pt-10 sm:px-8 lg:px-14">
+      <div className="mx-auto flex w-full max-w-[72rem] flex-col gap-5">
+        <p className="eyebrow">Start your course</p>
+        <h1 className="display-lg">Learn {track.title}</h1>
+        <p className="max-w-[60ch] text-lg leading-relaxed text-muted">{track.description}</p>
 
-        <h2 className="hud mt-14 text-faint">What we are building</h2>
-        <p className="mt-3 max-w-[68ch] leading-relaxed text-muted">
-          One real app, deployed five times, each version closer to how a team runs it in production. This is where it ends up.
-        </p>
-        <div className="mt-5">
-          <FinalArchitecture />
-        </div>
-        <ol className="mt-6 grid gap-px border border-line bg-line sm:grid-cols-2 lg:grid-cols-5">
-          {STAGES.map(([tag, name, text]) => (
-            <li key={tag} className="bg-bg-raised p-4">
-              <span className="num">{tag}</span>
-              <p className="mt-3 font-semibold">{name}</p>
-              <p className="mt-1 text-sm leading-relaxed text-muted">{text}</p>
-            </li>
+        <dl className="grid grid-cols-[repeat(auto-fit,minmax(9.5rem,1fr))] gap-x-6 gap-y-3 border-y border-line py-4">
+          {stats.map(([label, value]) => (
+            <div key={label} className="flex flex-col gap-0.5">
+              <dt className="text-xs text-muted">{label}</dt>
+              <dd className="text-sm font-medium text-ink">{value}</dd>
+            </div>
           ))}
-        </ol>
+        </dl>
 
-        <h2 className="hud mt-14 text-faint">Topics</h2>
-        <ul className="mt-5 grid gap-px border border-line bg-line md:grid-cols-2">
-          {track.sections.map((section, i) => {
-            const written = lessonCount(section);
-            const target = lessons.find((ref) => ref.sectionTitle === section.title);
-            const body = (
-              <>
-                <span className="hud flex items-center justify-between text-faint">
-                  <span>{String(i + 1).padStart(2, "0")}</span>
-                  <span>{written ? `${written} ${written === 1 ? "lesson" : "lessons"}` : "Soon"}</span>
-                </span>
-                <span className="mt-2 block text-lg font-semibold">{section.title}</span>
-                <span className="mt-1 block text-sm text-muted">{section.goal}</span>
-                <span className="mt-3 flex flex-wrap gap-1.5">
-                  {section.subsections.map((sub) => (
-                    <span key={sub.title} className={`border border-line px-2 py-0.5 text-xs ${sub.lesson ? "text-ink" : "text-faint"}`}>
-                      {sub.title}
-                    </span>
-                  ))}
-                </span>
-              </>
-            );
-            return (
-              <li key={section.title} className="bg-bg-raised">
-                {target ? (
-                  <Link href={`/roadmap/${track.id}/${target.slug}`} className="block h-full p-5 transition-colors hover:bg-bg-sunken">
-                    {body}
-                  </Link>
-                ) : (
-                  <div className="h-full p-5">{body}</div>
-                )}
+        <Link
+          href="#topics"
+          className="inline-flex w-fit items-center gap-2 rounded-md bg-accent px-5 py-3 text-sm font-medium text-[var(--num-fg)] transition-opacity hover:opacity-90 motion-reduce:transition-none"
+        >
+          Choose your first topic <ArrowDown className="h-4 w-4" aria-hidden />
+        </Link>
+
+        <RoadmapMindMap trackId={track.id} trackTitle={track.title} sections={toNavSections(track)} />
+
+        <div className="mt-6">
+          <RoadmapTrackSection track={track} />
+        </div>
+
+        <section className="mt-10" aria-labelledby="building-heading">
+          <h2 id="building-heading" className="text-2xl">
+            What we are building
+          </h2>
+          <p className="mt-2 max-w-[68ch] leading-relaxed text-muted">
+            One real app, deployed five times, each version closer to how a team runs it in production. This is where it ends up.
+          </p>
+          <div className="mt-5">
+            <FinalArchitecture />
+          </div>
+          <ol className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+            {STAGES.map(([tag, name, text]) => (
+              <li key={tag} className="rounded-xl bg-tint-sand p-4">
+                <span className="grid h-7 w-7 place-items-center rounded-md bg-accent text-xs font-semibold text-[var(--num-fg)]">{tag}</span>
+                <p className="mt-3 font-semibold">{name}</p>
+                <p className="mt-1 text-sm leading-relaxed text-muted">{text}</p>
               </li>
-            );
-          })}
-        </ul>
+            ))}
+          </ol>
+        </section>
       </div>
     </div>
   );

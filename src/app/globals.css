@@ -1,4 +1,9 @@
 @import "tailwindcss";
+@import "./theme-public.css";
+@import "./theme-app.css";
+
+/* Lesson text is data, not markup. Without this, strings like `[all:vars]` in code samples are read as utility classes. */
+@source not "../data";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -21,71 +26,125 @@
   --color-invert-bg: var(--invert-bg);
   --color-invert-fg: var(--invert-fg);
   --color-danger: var(--danger);
+  --color-tint-lav: var(--tint-lav);
+  --color-tint-sand: var(--tint-sand);
+  --color-tint-sage: var(--tint-sage);
+  --color-tint-mauve: var(--tint-mauve);
+  --color-ok-bg: var(--ok-bg);
+  --color-ok-fg: var(--ok-fg);
+  --color-warn-bg: var(--warn-bg);
+  --color-warn-fg: var(--warn-fg);
 
-  --font-display: var(--font-archivo), system-ui, sans-serif;
+  /* font-display resolves through --display-font so .theme-app can swap it for a serif. */
+  --font-display: var(--display-font);
   --font-body: var(--font-inter), system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
-  --font-serif: var(--font-instrument-serif), Georgia, serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-serif: var(--font-source-serif), Georgia, serif;
 }
 
 @layer base {
-  /* ---------- light (default) ---------- */
+  /* ---------- light (default): warm paper + plum ---------- */
   :root {
-    --bg: #fff;
-    --bg-raised: #fff;
-    --bg-sunken: #fafaf9;
-    --ink: #101014;
-    --ink-strong: #000;
-    --muted: #1010149e;
-    --faint: #1010146b;
-    --line: #1010141c;
-    --line-strong: #10101440;
-    --accent: #2d81ff;
-    --accent-ink: #1659c4;
-    --invert-bg: #101014;
-    --invert-fg: #f2f1ee;
-    --danger: #b3261e;
+    --bg: #fafaf7;
+    --bg-raised: #ffffff;
+    --bg-sunken: #f1eef9;
+    --ink: #171914;
+    --ink-strong: #000000;
+    --muted: #62665f;
+    --faint: #8a8f86;
+    --line: #e5e5e2;
+    --line-strong: #c7cbc4;
+    --accent: #5f4e8a;
+    --accent-ink: #5f4e8a;
+    --invert-bg: #171914;
+    --invert-fg: #f5f0e6;
+    --danger: #9a3c34;
     --scanline: transparent;
-    --num-fg: #000;
+    --num-fg: #ffffff;
 
-    --c-blue: #2f7bf5;   --c-blue-ink: #1a5bc4;
-    --c-orange: #e8573f; --c-orange-ink: #b83a24;
-    --c-purple: #8b5cf6; --c-purple-ink: #6a3fd6;
-    --c-yellow: #f2a516; --c-yellow-ink: #8a5800;
-    --c-teal: #12a58a;   --c-teal-ink: #0a7563;
-    --c-pink: #e0368f;   --c-pink-ink: #b0206c;
-    --c-green: #7bb51c;  --c-green-ink: #457008;
+    /* soft card tints and status colours */
+    --tint-lav: #f0eef8;
+    --tint-sand: #f3eee1;
+    --tint-sage: #eef3ec;
+    --tint-mauve: #ece9ee;
+    --ok-bg: #eff7f0;   --ok-fg: #337044;
+    --warn-bg: #f6efdc; --warn-fg: #8a6418;
 
-    --nav-h: 48px;
+    /* category hues (the --app scopes below read these) */
+    --c-blue: #5f4e8a;   --c-blue-ink: #5f4e8a;
+    --c-orange: #9a4938; --c-orange-ink: #9a4938;
+    --c-purple: #73546f; --c-purple-ink: #73546f;
+    --c-yellow: #8a6418; --c-yellow-ink: #8a6418;
+    --c-teal: #2d6f6a;   --c-teal-ink: #2d6f6a;
+    --c-pink: #49677a;   --c-pink-ink: #49677a;
+    --c-green: #337044;  --c-green-ink: #337044;
+
+    --display-font: var(--font-archivo-black), var(--font-archivo), Impact, sans-serif;
+    --display-weight: 400;
+    --nav-h: 56px;
     color-scheme: light;
   }
 
-  /* ---------- dark ---------- */
+  /* ---------- dark: green-tinted black + lavender ---------- */
   .dark {
-    --bg: #121316;
-    --bg-raised: #101014;
-    --bg-sunken: #060607;
-    --ink: #f2f1ee;
-    --ink-strong: #fff;
-    --muted: #f2f1ee99;
-    --faint: #f2f1ee61;
-    --line: #f2f1ee26;
-    --line-strong: #f2f1ee66;
-    --accent: #2d81ff;
-    --accent-ink: #74aaff;
-    --invert-bg: #fff;
-    --invert-fg: #0b0b0c;
-    --danger: #ff6259;
+    --bg: #111310;
+    --bg-raised: #181a16;
+    --bg-sunken: #0c0e0b;
+    --ink: #f5f0e6;
+    --ink-strong: #ffffff;
+    --muted: #aeb2a9;
+    --faint: #858a82;
+    --line: #343a33;
+    --line-strong: #5d655b;
+    --accent: #c7beef;
+    --accent-ink: #c7beef;
+    --invert-bg: #f5f0e6;
+    --invert-fg: #111310;
+    --danger: #e39a91;
     --scanline: #ffffff06;
+    --num-fg: #17141f;
 
-    --c-blue-ink: #7fb0ff;
-    --c-orange-ink: #ff8a70;
-    --c-purple-ink: #b69cff;
-    --c-yellow-ink: #ffc14d;
-    --c-teal-ink: #3fd6b8;
-    --c-pink-ink: #ff7ab8;
-    --c-green-ink: #a6e04a;
+    --tint-lav: #292635;
+    --tint-sand: #2e291f;
+    --tint-sage: #1a1f1a;
+    --tint-mauve: #2a272c;
+    --ok-bg: #1f2a21;   --ok-fg: #8fc59a;
+    --warn-bg: #2e291f; --warn-fg: #d4ae58;
+
+    --c-blue: #c7beef;   --c-blue-ink: #c7beef;
+    --c-orange: #d98773; --c-orange-ink: #d98773;
+    --c-purple: #c69bc1; --c-purple-ink: #c69bc1;
+    --c-yellow: #d4ae58; --c-yellow-ink: #d4ae58;
+    --c-teal: #75b9b1;   --c-teal-ink: #75b9b1;
+    --c-pink: #86a9be;   --c-pink-ink: #86a9be;
+    --c-green: #8fc59a;  --c-green-ink: #8fc59a;
     color-scheme: dark;
+  }
+
+  /* Logged-in style pages (roadmap): serif headings instead of the heavy display face. */
+  .theme-app {
+    --display-font: var(--font-source-serif), Georgia, serif;
+    --display-weight: 600;
+  }
+
+  /* Marketing bands: fixed look in both modes. Wrap a section in one and every token inside adapts. */
+  .band-lav {
+    --bg: #afa6df; --bg-raised: #c6bff0; --bg-sunken: #9d94d3;
+    --ink: #08080b; --ink-strong: #08080b; --muted: #2d2a44; --faint: #4b4766;
+    --line: #08080b26; --line-strong: #08080b66;
+    --accent: #08080b; --accent-ink: #08080b;
+    --invert-bg: #08080b; --invert-fg: #f4f1fa;
+    --scanline: transparent; color-scheme: light;
+    background: var(--bg); color: var(--ink);
+  }
+  .band-ink {
+    --bg: #08080b; --bg-raised: #15141c; --bg-sunken: #0d0c12;
+    --ink: #f4f1fa; --ink-strong: #ffffff; --muted: #a8a4b8; --faint: #7d7990;
+    --line: #f4f1fa1f; --line-strong: #f4f1fa59;
+    --accent: #c6bff0; --accent-ink: #c6bff0;
+    --invert-bg: #c6bff0; --invert-fg: #08080b;
+    --scanline: transparent; color-scheme: dark;
+    background: var(--bg); color: var(--ink);
   }
 
   html {
@@ -111,8 +170,8 @@
   }
 
   h1, h2, h3, h4 {
-    font-family: var(--font-display);
-    font-weight: 500;
+    font-family: var(--display-font);
+    font-weight: var(--display-weight);
     text-wrap: balance;
     color: var(--ink-strong);
   }
@@ -175,16 +234,16 @@
     gap: 0.5rem;
     width: fit-content;
     height: 44px;
-    padding: 0 20px;
-    border-radius: 0;
+    padding: 0 22px;
+    border-radius: 999px;
     white-space: nowrap;
-    font-family: var(--font-mono);
-    font-weight: 700;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.875rem;
     transition: opacity 150ms, background-color 150ms, color 150ms;
   }
+
+  .theme-app .btn { border-radius: 8px; }
 
   .btn-primary { background: var(--invert-bg); color: var(--invert-fg); }
   .btn-primary:hover { opacity: 0.8; }
@@ -192,10 +251,10 @@
   .btn-secondary { border: 1px solid var(--line-strong); color: var(--ink); }
   .btn-secondary:hover { background: var(--invert-bg); color: var(--invert-fg); }
 
-  .btn-ghost { height: 36px; padding: 0 12px; color: var(--muted); }
+  .btn-ghost { height: 36px; padding: 0 12px; border-radius: 8px; color: var(--muted); }
   .btn-ghost:hover { background: var(--invert-bg); color: var(--invert-fg); }
 
-  .btn-sm { height: 36px; padding: 0 14px; font-size: 0.6875rem; }
+  .btn-sm { height: 36px; padding: 0 14px; font-size: 0.8125rem; }
 
   .chip {
     display: inline-flex;

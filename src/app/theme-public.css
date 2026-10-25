@@ -1,0 +1,91 @@
+/* Styles for the public pages (home, projects, about): the lavender / near-black band look. */
+
+.pub-band {
+  position: relative;
+  overflow: hidden;
+  padding: 4.5rem 1rem 4rem;
+}
+
+.pub-band--hero { padding-top: 7rem; }
+
+@media (min-width: 640px) {
+  .pub-band { padding-left: 1.5rem; padding-right: 1.5rem; }
+}
+
+@media (min-width: 1024px) {
+  .pub-band { padding-left: 2.5rem; padding-right: 2.5rem; }
+}
+
+.pub-wrap {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+/* Headlines: Archivo Black, tight and upper case, with an italic serif accent. */
+.pub-h1,
+.pub-h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  text-transform: uppercase;
+  color: var(--ink-strong);
+  overflow-wrap: break-word;
+}
+
+.pub-h1 { font-size: clamp(2.25rem, 8.6vw, 5.25rem); line-height: 0.95; letter-spacing: -0.01em; }
+.pub-h2 { font-size: clamp(1.75rem, 5vw, 2.875rem); line-height: 1; letter-spacing: -0.01em; }
+
+.pub-serif {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: -0.01em;
+  color: var(--accent-ink);
+}
+
+.pub-h1 .pub-serif { display: block; margin-top: 0.1em; font-size: 0.62em; line-height: 1.05; }
+
+/* Nav bar shape changes smoothly between the flat top state and the floating scrolled state. */
+.pub-bar { transition: background-color 300ms ease, border-color 300ms ease, box-shadow 300ms ease; }
+
+/* Ticker strip above the nav. */
+.pub-ticker { overflow: hidden; height: 32px; display: flex; align-items: center; }
+.pub-ticker-track { display: flex; width: max-content; animation: pub-ticker-scroll 40s linear infinite; }
+.pub-ticker-row { display: flex; flex: none; }
+.pub-ticker-item {
+  display: inline-flex; align-items: center; gap: 1.25rem; padding-right: 1.25rem;
+  font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; white-space: nowrap;
+}
+.pub-ticker-sep { color: var(--accent); }
+@keyframes pub-ticker-scroll { to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .pub-ticker-track { animation: none; } }
+
+/* Floating pill navigation (public routes). */
+.pub-nav {
+  border: 1px solid #f4f1fa1f;
+  box-shadow: 0 10px 30px -12px rgba(8, 8, 11, 0.55);
+}
+
+/* Subtle keyboard focus ring that follows the band's accent. */
+.pub-band a:focus-visible,
+.pub-band button:focus-visible,
+.pub-nav a:focus-visible,
+.pub-nav button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 999px;
+}
+
+.pub-card-link { transition: transform 200ms ease, border-color 200ms ease; }
+.pub-card-link:hover { transform: translateY(-3px); border-color: var(--line-strong); }
+
+.pub-arcs { position: absolute; right: -80px; bottom: -80px; width: 420px; height: 420px; opacity: 0.35; pointer-events: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .pub-card-link,
+  .pub-card-link * { transition: none !important; }
+  .pub-card-link:hover { transform: none; }
+}

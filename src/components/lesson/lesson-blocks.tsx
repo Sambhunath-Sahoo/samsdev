@@ -5,16 +5,16 @@ import { slugify } from "@/lib/roadmap/lessons";
 import type { Lesson, LessonBlock } from "@/types/roadmap";
 
 const CALLOUT_STYLE = {
-  tip: { label: "Tip", bar: "border-[var(--app)]", text: "accent-text" },
-  gotcha: { label: "Gotcha", bar: "border-danger", text: "text-danger" },
-  cost: { label: "Cost", bar: "border-[var(--c-yellow)]", text: "text-[var(--c-yellow-ink)]" },
+  tip: { label: "Tip", box: "bg-tint-lav", text: "text-accent-ink" },
+  gotcha: { label: "Gotcha", box: "bg-warn-bg", text: "text-danger" },
+  cost: { label: "Cost", box: "bg-tint-sand", text: "text-warn-fg" },
 } as const;
 
 function Block({ block }: { block: LessonBlock }) {
   switch (block.type) {
     case "h2":
       return (
-        <h2 id={slugify(block.text)} className="mt-12 scroll-mt-28 text-2xl tracking-tight first:mt-0">
+        <h2 id={slugify(block.text)} className="mt-12 scroll-mt-28 text-2xl first:mt-0">
           {block.text}
         </h2>
       );
@@ -27,7 +27,7 @@ function Block({ block }: { block: LessonBlock }) {
     case "list": {
       const Tag = block.ordered ? "ol" : "ul";
       return (
-        <Tag className={`mt-4 max-w-[78ch] space-y-2 pl-6 text-[1.0625rem] leading-[1.7] text-muted marker:text-[var(--app)] ${block.ordered ? "list-decimal" : "list-[square]"}`}>
+        <Tag className={`mt-4 max-w-[78ch] space-y-2 pl-6 text-[1.0625rem] leading-[1.7] text-muted marker:text-accent ${block.ordered ? "list-decimal" : "list-[square]"}`}>
           {block.items.map((item) => (
             <li key={item}>
               <InlineText text={item} />
@@ -41,8 +41,8 @@ function Block({ block }: { block: LessonBlock }) {
     case "callout": {
       const style = CALLOUT_STYLE[block.tone];
       return (
-        <aside className={`my-6 max-w-[78ch] border border-line border-l-2 bg-bg-raised p-4 ${style.bar}`}>
-          <p className={`hud ${style.text}`}>
+        <aside className={`my-6 max-w-[78ch] rounded-xl p-4 ${style.box}`}>
+          <p className={`eyebrow ${style.text}`}>
             {style.label} · {block.title}
           </p>
           <p className="mt-2 text-sm leading-relaxed text-muted">
@@ -53,12 +53,12 @@ function Block({ block }: { block: LessonBlock }) {
     }
     case "table":
       return (
-        <div className="my-6 overflow-x-auto border border-line">
+        <div className="my-6 overflow-x-auto rounded-xl border border-line">
           <table className="w-full min-w-[32rem] border-collapse text-left text-sm">
-            <thead className="bg-bg-sunken">
+            <thead className="bg-tint-lav">
               <tr>
                 {block.head.map((cell) => (
-                  <th key={cell} scope="col" className="hud border-b border-line px-4 py-2.5 text-faint">
+                  <th key={cell} scope="col" className="eyebrow border-b border-line px-4 py-2.5">
                     {cell}
                   </th>
                 ))}
@@ -80,7 +80,7 @@ function Block({ block }: { block: LessonBlock }) {
       );
     case "figure":
       return (
-        <figure className="my-8 border border-line bg-bg-raised">
+        <figure className="my-8 overflow-hidden rounded-xl border border-line bg-bg-raised">
           <Image src={block.src} alt={block.alt} width={block.width} height={block.height} unoptimized className="h-auto w-full" />
           <figcaption className="border-t border-line px-4 py-2.5 text-sm text-muted">{block.caption}</figcaption>
         </figure>

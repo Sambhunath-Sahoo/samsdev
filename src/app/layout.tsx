@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Archivo, Inter, Geist_Mono, Instrument_Serif } from "next/font/google";
+import { Archivo, Archivo_Black, Inter, JetBrains_Mono, Source_Serif_4 } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider, THEME_STORAGE_KEY } from "@/components/theme-provider";
 import { ScrollToTopOnLoad } from "@/components/scroll-to-top-on-load";
@@ -18,16 +18,22 @@ const inter = Inter({
   weight: ["400", "500", "600"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const archivoBlack = Archivo_Black({
+  variable: "--font-archivo-black",
+  subsets: ["latin"],
+  weight: ["400"],
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
   subsets: ["latin"],
   weight: ["400", "500", "700"],
 });
 
-const instrumentSerif = Instrument_Serif({
-  variable: "--font-instrument-serif",
+const sourceSerif = Source_Serif_4({
+  variable: "--font-source-serif",
   subsets: ["latin"],
-  weight: ["400"],
+  weight: ["400", "500", "600"],
   style: ["normal", "italic"],
 });
 
@@ -46,13 +52,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={`${archivo.variable} ${archivoBlack.variable} ${inter.variable} ${jetbrainsMono.variable} ${sourceSerif.variable}`}>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeBootstrap }} />
       </head>
       <body
         suppressHydrationWarning
-        className={`${archivo.variable} ${inter.variable} ${geistMono.variable} ${instrumentSerif.variable} antialiased`}
+        className="antialiased"
       >
         <ThemeProvider>
           <ScrollToTopOnLoad />
