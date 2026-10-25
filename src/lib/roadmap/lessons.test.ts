@@ -31,6 +31,21 @@ const track: RoadmapTrack = {
   ],
 };
 
+/** AWS documentation's placeholder account ids. Any other 12-digit number could be a real account. */
+const EXAMPLE_ACCOUNT_IDS: ReadonlySet<string> = new Set(["111122223333", "123456789012"]);
+
+/** Addresses that cannot identify a real host: RFC 5737 documentation ranges, RFC 1918 private ranges, loopback, and public DNS resolvers everyone knows. */
+function isExampleAddress(ip: string): boolean {
+  const [a, b, c] = ip.split(".").map(Number);
+  if (["1.1.1.1", "8.8.8.8", "8.8.4.4", "0.0.0.0"].includes(ip)) return true;
+  if (a === 127 || a === 10) return true;
+  if (a === 192 && b === 168) return true;
+  if (a === 172 && b >= 16 && b <= 31) return true;
+  if (a === 192 && b === 0 && c === 2) return true;
+  if (a === 198 && b === 51 && c === 100) return true;
+  return a === 203 && b === 0 && c === 113;
+}
+
 describe("slugify", () => {
   it("lowercases, strips punctuation and joins words with dashes", () => {
     expect(slugify("Run: it & go!")).toBe("run-it-go");
@@ -86,7 +101,9 @@ describe("written roadmap lessons", () => {
 
   it("never lets a real account id, IP or key name into lesson text", () => {
     const text = JSON.stringify(all.map(({ ref }) => ref.subsection));
-    expect(text).not.toMatch(/\b\d{12}\b(?<!111122223333)/);
-    expect(text).not.toMatch(/\b(?:\d{1,3}\.){3}\d{1,3}\b(?<!203\.0\.113\.25)(?<!198\.51\.100\.7)(?<!127\.0\.0\.1)(?<!0\.0\.0\.0)/);
+    const accountIds = (text.match(/\b\d{12}\b/g) ?? []).filter((id) => !EXAMPLE_ACCOUNT_IDS.has(id));
+    const addresses = (text.match(/\b(?:\d{1,3}\.){3}\d{1,3}\b/g) ?? []).filter((ip) => !isExampleAddress(ip));
+    expect(accountIds).toEqual([]);
+    expect(addresses).toEqual([]);
   });
 });

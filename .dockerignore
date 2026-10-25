@@ -1,0 +1,13 @@
+node_modules
+.next
+.git
+.claude
+.cursor
+.playwright-mcp
+.sanity
+dist
+.env*
+!.env.example
+*.tsbuildinfo
+.DS_Store
+npm-debug.log*

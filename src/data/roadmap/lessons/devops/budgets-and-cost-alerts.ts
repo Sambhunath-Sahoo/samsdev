@@ -56,6 +56,11 @@ export const BUDGETS_AND_COST_ALERTS: RoadmapSubsection = {
       },
       { type: "callout", tone: "tip", title: "Automation makes terminating cheap", text: "When one command builds the server and another removes it, you can terminate every night and keep the monthly cost near $1. That is the point of Terraform later in the roadmap." },
     ],
+    references: [
+      { title: "AWS docs: Managing your costs with AWS Budgets", url: "https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html" },
+      { title: "AWS docs: What is AWS Cost Explorer?", url: "https://docs.aws.amazon.com/cost-management/latest/userguide/ce-what-is.html" },
+      { title: "AWS Free Tier", url: "https://aws.amazon.com/free/" },
+    ],
   },
   points: [
     {

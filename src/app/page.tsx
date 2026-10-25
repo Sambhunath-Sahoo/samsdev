@@ -17,7 +17,7 @@ export default function Home() {
       <HashScroll />
       <Navbar />
       <main>
-        <HeroSection index="01" />
+        <HeroSection />
         <WorkSection index="02" />
         <WorkExperienceSection index="03" />
         <ServicesSection index="04" />

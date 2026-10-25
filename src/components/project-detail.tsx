@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowLeft, ArrowUpRight, Github } from "lucide-react";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
-import { Rail, SectionBar } from "@/components/section-shell";
+import { Band, Bullet, CARD, TAG, TAG_ON } from "@/components/section-shell";
 import type { DetailedProject } from "@/types/content";
 import { padIndex } from "@/lib/hues";
 import { projectStatus, projectStatusLabel } from "@/lib/project-status";
@@ -54,91 +54,88 @@ export function ProjectDetail({ project }: { project: DetailedProject }) {
   const features = project.features ?? [];
   const tech = project.tech ?? [];
   const hasBody = Boolean(project.fullDescription) || features.length > 0;
+  const hasGallery = gallery.length > 0;
+  const detailsTone = hasGallery ? "lav" : "ink";
 
   return (
     <div className="min-h-screen">
       <Navbar />
       <main>
-        <section className="relative scanlines">
-          <Rail className="relative">
-            <SectionBar index="01" label="Project" aside={project.subtitle} />
-            <div className="cell-grid lg:grid-cols-2">
-              <div className="section-pad flex flex-col">
-                <Link href="/projects" className="hud inline-flex items-center gap-1.5 text-faint hover:text-ink">
-                  <ArrowLeft className="h-3 w-3" strokeWidth={2.5} /> All projects
-                </Link>
-                <h1 className="display-lg mt-6">{project.title}</h1>
-                <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted">{project.description}</p>
+        <Band tone="lav" hero>
+          <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-12">
+            <div className="flex min-w-0 flex-col">
+              <Link href="/projects" className="hud inline-flex items-center gap-1.5 text-muted hover:text-ink">
+                <ArrowLeft className="h-3 w-3" strokeWidth={2.5} /> All projects
+              </Link>
+              <p className="hud mt-6 text-muted">Chapter 01 / Project · {project.subtitle}</p>
+              <h1 className="pub-h1 mt-4 !text-[clamp(2rem,6vw,4rem)]">{project.title}</h1>
+              <p className="mt-5 max-w-xl text-base leading-relaxed text-muted md:text-lg">{project.description}</p>
 
-                <div className="mt-5 flex flex-wrap gap-1.5">
-                  <span className={cn("chip", projectStatus(project) === "live" && "chip-on")}>{projectStatusLabel(project)}</span>
-                  {tech.map((item) => (
-                    <span key={item} className="chip">
-                      {item}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="mt-8 flex flex-wrap items-center gap-2.5">
-                  {project.links?.live ? (
-                    <a href={project.links.live} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
-                      View live <ArrowUpRight className="h-3.5 w-3.5" strokeWidth={2.5} />
-                    </a>
-                  ) : (
-                    <span className="hud text-faint">Live link coming soon</span>
-                  )}
-                  {project.links?.github && (
-                    <a href={project.links.github} target="_blank" rel="noopener noreferrer" className="btn btn-secondary">
-                      <Github className="h-3.5 w-3.5" /> Source
-                    </a>
-                  )}
-                </div>
-              </div>
-
-              <div className="flex items-center justify-center p-6 md:p-10">
-                <div className="w-full overflow-hidden border border-line">
-                  <Media project={project} />
-                </div>
-              </div>
-            </div>
-          </Rail>
-        </section>
-
-        {gallery.length > 0 && (
-          <section>
-            <Rail>
-              <SectionBar index="02" label="Gallery" aside={`${gallery.length} screenshot${gallery.length === 1 ? "" : "s"}`} />
-              <div className="cell-grid sm:grid-cols-2 lg:grid-cols-3">
-                {gallery.map((src, i) => (
-                  <figure key={src} className="relative aspect-[4/3] bg-bg-sunken">
-                    <Image src={src} alt={`${project.title} screenshot ${i + 1}`} fill sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" className="object-cover object-top" />
-                  </figure>
+              <div className="mt-5 flex flex-wrap gap-1.5">
+                <span className={cn(TAG, projectStatus(project) === "live" && TAG_ON)}>{projectStatusLabel(project)}</span>
+                {tech.map((item) => (
+                  <span key={item} className={TAG}>
+                    {item}
+                  </span>
                 ))}
               </div>
-            </Rail>
-          </section>
+
+              <div className="mt-8 flex flex-wrap items-center gap-2.5">
+                {project.links?.live ? (
+                  <a href={project.links.live} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
+                    View live <ArrowUpRight className="h-3.5 w-3.5" strokeWidth={2.5} />
+                  </a>
+                ) : (
+                  <span className="hud text-muted">Live link coming soon</span>
+                )}
+                {project.links?.github && (
+                  <a href={project.links.github} target="_blank" rel="noopener noreferrer" className="btn btn-secondary">
+                    <Github className="h-3.5 w-3.5" /> Source
+                  </a>
+                )}
+              </div>
+            </div>
+
+            <div className="min-w-0 overflow-hidden rounded-2xl border border-line-strong">
+              <Media project={project} />
+            </div>
+          </div>
+        </Band>
+
+        {hasGallery && (
+          <Band tone="ink">
+            <p className="hud mb-6 text-muted">
+              Chapter 02 / Gallery · {gallery.length} screenshot{gallery.length === 1 ? "" : "s"}
+            </p>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {gallery.map((src, i) => (
+                <figure key={src} className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-line bg-bg-sunken">
+                  <Image src={src} alt={`${project.title} screenshot ${i + 1}`} fill sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" className="object-cover object-top" />
+                </figure>
+              ))}
+            </div>
+          </Band>
         )}
 
-        <section>
-          <Rail>
-            <SectionBar index={gallery.length > 0 ? "03" : "02"} label="Details" aside="What it does and how it is built" />
-            <div className={hasBody ? "cell-grid lg:grid-cols-[2fr_1fr]" : "cell-grid"}>
-              {hasBody && (
-              <div className="cell">
+        <Band tone={detailsTone}>
+          <p className="hud mb-6 text-muted">Chapter {hasGallery ? "03" : "02"} / Details · What it does and how it is built</p>
+          <div className={cn("grid gap-4", hasBody && "lg:grid-cols-[2fr_1fr]")}>
+            {hasBody && (
+              <div className={CARD}>
                 {project.fullDescription && (
                   <>
-                    <p className="hud text-faint">About the project</p>
-                    <p className="mt-4 max-w-[65ch] leading-[1.7] text-muted">{project.fullDescription}</p>
+                    <p className="hud text-muted">About the project</p>
+                    <p className="mt-4 max-w-[65ch] leading-[1.7] text-ink">{project.fullDescription}</p>
                   </>
                 )}
 
                 {features.length > 0 && (
                   <div className={project.fullDescription ? "mt-10" : ""}>
-                    <p className="hud text-faint">Key features</p>
-                    <div className="cell-grid mt-4 border border-line sm:grid-cols-2">
+                    <p className="hud text-muted">Key features</p>
+                    <div className="mt-4 grid gap-3 sm:grid-cols-2">
                       {features.map((feature, i) => (
-                        <div key={feature} className="flex gap-3 p-4 sm:[&:last-child:nth-child(odd)]:col-span-2">
-                          <span className="hud num self-start">{padIndex(i)}</span>
+                        <div key={feature} className="flex gap-3 rounded-xl border border-line p-4 sm:[&:last-child:nth-child(odd)]:col-span-2">
+                          <span className="font-display text-xl leading-none text-accent-ink">{padIndex(i)}</span>
                           <span className="text-sm leading-relaxed text-ink">{feature}</span>
                         </div>
                       ))}
@@ -146,22 +143,21 @@ export function ProjectDetail({ project }: { project: DetailedProject }) {
                   </div>
                 )}
               </div>
-              )}
+            )}
 
-              <div className="cell">
-                <p className="hud text-faint">Stack</p>
-                <ul className="mt-4 grid gap-2.5 text-ink">
-                  {tech.map((item) => (
-                    <li key={item} className="flex items-center gap-2.5">
-                      <span aria-hidden="true" className="h-1.5 w-1.5 flex-none bg-accent" />
-                      <span className="font-mono text-sm tracking-[0.04em]">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+            <div className={CARD}>
+              <p className="hud text-muted">Stack</p>
+              <ul className="mt-4 grid gap-2.5 text-ink">
+                {tech.map((item) => (
+                  <li key={item} className="flex items-center gap-2.5">
+                    <Bullet />
+                    <span className="font-mono text-sm tracking-[0.04em]">{item}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
-          </Rail>
-        </section>
+          </div>
+        </Band>
       </main>
       <Footer />
     </div>

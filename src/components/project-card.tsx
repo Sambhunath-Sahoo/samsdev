@@ -2,8 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import type { DetailedProject } from "@/types/content";
-import { hueClass, padIndex } from "@/lib/hues";
+import { padIndex } from "@/lib/hues";
 import { projectStatus, projectStatusLabel } from "@/lib/project-status";
+import { CARD, TAG, TAG_ON } from "@/components/section-shell";
 import { cn } from "@/lib/utils";
 
 const MAX_TECH_CHIPS = 5;
@@ -12,47 +13,40 @@ export function ProjectCard({ project, index }: { project: DetailedProject; inde
   const tech = (project.tech ?? []).slice(0, MAX_TECH_CHIPS);
 
   return (
-    <Link
-      href={`/projects/${project.slug}`}
-      className={cn("group relative flex h-full flex-col bg-bg", hueClass(index))}
-    >
-      <div className="flex items-center justify-between gap-4 border-b border-line px-4 py-2">
-        <span className="hud num">{padIndex(index)}</span>
-        <p className="hud truncate text-faint">{project.subtitle}</p>
+    <Link href={`/projects/${project.slug}`} className={cn(CARD, "pub-card-link group flex h-full flex-col !p-4")}>
+      <div className="flex items-center justify-between gap-4">
+        <span className="font-display text-3xl leading-none text-accent-ink">{padIndex(index)}</span>
+        <p className="hud truncate text-muted">{project.subtitle}</p>
       </div>
 
-      <div className="relative aspect-[16/9] overflow-hidden border-b border-line bg-bg-sunken">
-        <div className="absolute inset-x-4 top-4 -bottom-1 overflow-hidden border border-line bg-bg-raised transition-transform duration-300 group-hover:-translate-y-1.5">
-          {project.image ? (
-            <Image
-              src={project.image}
-              alt={project.title}
-              fill
-              sizes="(min-width: 640px) 50vw, 100vw"
-              className="object-cover object-top"
-            />
-          ) : (
-            <div className="grid h-full place-items-center font-display text-4xl text-faint">
-              {project.title.charAt(0)}
-            </div>
-          )}
-        </div>
+      <div className="relative mt-4 aspect-[16/9] overflow-hidden rounded-xl border border-line bg-bg-sunken">
+        {project.image ? (
+          <Image
+            src={project.image}
+            alt={project.title}
+            fill
+            sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+            className="object-cover object-top"
+          />
+        ) : (
+          <div className="grid h-full place-items-center font-display text-4xl text-faint">{project.title.charAt(0)}</div>
+        )}
       </div>
 
-      <div className="flex flex-1 flex-col px-4 pb-4 pt-4">
-        <h3 className="text-xl leading-tight tracking-[-0.02em]">{project.title}</h3>
+      <div className="flex flex-1 flex-col pt-4">
+        <h3 className="font-display text-xl leading-tight text-ink-strong">{project.title}</h3>
         <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-muted">{project.description}</p>
 
-        <div className="mt-3 flex flex-wrap gap-1">
-          <span className={cn("chip", projectStatus(project) === "live" && "chip-on")}>{projectStatusLabel(project)}</span>
+        <div className="mt-3 flex flex-wrap gap-1.5">
+          <span className={cn(TAG, projectStatus(project) === "live" && TAG_ON)}>{projectStatusLabel(project)}</span>
           {tech.map((item) => (
-            <span key={item} className="chip">
+            <span key={item} className={TAG}>
               {item}
             </span>
           ))}
         </div>
 
-        <span className="hud mt-auto flex items-center gap-1.5 pt-4 text-muted transition-colors group-hover:text-ink">
+        <span className="hud mt-auto flex items-center gap-1.5 pt-4 text-ink">
           Explore
           <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" strokeWidth={2.5} />
         </span>

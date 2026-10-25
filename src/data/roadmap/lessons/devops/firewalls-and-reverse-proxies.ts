@@ -77,6 +77,11 @@ docker logs caddy 2>&1 | tail -15`,
         ],
       },
     ],
+    references: [
+      { title: "Caddy docs: Reverse proxy quick-start", url: "https://caddyserver.com/docs/quick-starts/reverse-proxy" },
+      { title: "AWS docs: Security groups", url: "https://docs.aws.amazon.com/vpc/latest/userguide/vpc-security-groups.html" },
+      { title: "Ubuntu Server docs: Firewalls", url: "https://ubuntu.com/server/docs/firewalls" },
+    ],
   },
   points: [
     {

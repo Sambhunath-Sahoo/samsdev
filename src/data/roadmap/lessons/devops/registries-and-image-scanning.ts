@@ -55,6 +55,11 @@ aws ecr describe-images --repository-name myapp-api --region ap-south-1 --profil
       { type: "h2", text: "Image scanning" },
       { type: "p", text: "With `scanOnPush=true`, ECR checks each pushed image against a database of known vulnerabilities and lists findings by severity. Read the scan after a push, fix what is fixable (usually by updating the base image), and treat a critical finding in a package you actually use as a blocker." },
     ],
+    references: [
+      { title: "AWS docs: What is Amazon ECR?", url: "https://docs.aws.amazon.com/AmazonECR/latest/userguide/what-is-ecr.html" },
+      { title: "Trivy documentation", url: "https://trivy.dev/docs/latest/" },
+      { title: "Docker docs: Docker Hub", url: "https://docs.docker.com/docker-hub/" },
+    ],
   },
   points: [
     {

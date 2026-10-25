@@ -78,6 +78,11 @@ curl localhost:8000/health`,
       { type: "h2", text: "Where ECS Fargate fits" },
       { type: "p", text: "Fargate runs containers without a server for you to patch or SSH into. EC2 first is deliberate: doing it by hand shows what Fargate, and later Kubernetes, automate for you." },
     ],
+    references: [
+      { title: "AWS docs: Amazon EC2 concepts", url: "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html" },
+      { title: "AWS docs: AWS Fargate for Amazon ECS", url: "https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html" },
+      { title: "AWS docs: Amazon EC2 key pairs", url: "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html" },
+    ],
   },
   points: [
     {

@@ -48,6 +48,11 @@ docker volume inspect caddy_data`,
       },
       { type: "callout", tone: "tip", title: "Version 1 shortcut", text: "Copying the env file to the server with `scp` is fine for a first deploy. Later versions replace it with a parameter store, so no secret file sits on the machine." },
     ],
+    references: [
+      { title: "Docker docs: Volumes", url: "https://docs.docker.com/engine/storage/volumes/" },
+      { title: "Docker docs: Networking", url: "https://docs.docker.com/engine/network/" },
+      { title: "Docker docs: Build secrets", url: "https://docs.docker.com/build/building/secrets/" },
+    ],
   },
   points: [
     {

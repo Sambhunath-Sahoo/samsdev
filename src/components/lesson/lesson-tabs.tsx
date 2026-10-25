@@ -23,8 +23,8 @@ export function LessonTabs({ learn, review }: { learn: React.ReactNode; review: 
             aria-controls={`panel-${name}`}
             onClick={() => setTab(name)}
             className={cn(
-              "-mb-px border-b-2 px-1 py-3 text-sm font-medium",
-              tab === name ? "border-[var(--app)] text-ink" : "border-transparent text-muted hover:text-ink",
+              "-mb-px rounded-t-md border-b-2 px-1 py-3 text-sm font-medium",
+              tab === name ? "border-accent text-ink" : "border-transparent text-muted hover:text-ink",
             )}
           >
             {name}

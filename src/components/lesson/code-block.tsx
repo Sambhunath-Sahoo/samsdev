@@ -13,7 +13,7 @@ const TOKEN_CLASS: Record<TokenKind, string> = {
 export function CodeBlock({ language, code, title }: { language: string; code: string; title?: string }) {
   const label = title ?? language;
   return (
-    <figure className="my-5 overflow-hidden rounded-lg border border-[#181a1f] bg-[#282c34]">
+    <figure className="my-5 overflow-hidden rounded-xl border border-[#181a1f] bg-[#282c34]">
       <figcaption className="flex items-center gap-3 border-b border-[#181a1f] bg-[#21252b] px-3 py-1.5">
         <span aria-hidden className="flex shrink-0 gap-1.5">
           <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />

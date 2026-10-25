@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { CARD } from "@/components/section-shell";
+import { cn } from "@/lib/utils";
 
 interface ProjectsTeaserProps {
   githubUrl: string;
@@ -6,13 +8,13 @@ interface ProjectsTeaserProps {
   showAllLink?: boolean;
 }
 
-/** The "more on the way" cell that closes a project grid and keeps the cell count even. */
+/** The "more on the way" card that closes a project grid. */
 export function ProjectsTeaser({ githubUrl, showAllLink = false }: ProjectsTeaserProps) {
   return (
-    <div className="cell hue-orange flex flex-col justify-center sm:[&:last-child:nth-child(odd)]:col-span-2">
-      <p className="hud text-faint">Next up</p>
-      <h3 className="mt-3 text-xl leading-tight tracking-[-0.02em]">
-        More projects <span className="accent-text">on the way</span>
+    <div className={cn(CARD, "flex flex-col justify-center border-dashed sm:[&:last-child:nth-child(odd)]:col-span-2")}>
+      <p className="hud text-muted">Next up</p>
+      <h3 className="mt-3 font-display text-xl uppercase leading-tight text-ink-strong">
+        More projects <span className="pub-serif text-[1.1em]">on the way</span>
       </h3>
       <p className="mt-2 text-sm leading-relaxed text-muted">
         Side projects, experiments and open-source work land here first. Follow along on GitHub for early builds.

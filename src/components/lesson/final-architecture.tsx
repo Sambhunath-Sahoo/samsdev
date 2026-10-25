@@ -11,9 +11,9 @@ function Box({ x, y, w, h, label, sub, accent, dashed }: BoxProps) {
         y={y}
         width={w}
         height={h}
-        rx={4}
+        rx={8}
         fill="var(--bg-raised)"
-        stroke={accent ? "var(--app)" : "var(--line-strong)"}
+        stroke={accent ? "var(--accent)" : "var(--line-strong)"}
         strokeWidth={accent ? 1.75 : 1}
         strokeDasharray={dashed ? "5 4" : undefined}
       />
@@ -45,7 +45,7 @@ function Arrow({ d, label, lx, ly }: { d: string; label?: string; lx?: number; l
 function Frame({ x, y, w, h, label, dashed }: { x: number; y: number; w: number; h: number; label: string; dashed?: boolean }) {
   return (
     <g>
-      <rect x={x} y={y} width={w} height={h} rx={6} fill="none" stroke="var(--line-strong)" strokeDasharray={dashed ? "6 5" : undefined} />
+      <rect x={x} y={y} width={w} height={h} rx={12} fill="none" stroke="var(--line-strong)" strokeDasharray={dashed ? "6 5" : undefined} />
       <text x={x + 12} y={y + 18} fontSize={10.5} letterSpacing={1.2} fill="currentColor" opacity={0.55} style={{ textTransform: "uppercase" }}>
         {label}
       </text>
@@ -55,7 +55,7 @@ function Frame({ x, y, w, h, label, dashed }: { x: number; y: number; w: number;
 
 export function FinalArchitecture() {
   return (
-    <figure className="border border-line bg-bg-raised">
+    <figure className="overflow-hidden rounded-xl border border-line bg-bg-raised">
       <div className="overflow-x-auto">
         <svg
           viewBox="0 0 1100 640"

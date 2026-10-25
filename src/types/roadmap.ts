@@ -16,11 +16,19 @@ export type LessonBlock =
   | { readonly type: "table"; readonly head: readonly string[]; readonly rows: readonly (readonly string[])[] }
   | { readonly type: "figure"; readonly src: string; readonly alt: string; readonly caption: string; readonly width: number; readonly height: number };
 
+/** An external page worth reading next. Must be a public https URL. */
+export interface LessonReference {
+  readonly title: string;
+  readonly url: string;
+}
+
 export interface Lesson {
   /** One sentence shown under the title and in lesson cards. */
   readonly summary: string;
   readonly minutes: number;
   readonly blocks: readonly LessonBlock[];
+  /** "Further reading" links shown after the lesson. */
+  readonly references?: readonly LessonReference[];
 }
 
 export interface RoadmapSubsection {
@@ -46,4 +54,12 @@ export interface RoadmapTrack {
   readonly description: string;
   readonly hue: "orange" | "blue";
   readonly sections: readonly RoadmapSection[];
+}
+
+/** A written lesson that belongs to one outline subsection, matched by track, section title and subsection title. */
+export interface LessonEntry {
+  readonly track: "devops" | "system-design";
+  /** Exact `title` of the section the subsection sits in. */
+  readonly section: string;
+  readonly subsection: RoadmapSubsection;
 }

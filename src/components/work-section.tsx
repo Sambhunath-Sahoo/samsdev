@@ -1,4 +1,4 @@
-import { Rail, SectionBar, SectionHead } from "@/components/section-shell";
+import { Band, BandHead } from "@/components/section-shell";
 import { ProjectCard } from "@/components/project-card";
 import { ProjectsTeaser } from "@/components/projects-teaser";
 import { getDetailedProjects } from "@/lib/content/projects";
@@ -16,18 +16,18 @@ export async function WorkSection({ index = "02" }: { index?: string }) {
   const hasMore = projects.length > HOME_PROJECT_LIMIT;
 
   return (
-    <section id="work" className="scroll-mt-12">
-      <Rail>
-        <SectionBar index={index} label="Work" aside="Pick a project to explore" />
-        <SectionHead title="Work" description="AI and full stack products I designed and built. Pick one to open the case study." />
-
-        <div className="cell-grid sm:grid-cols-2 lg:grid-cols-4">
-          {featured.map((project, i) => (
-            <ProjectCard key={project.slug} project={project} index={i} />
-          ))}
-          <ProjectsTeaser githubUrl={contacts?.github ?? DEFAULT_GITHUB} showAllLink={hasMore} />
-        </div>
-      </Rail>
-    </section>
+    <Band tone="ink" id="work">
+      <BandHead
+        eyebrow={`Chapter ${index} / Selected work`}
+        title="Work"
+        lead="AI and full stack products I designed and built. Pick one to open the case study."
+      />
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {featured.map((project, i) => (
+          <ProjectCard key={project.slug} project={project} index={i} />
+        ))}
+        <ProjectsTeaser githubUrl={contacts?.github ?? DEFAULT_GITHUB} showAllLink={hasMore} />
+      </div>
+    </Band>
   );
 }

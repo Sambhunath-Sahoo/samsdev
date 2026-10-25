@@ -15,7 +15,7 @@ export function ExpandControls() {
   }
 
   return (
-    <button type="button" onClick={toggleAll} className="accent-text text-sm font-semibold hover:underline">
+    <button type="button" onClick={toggleAll} className="rounded-md px-1 text-sm font-semibold text-accent-ink hover:underline">
       {isExpanded ? "Collapse all sections" : "Expand all sections"}
     </button>
   );
