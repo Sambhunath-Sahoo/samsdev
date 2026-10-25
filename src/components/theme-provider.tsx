@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
+import { THEME_STORAGE_KEY } from "@/lib/theme";
 
 type Theme = "light" | "dark";
 
@@ -12,7 +13,6 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-export const THEME_STORAGE_KEY = "portfolio-theme";
 const THEME_TRANSITION_CLASS = "theme-transition";
 const THEME_TRANSITION_MS = 200;
 

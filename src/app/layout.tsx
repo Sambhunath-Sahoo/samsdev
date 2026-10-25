@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Archivo, Archivo_Black, Inter, JetBrains_Mono, Source_Serif_4 } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider, THEME_STORAGE_KEY } from "@/components/theme-provider";
+import { ThemeProvider } from "@/components/theme-provider";
+import { THEME_STORAGE_KEY } from "@/lib/theme";
 import { ScrollToTopOnLoad } from "@/components/scroll-to-top-on-load";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
