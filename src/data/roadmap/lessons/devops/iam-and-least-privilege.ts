@@ -56,6 +56,11 @@ aws sts get-caller-identity --profile myapp   # who am I?`,
       { type: "callout", tone: "cost", title: "IAM and Identity Center are free", text: "Users, roles, policies and MFA cost nothing. Costs come from the resources you create with them." },
       { type: "p", text: "`AdministratorAccess` is acceptable for a personal learning account. In a team, give each person or pipeline a narrower permission set." },
     ],
+    references: [
+      { title: "AWS docs: Security best practices in IAM", url: "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html" },
+      { title: "AWS docs: Policies and permissions in IAM", url: "https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html" },
+      { title: "AWS docs: What is IAM Identity Center?", url: "https://docs.aws.amazon.com/singlesignon/latest/userguide/what-is.html" },
+    ],
   },
   points: [
     {

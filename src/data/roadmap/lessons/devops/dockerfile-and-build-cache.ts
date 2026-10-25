@@ -109,6 +109,11 @@ CMD exec node apps/\${APP}/server.js`,
       { type: "callout", tone: "gotcha", title: "pnpm fetch fails on build scripts", text: "If `package.json` is not copied before `pnpm fetch`, Corepack installs the newest pnpm, which blocks dependency build scripts. Copying `package.json` first pins the version from `packageManager`." },
       { type: "callout", tone: "gotcha", title: "Monorepo output must be traced from the root", text: "Set `output: \"standalone\"` and `outputFileTracingRoot` to the repo root in `next.config`, or the shared workspace packages are missing from the standalone bundle." },
     ],
+    references: [
+      { title: "Docker docs: Build cache", url: "https://docs.docker.com/build/cache/" },
+      { title: "Docker docs: Multi-stage builds", url: "https://docs.docker.com/build/building/multi-stage/" },
+      { title: "Docker docs: Dockerfile reference", url: "https://docs.docker.com/reference/dockerfile/" },
+    ],
   },
   points: [
     {

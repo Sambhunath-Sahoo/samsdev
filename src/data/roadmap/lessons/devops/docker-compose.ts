@@ -77,6 +77,11 @@ docker compose down               # stop and remove the containers`,
       { type: "callout", tone: "gotcha", title: "Two env files, two jobs", text: "Compose reads the `.env` next to the compose file to fill `${VARIABLES}` in the YAML, such as build arguments. `env_file:` is different: it hands variables to the running container. Do not mix them up, and commit only a `.env.example` with the names but no values." },
       { type: "callout", tone: "tip", title: "Check each app from the browser", text: "A green `docker compose ps` is not proof. Open each app and sign in. A bad API address baked into a web image only shows up there." },
     ],
+    references: [
+      { title: "Docker docs: Compose", url: "https://docs.docker.com/compose/" },
+      { title: "Docker docs: Compose file reference", url: "https://docs.docker.com/reference/compose-file/" },
+      { title: "Docker docs: Control startup order", url: "https://docs.docker.com/compose/how-tos/startup-order/" },
+    ],
   },
   points: [
     {
