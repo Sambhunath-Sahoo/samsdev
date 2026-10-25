@@ -46,11 +46,11 @@ export default async function RoadmapTrackPage({ params }: RoadmapTrackParams) {
   ] as const;
 
   return (
-    <div className="px-4 pb-24 pt-10 sm:px-8 lg:px-14">
-      <div className="mx-auto flex w-full max-w-[72rem] flex-col gap-5">
+    <div className="px-4 pb-20 pt-6 sm:px-6 lg:px-10">
+      <div className="mx-auto flex w-full max-w-[64rem] flex-col gap-4">
         <p className="eyebrow">Start your course</p>
         <h1 className="display-lg">Learn {track.title}</h1>
-        <p className="max-w-[60ch] text-lg leading-relaxed text-muted">{track.description}</p>
+        <p className="max-w-[68ch] text-[0.9375rem] leading-relaxed text-muted">{track.description}</p>
 
         <dl className="grid grid-cols-[repeat(auto-fit,minmax(9.5rem,1fr))] gap-x-6 gap-y-3 border-y border-line py-4">
           {stats.map(([label, value]) => (
@@ -63,19 +63,19 @@ export default async function RoadmapTrackPage({ params }: RoadmapTrackParams) {
 
         <Link
           href="#topics"
-          className="inline-flex w-fit items-center gap-2 rounded-md bg-accent px-5 py-3 text-sm font-medium text-[var(--num-fg)] transition-opacity hover:opacity-90 motion-reduce:transition-none"
+          className="inline-flex w-fit items-center gap-2 rounded-md bg-accent px-4 py-2 text-[0.8125rem] font-medium text-[var(--num-fg)] transition-opacity hover:opacity-90 motion-reduce:transition-none"
         >
           Choose your first topic <ArrowDown className="h-4 w-4" aria-hidden />
         </Link>
 
         <RoadmapMindMap trackId={track.id} trackTitle={track.title} sections={toNavSections(track)} />
 
-        <div className="mt-6">
+        <div className="mt-4">
           <RoadmapTrackSection track={track} />
         </div>
 
-        <section className="mt-10" aria-labelledby="building-heading">
-          <h2 id="building-heading" className="text-2xl">
+        <section className="mt-8" aria-labelledby="building-heading">
+          <h2 id="building-heading" className="text-xl">
             What we are building
           </h2>
           <p className="mt-2 max-w-[68ch] leading-relaxed text-muted">

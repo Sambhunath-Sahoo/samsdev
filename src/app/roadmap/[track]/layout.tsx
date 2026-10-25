@@ -32,7 +32,7 @@ export default async function RoadmapTrackLayout({ children, params }: TrackLayo
         isSignedIn={Boolean(session?.user?.id) && !progressUnavailable}
         initialCompleted={completedIds}
       >
-        <div className="lg:grid lg:grid-cols-[320px_minmax(0,1fr)]">
+        <div className="lg:grid lg:grid-cols-[272px_minmax(0,1fr)]">
           <details className="border-b border-line bg-bg lg:hidden">
             <summary className="cursor-pointer list-none px-4 py-3.5 text-sm font-semibold text-ink [&::-webkit-details-marker]:hidden sm:px-6">Course contents ▾</summary>
             {nav}

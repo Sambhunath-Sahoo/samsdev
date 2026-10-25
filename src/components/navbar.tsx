@@ -193,11 +193,11 @@ function PillNav({ activeHref, onNavigate, isMobileOpen, onToggleMobile, onToggl
 /** Roadmap pages: flat app bar with a round logo, normal-case links and a pale lavender pill on the active one. */
 function FlatNav({ activeHref, onNavigate, isMobileOpen, onToggleMobile, onToggleTheme }: NavProps) {
   const iconButton =
-    "flex h-10 w-10 items-center justify-center rounded-lg border border-line bg-bg-raised text-muted transition-colors hover:bg-tint-lav hover:text-ink";
+    "flex h-8 w-8 items-center justify-center rounded-lg border border-line bg-bg-raised text-muted transition-colors hover:bg-tint-lav hover:text-ink";
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-line bg-bg/95 backdrop-blur-sm">
-      <div className="flex h-14 items-center gap-1 px-4 sm:px-6">
+      <div className="flex h-12 items-center gap-1 px-4 sm:px-5">
         <Brand mark compact className="mr-3" />
 
         <nav aria-label="Primary" className="hidden min-w-0 items-center gap-0.5 lg:flex">
@@ -210,7 +210,7 @@ function FlatNav({ activeHref, onNavigate, isMobileOpen, onToggleMobile, onToggl
                 onClick={() => onNavigate(item.href)}
                 aria-current={isActive ? "page" : undefined}
                 className={cn(
-                  "whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+                  "whitespace-nowrap rounded-lg px-2.5 py-1.5 text-[0.8125rem] font-medium transition-colors",
                   isActive ? "bg-tint-lav text-ink" : "text-muted hover:bg-tint-lav/60 hover:text-ink",
                 )}
               >
@@ -232,7 +232,7 @@ function FlatNav({ activeHref, onNavigate, isMobileOpen, onToggleMobile, onToggl
           <Link
             href="/#contact"
             onClick={() => onNavigate("/#contact")}
-            className="hidden h-10 items-center rounded-lg border border-line-strong bg-bg-raised px-4 text-sm font-medium text-ink transition-colors hover:bg-tint-lav sm:inline-flex"
+            className="hidden h-8 items-center rounded-lg border border-line-strong bg-bg-raised px-3 text-[0.8125rem] font-medium text-ink transition-colors hover:bg-tint-lav sm:inline-flex"
           >
             Let&apos;s talk
           </Link>

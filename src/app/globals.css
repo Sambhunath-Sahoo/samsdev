@@ -79,9 +79,9 @@
     --c-pink: #49677a;   --c-pink-ink: #49677a;
     --c-green: #337044;  --c-green-ink: #337044;
 
-    --display-font: var(--font-archivo-black), var(--font-archivo), Impact, sans-serif;
     --display-weight: 400;
-    --nav-h: 56px;
+    --display-font: var(--font-archivo-black), var(--font-archivo), Impact, sans-serif;
+    --nav-h: 48px;
     color-scheme: light;
   }
 

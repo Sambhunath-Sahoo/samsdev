@@ -37,16 +37,16 @@ export function RoadmapMindMap({ trackId, trackTitle, sections }: { trackId: str
   const isDone = (item: NavItem) => item.pointIds.length > 0 && item.pointIds.every((id) => completed.has(id));
 
   return (
-    <section id="mindmap" aria-labelledby="mindmap-heading" className="mt-10 scroll-mt-24">
-      <h2 id="mindmap-heading" className="text-2xl">
+    <section id="mindmap" aria-labelledby="mindmap-heading" className="mt-8 scroll-mt-24">
+      <h2 id="mindmap-heading" className="text-xl">
         Mind map
       </h2>
       <p className="mt-2 max-w-[68ch] leading-relaxed text-muted">The whole course on one page. Each branch is a section, each chip a lesson. Done lessons get a tick.</p>
 
-      <div className="mt-5 rounded-2xl border border-line bg-bg-raised p-4 sm:p-6">
+      <div className="mt-5 rounded-xl border border-line bg-bg-raised p-3 sm:p-4">
         <div className="flex flex-col gap-5 md:flex-row md:items-center md:gap-0">
           <div className="flex items-center md:sticky md:top-24 md:shrink-0 md:self-start">
-            <div className="grid min-h-24 w-full place-items-center rounded-3xl bg-accent px-6 py-5 text-center font-display text-xl leading-tight text-[var(--num-fg)] md:size-40 md:rounded-full">
+            <div className="grid min-h-24 w-full place-items-center rounded-3xl bg-accent px-6 py-5 text-center font-display text-lg leading-tight text-[var(--num-fg)] md:size-32 md:rounded-full">
               {trackTitle}
             </div>
             <span aria-hidden className="hidden h-0.5 w-8 bg-line-strong md:block" />
@@ -58,11 +58,11 @@ export function RoadmapMindMap({ trackId, trackTitle, sections }: { trackId: str
                 key={section.title}
                 className={cn(
                   hueClass(index),
-                  "relative flex flex-col gap-2 py-2.5 lg:flex-row lg:items-start lg:gap-4",
-                  "before:absolute before:-left-6 before:top-[1.55rem] before:h-0.5 before:w-6 before:bg-line-strong md:before:-left-8 md:before:w-8",
+                  "relative flex flex-col gap-1.5 py-2 lg:flex-row lg:items-start lg:gap-4",
+                  "before:absolute before:-left-6 before:top-[1.35rem] before:h-0.5 before:w-6 before:bg-line-strong md:before:-left-8 md:before:w-8",
                 )}
               >
-                <span className="inline-flex w-fit shrink-0 items-center gap-2 rounded-full bg-[var(--app)] px-3 py-1.5 text-sm font-semibold text-[var(--num-fg)] lg:w-60">
+                <span className="inline-flex w-fit shrink-0 items-center gap-2 rounded-full bg-[var(--app)] px-3 py-1 text-[0.8125rem] font-semibold text-[var(--num-fg)] lg:w-56">
                   <span className="text-xs opacity-80">{padIndex(index)}</span>
                   <span className="min-w-0">{section.title}</span>
                 </span>

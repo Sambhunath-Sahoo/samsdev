@@ -3,6 +3,9 @@
 .theme-app {
   background: var(--bg);
   color: var(--ink);
+  /* Compact density: 14px text unless a component sets its own size. */
+  font-size: 0.875rem;
+  line-height: 1.5;
 }
 
 /* Small caps label above a page title. */
@@ -19,8 +22,10 @@
 .theme-app .display-lg,
 .theme-app .display-md {
   letter-spacing: -0.015em;
-  line-height: 1.1;
+  line-height: 1.15;
 }
+.theme-app .display-lg { font-size: clamp(1.5rem, 2.2vw, 1.875rem); }
+.theme-app .display-md { font-size: clamp(1.25rem, 1.8vw, 1.5rem); }
 
 /* Rounded pill used for status badges (Soon, N lessons, Done). */
 .theme-app .pill {

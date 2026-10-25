@@ -40,14 +40,14 @@ export default async function LessonPage({ params }: LessonParams) {
 
   return (
     <>
-      <div className="px-4 pb-32 pt-8 sm:px-8 lg:px-14 lg:pb-24 xl:grid xl:grid-cols-[minmax(0,1fr)_260px] xl:gap-16">
-        <article className="mx-auto w-full min-w-0 max-w-[60rem]">
+      <div className="px-4 pb-28 pt-6 sm:px-6 lg:px-10 lg:pb-20 xl:grid xl:grid-cols-[minmax(0,1fr)_220px] xl:gap-10">
+        <article className="mx-auto w-full min-w-0 max-w-[52rem]">
           <p className="eyebrow">
             {ref.sectionTitle} <span className="mx-1">·</span> Lesson {ref.position} of {ref.total}
           </p>
           <h1 className="display-lg mt-3 max-w-3xl">{ref.subsection.title}</h1>
-          <p className="mt-4 max-w-[60ch] text-lg leading-relaxed text-muted">{lesson.summary}</p>
-          <p className="mt-4 flex flex-wrap gap-x-5 gap-y-1 text-sm text-muted">
+          <p className="mt-2 max-w-[68ch] text-[0.9375rem] leading-relaxed text-muted">{lesson.summary}</p>
+          <p className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted">
             <span className="inline-flex items-center gap-1.5">
               <Clock className="h-3 w-3" aria-hidden /> {lesson.minutes} min read
             </span>
@@ -56,7 +56,7 @@ export default async function LessonPage({ params }: LessonParams) {
             </span>
           </p>
 
-          <div className="mt-8">
+          <div className="mt-5">
             <LessonTabs
               learn={
                 <>
@@ -78,10 +78,10 @@ export default async function LessonPage({ params }: LessonParams) {
           </div>
 
           {next && (
-            <Link href={`/roadmap/${track.id}/${next.slug}`} className="group mt-14 flex items-center justify-between gap-4 rounded-xl bg-tint-lav p-5 transition-shadow hover:shadow-md motion-reduce:transition-none">
+            <Link href={`/roadmap/${track.id}/${next.slug}`} className="group mt-10 flex items-center justify-between gap-4 rounded-lg bg-tint-lav p-4 transition-shadow hover:shadow-md motion-reduce:transition-none">
               <span>
                 <span className="eyebrow block">Next lesson</span>
-                <span className="mt-1 block text-lg font-semibold">{next.subsection.title}</span>
+                <span className="mt-0.5 block text-base font-semibold">{next.subsection.title}</span>
               </span>
               <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1 motion-reduce:transition-none" aria-hidden />
             </Link>

@@ -14,20 +14,20 @@ function Block({ block }: { block: LessonBlock }) {
   switch (block.type) {
     case "h2":
       return (
-        <h2 id={slugify(block.text)} className="mt-12 scroll-mt-28 text-2xl first:mt-0">
+        <h2 id={slugify(block.text)} className="mt-8 scroll-mt-24 text-xl first:mt-0">
           {block.text}
         </h2>
       );
     case "p":
       return (
-        <p className="mt-4 max-w-[78ch] text-[1.0625rem] leading-[1.75] text-muted">
+        <p className="mt-3 max-w-[78ch] text-[0.9375rem] leading-[1.65] text-muted">
           <InlineText text={block.text} />
         </p>
       );
     case "list": {
       const Tag = block.ordered ? "ol" : "ul";
       return (
-        <Tag className={`mt-4 max-w-[78ch] space-y-2 pl-6 text-[1.0625rem] leading-[1.7] text-muted marker:text-accent ${block.ordered ? "list-decimal" : "list-[square]"}`}>
+        <Tag className={`mt-3 max-w-[78ch] space-y-1.5 pl-5 text-[0.9375rem] leading-[1.6] text-muted marker:text-accent ${block.ordered ? "list-decimal" : "list-[square]"}`}>
           {block.items.map((item) => (
             <li key={item}>
               <InlineText text={item} />
@@ -41,11 +41,11 @@ function Block({ block }: { block: LessonBlock }) {
     case "callout": {
       const style = CALLOUT_STYLE[block.tone];
       return (
-        <aside className={`my-6 max-w-[78ch] rounded-xl p-4 ${style.box}`}>
+        <aside className={`my-5 max-w-[78ch] rounded-lg p-3.5 ${style.box}`}>
           <p className={`eyebrow ${style.text}`}>
             {style.label} · {block.title}
           </p>
-          <p className="mt-2 text-sm leading-relaxed text-muted">
+          <p className="mt-1.5 text-[0.8125rem] leading-relaxed text-muted">
             <InlineText text={block.text} />
           </p>
         </aside>
@@ -53,12 +53,12 @@ function Block({ block }: { block: LessonBlock }) {
     }
     case "table":
       return (
-        <div className="my-6 overflow-x-auto rounded-xl border border-line">
-          <table className="w-full min-w-[32rem] border-collapse text-left text-sm">
+        <div className="my-5 overflow-x-auto rounded-lg border border-line">
+          <table className="w-full min-w-[32rem] border-collapse text-left text-[0.8125rem]">
             <thead className="bg-tint-lav">
               <tr>
                 {block.head.map((cell) => (
-                  <th key={cell} scope="col" className="eyebrow border-b border-line px-4 py-2.5">
+                  <th key={cell} scope="col" className="eyebrow border-b border-line px-3 py-2">
                     {cell}
                   </th>
                 ))}
@@ -68,7 +68,7 @@ function Block({ block }: { block: LessonBlock }) {
               {block.rows.map((row) => (
                 <tr key={row.join("|")} className="border-b border-line last:border-b-0">
                   {row.map((cell, i) => (
-                    <td key={`${i}-${cell}`} className={`px-4 py-2.5 align-top ${i === 0 ? "font-medium text-ink" : "text-muted"}`}>
+                    <td key={`${i}-${cell}`} className={`px-3 py-2 align-top ${i === 0 ? "font-medium text-ink" : "text-muted"}`}>
                       <InlineText text={cell} />
                     </td>
                   ))}
@@ -80,9 +80,9 @@ function Block({ block }: { block: LessonBlock }) {
       );
     case "figure":
       return (
-        <figure className="my-8 overflow-hidden rounded-xl border border-line bg-bg-raised">
+        <figure className="my-6 overflow-hidden rounded-lg border border-line bg-bg-raised">
           <Image src={block.src} alt={block.alt} width={block.width} height={block.height} unoptimized className="h-auto w-full" />
-          <figcaption className="border-t border-line px-4 py-2.5 text-sm text-muted">{block.caption}</figcaption>
+          <figcaption className="border-t border-line px-3 py-2 text-xs text-muted">{block.caption}</figcaption>
         </figure>
       );
   }

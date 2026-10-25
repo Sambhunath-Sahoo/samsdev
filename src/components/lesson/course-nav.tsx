@@ -63,16 +63,16 @@ export function CourseNav({ trackId, trackTitle, sections }: { trackId: string; 
     });
 
   return (
-    <nav aria-label={`${trackTitle} course contents`} className="px-4 py-5">
+    <nav aria-label={`${trackTitle} course contents`} className="px-3 py-4">
       <p className="eyebrow">Course contents</p>
       <div className="mt-2 flex items-baseline justify-between gap-3">
-        <h2 className="text-xl">{trackTitle}</h2>
+        <h2 className="text-lg">{trackTitle}</h2>
         <span className="pill pill-ok">
           {doneCount}/{written.length}
         </span>
       </div>
 
-      <label className="mt-4 flex items-center gap-2 rounded-lg border border-line bg-bg-raised px-3 py-2 focus-within:border-accent focus-within:ring-2 focus-within:ring-accent/30">
+      <label className="mt-3 flex items-center gap-2 rounded-lg border border-line bg-bg-raised px-3 py-1.5 focus-within:border-accent focus-within:ring-2 focus-within:ring-accent/30">
         <Search className="h-4 w-4 shrink-0 text-faint" aria-hidden />
         <span className="sr-only">Search lessons</span>
         <input
@@ -80,11 +80,11 @@ export function CourseNav({ trackId, trackTitle, sections }: { trackId: string; 
           value={query}
           onChange={(event) => setQuery(event.target.value)}
           placeholder="Search lessons"
-          className="w-full min-w-0 bg-transparent text-sm text-ink outline-none placeholder:text-faint"
+          className="w-full min-w-0 bg-transparent text-[0.8125rem] text-ink outline-none placeholder:text-faint"
         />
       </label>
 
-      <ol className="mt-4">
+      <ol className="mt-3">
         {visible.map(({ section, index, items }) => {
           const isOpen = needle !== "" || opened.has(index);
           return (
@@ -93,14 +93,14 @@ export function CourseNav({ trackId, trackTitle, sections }: { trackId: string; 
                 type="button"
                 onClick={() => toggle(index)}
                 aria-expanded={isOpen}
-                className="flex w-full items-center gap-3 rounded-lg py-3 text-left hover:text-ink"
+                className="flex w-full items-center gap-2.5 rounded-lg py-2 text-left hover:text-ink"
               >
-                <span aria-hidden className="grid h-6 w-6 shrink-0 place-items-center rounded-md bg-accent text-xs font-semibold text-[var(--num-fg)]">{index + 1}</span>
-                <span className="min-w-0 flex-1 text-sm font-semibold text-ink-strong">{section.title}</span>
+                <span aria-hidden className="grid h-5 w-5 shrink-0 place-items-center rounded bg-accent text-[11px] font-semibold text-[var(--num-fg)]">{index + 1}</span>
+                <span className="min-w-0 flex-1 text-[0.8125rem] font-semibold text-ink-strong">{section.title}</span>
                 <ChevronDown className={cn("h-4 w-4 shrink-0 text-muted transition-transform", isOpen && "rotate-180")} aria-hidden />
               </button>
               {isOpen && (
-                <ul className="mb-3 space-y-0.5">
+                <ul className="mb-2 space-y-0">
                   {items.map((item) => (
                     <li key={item.title}>
                       {item.slug ? (
@@ -108,14 +108,14 @@ export function CourseNav({ trackId, trackTitle, sections }: { trackId: string; 
                           <Link
                             href={`/roadmap/${trackId}/${item.slug}`}
                             aria-current={item.slug === activeSlug ? "page" : undefined}
-                            className={cn("min-w-0 flex-1 px-3 py-1.5 text-sm", item.slug === activeSlug ? "font-medium text-ink" : "text-muted")}
+                            className={cn("min-w-0 flex-1 px-2.5 py-1 text-[0.8125rem]", item.slug === activeSlug ? "font-medium text-ink" : "text-muted")}
                           >
                             {item.title}
                           </Link>
                           <LessonCheck title={item.title} pointIds={item.pointIds} />
                         </div>
                       ) : (
-                        <p className="px-3 py-1.5 text-sm text-faint">{item.title}</p>
+                        <p className="px-2.5 py-1 text-[0.8125rem] text-faint">{item.title}</p>
                       )}
                     </li>
                   ))}

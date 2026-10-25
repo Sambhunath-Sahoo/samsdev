@@ -8,7 +8,7 @@ import type { RoadmapSection, RoadmapSubsection } from "@/types/roadmap";
 
 const plural = (count: number, word: string) => `${count} ${word}${count === 1 ? "" : "s"}`;
 
-const ROW_CLASS = "flex items-center gap-3 rounded-lg bg-bg-raised px-4 py-3";
+const ROW_CLASS = "flex items-center gap-3 rounded-lg bg-bg-raised px-3 py-2";
 
 function SubsectionItem({ trackId, subsection }: { trackId: string; subsection: RoadmapSubsection }) {
   const points = subsection.points ?? [];
@@ -42,7 +42,7 @@ function SubsectionItem({ trackId, subsection }: { trackId: string; subsection: 
   return (
     <li className="rounded-lg bg-bg-raised">
       <details data-collapsible className="group/sub">
-        <summary className={`${summaryReset} flex items-center gap-3 rounded-lg px-4 py-3 hover:bg-bg-sunken`}>
+        <summary className={`${summaryReset} flex items-center gap-3 rounded-lg px-3 py-2 hover:bg-bg-sunken`}>
           <ListChecks className="h-4 w-4 shrink-0 text-faint" aria-hidden />
           <span className="min-w-0 text-muted group-open/sub:text-ink">{subsection.title}</span>
           <ChevronDown className={`${chevron("sub")} h-4 w-4 text-muted motion-reduce:transition-none`} aria-hidden />
@@ -69,8 +69,8 @@ export function RoadmapTopicRow({ trackId, section, index }: { trackId: string; 
 
   return (
     <details data-collapsible className="group/section rounded-xl bg-tint-lav" open={pointIds.length > 0}>
-      <summary className={`${summaryReset} flex items-center gap-3 rounded-xl px-4 py-3 hover:brightness-[0.98] sm:gap-4`}>
-        <span aria-hidden className="grid h-8 w-8 shrink-0 place-items-center rounded-md bg-accent text-sm font-semibold text-[var(--num-fg)]">
+      <summary className={`${summaryReset} flex items-center gap-3 rounded-xl px-3.5 py-2.5 hover:brightness-[0.98] sm:gap-4`}>
+        <span aria-hidden className="grid h-7 w-7 shrink-0 place-items-center rounded-md bg-accent text-xs font-semibold text-[var(--num-fg)]">
           {index + 1}
         </span>
         <span className="min-w-0 flex-1">

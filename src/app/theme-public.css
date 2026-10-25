@@ -27,7 +27,7 @@
 /* Headlines: Archivo Black, tight and upper case, with an italic serif accent. */
 .pub-h1,
 .pub-h2 {
-  font-family: var(--font-display);
+  font-family: var(--display-font);
   font-weight: 400;
   text-transform: uppercase;
   color: var(--ink-strong);

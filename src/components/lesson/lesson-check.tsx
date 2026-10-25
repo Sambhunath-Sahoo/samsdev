@@ -25,11 +25,11 @@ export function LessonCheck({ title, pointIds }: { title: string; pointIds: read
       aria-label={isDone ? `Mark "${title}" not done` : `Mark "${title}" done`}
       title={isSignedIn ? (isDone ? "Done. Click to undo" : "Mark done") : "Sign in to track your progress"}
       className={cn(
-        "mr-2 grid h-6 w-6 shrink-0 place-items-center rounded-full border transition-colors disabled:cursor-not-allowed disabled:opacity-40",
+        "mr-1.5 grid h-5 w-5 shrink-0 place-items-center rounded-full border transition-colors disabled:cursor-not-allowed disabled:opacity-40",
         isDone ? "border-accent bg-accent text-[var(--num-fg)]" : "border-line-strong text-transparent hover:border-accent hover:text-accent",
       )}
     >
-      <Check className="h-3.5 w-3.5" strokeWidth={3} aria-hidden />
+      <Check className="h-3 w-3" strokeWidth={3} aria-hidden />
     </button>
   );
 }
